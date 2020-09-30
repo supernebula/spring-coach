@@ -28,7 +28,7 @@ import com.evol.config.WXPayConstants.SignType;
 
 public class WXPayRequest {
     private WXPayConfig config;
-    public WXPayRequest(WXPayConfig config) throws Exception{
+    public WXPayRequest(WXPayConfig config){
 
         this.config = config;
     }

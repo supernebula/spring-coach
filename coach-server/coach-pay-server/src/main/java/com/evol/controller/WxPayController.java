@@ -1,14 +1,28 @@
 package com.evol.controller;
 
 import com.evol.config.WXPayConfig;
+import com.evol.config.WXPayRequest;
+import com.sun.deploy.net.HttpUtils;
+import com.sun.jndi.toolkit.url.UrlUtil;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.apache.http.HttpRequest;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.HttpClientUtils;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sun.net.util.URLUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -31,6 +45,53 @@ public class WxPayController {
         return "pay";
     }
 
+    @GetMapping("reqcode")
+    public void reqCode( HttpServletResponse response) throws IOException {
+
+        String redirectUri = URLEncoder.encode("http://h5test.dd.com/wx/getCode", StandardCharsets.UTF_8.toString()) ;
+
+        System.out.println("redirectUri:" + redirectUri);
+
+        String uri = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + wXPayConfig.getAppId() +
+                "&redirect_uri=" + redirectUri + "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+
+        response.sendRedirect(uri);
+    }
+
+    @GetMapping("getCode")
+    @ResponseBody
+    public String getCode(@RequestParam(name = "code", required = false) String code){
+        System.out.println("code:" + code);
+
+
+        String uri = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + wXPayConfig.getAppId() +
+                "&secret=" + wXPayConfig.getAppSecret() +"&code=" + code + "&grant_type=authorization_code";
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(Duration.ofSeconds(10))//连接超时
+                .writeTimeout(Duration.ofSeconds(5))//写超时，也就是请求超时
+                .readTimeout(Duration.ofSeconds(5))//读取超时
+                .callTimeout(Duration.ofSeconds(15))//调用超时，也是整个请求过程的超时
+                .build();
+
+        String bodyStr = "null";
+
+        Request request = new Request.Builder().url(uri).build();
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            okhttp3.ResponseBody body = (okhttp3.ResponseBody) response.body();
+            if (response.isSuccessful()) {
+               System.out.println("success:" + body == null ? "" : body.string());
+                bodyStr = body.string();
+            } else {
+                System.out.println("error,statusCode={" + response.code() + "},body={" + body == null ? "" :
+                        body.string() + "}");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bodyStr;
+    }
+
 
     /**
      *
@@ -45,13 +106,16 @@ public class WxPayController {
             , @RequestParam(name = "body", required = true) String body
             , @RequestParam(name = "total_fee", required = true) String total_fee
             , @RequestParam(name = "detail", required = false) String detail
-            , HttpServletResponse response){
+            , HttpServletResponse response) throws Exception {
 
         // 超时时间 可空
         String timeout_express="2m";
         // 销售产品码 必填
         String product_code="QUICK_WAP_WAY";
         /**********************/
+
+        WXPayRequest wxPayRequest = new WXPayRequest(wXPayConfig);
+
 
         return "";
     }

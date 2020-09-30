@@ -9,7 +9,7 @@ import java.io.InputStream;
 
 @Component
 @Data
-public class WXPayConfig {
+public  class WXPayConfig {
 
 
 
@@ -19,6 +19,8 @@ public class WXPayConfig {
      * @return App ID
      */
     private String appId = "";
+
+    private String appSecret = "";
 
 
     /**
@@ -36,8 +38,7 @@ public class WXPayConfig {
      */
     private String key = "";
 
-    private String certPath = "" +
-            ".p12";
+    private String certPath = ".p12";
 
     /**
      * 获取商户证书内容
@@ -74,7 +75,9 @@ public class WXPayConfig {
      *
      * @return
      */
-    private boolean shouldAutoReport = true;
+    public boolean shouldAutoReport() {
+        return true;
+    };
 
     /**
      * 进行健康上报的线程的数量

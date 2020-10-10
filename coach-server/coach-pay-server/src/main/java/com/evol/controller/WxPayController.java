@@ -48,7 +48,7 @@ public class WxPayController {
     @GetMapping("reqcode")
     public void reqCode( HttpServletResponse response) throws IOException {
 
-        String redirectUri = URLEncoder.encode("http://h5test.dd.com/wx/getCode", StandardCharsets.UTF_8.toString()) ;
+        String redirectUri = URLEncoder.encode("http://h5test.diandian11.com/wx/getCode", StandardCharsets.UTF_8.toString()) ;
 
         System.out.println("redirectUri:" + redirectUri);
 
@@ -89,6 +89,7 @@ public class WxPayController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("bodyStr:" + bodyStr);
         return bodyStr;
     }
 

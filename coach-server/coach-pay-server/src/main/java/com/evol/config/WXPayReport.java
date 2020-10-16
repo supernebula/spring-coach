@@ -213,6 +213,7 @@ public class WXPayReport {
     @Deprecated
     private void reportAsync(final String data) throws Exception {
         new Thread(new Runnable() {
+            @Override
             public void run() {
                 try {
                     httpRequest(data, DEFAULT_CONNECT_TIMEOUT_MS, DEFAULT_READ_TIMEOUT_MS);

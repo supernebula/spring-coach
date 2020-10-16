@@ -1,23 +1,36 @@
 package com.evol.controller;
 
+import com.evol.WxPayConfig;
+import com.evol.config.SystemConfig;
 import com.evol.config.WXPayConfig;
 import com.evol.config.WXPayRequest;
+import com.evol.model.request.UnifiedOrderParams;
+import com.evol.model.response.JsPayResult;
+import com.evol.model.response.UnifiedOrderResult;
+import com.evol.service.WechatPayService;
+import com.evol.util.*;
 import com.sun.deploy.net.HttpUtils;
 import com.sun.jndi.toolkit.url.UrlUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpRequest;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.tomcat.util.json.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.xml.sax.SAXException;
 import sun.net.util.URLUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -31,8 +44,13 @@ import java.util.Map;
 @RequestMapping("/wx")
 public class WxPayController {
 
+    private static final Logger logger = LoggerFactory.getLogger(WxPayController.class);
+
     @Autowired
     private WXPayConfig wXPayConfig;
+
+    @Autowired
+    private WechatPayService wechatPayService;
 
 
     @GetMapping("index")
@@ -48,7 +66,7 @@ public class WxPayController {
     @GetMapping("reqcode")
     public void reqCode( HttpServletResponse response) throws IOException {
 
-        String redirectUri = URLEncoder.encode("http://h5test.diandian11.com/wx/getCode", StandardCharsets.UTF_8.toString()) ;
+        String redirectUri = URLEncoder.encode(wXPayConfig.getAuthCodeUrl(), StandardCharsets.UTF_8.toString()) ;
 
         System.out.println("redirectUri:" + redirectUri);
 
@@ -60,7 +78,7 @@ public class WxPayController {
 
     @GetMapping("getCode")
     @ResponseBody
-    public String getCode(@RequestParam(name = "code", required = false) String code){
+    public Object getCode(@RequestParam(name = "code", required = false) String code){
         System.out.println("code:" + code);
 
 
@@ -80,8 +98,8 @@ public class WxPayController {
         try (Response response = okHttpClient.newCall(request).execute()) {
             okhttp3.ResponseBody body = (okhttp3.ResponseBody) response.body();
             if (response.isSuccessful()) {
-               System.out.println("success:" + body == null ? "" : body.string());
                 bodyStr = body.string();
+               System.out.println("success:" + body == null ? "" : bodyStr);
             } else {
                 System.out.println("error,statusCode={" + response.code() + "},body={" + body == null ? "" :
                         body.string() + "}");
@@ -90,12 +108,13 @@ public class WxPayController {
             e.printStackTrace();
         }
         System.out.println("bodyStr:" + bodyStr);
+
         return bodyStr;
     }
 
 
     /**
-     *
+     * 微信统一下单接口 https://api.mch.weixin.qq.com/pay/unifiedorder
      * @param out_trade_no 商户订单号，商户网站订单系统中唯一订单号，必填
      * @param body 订单名称，必填
      * @param total_fee 付款金额，必填
@@ -103,41 +122,128 @@ public class WxPayController {
      * @return
      */
     @PostMapping("pay")
-    public String postPay(@RequestParam(name = "out_trade_no", required = true) String out_trade_no
+    @ResponseBody
+    public void postPay(@RequestParam(name = "out_trade_no", required = true) String out_trade_no
             , @RequestParam(name = "body", required = true) String body
-            , @RequestParam(name = "total_fee", required = true) String total_fee
+            , @RequestParam(name = "total_fee", required = true) Integer total_fee
             , @RequestParam(name = "detail", required = false) String detail
-            , HttpServletResponse response) throws Exception {
+            , @RequestParam(name = "openId", required = false) String openId
+            , HttpServletResponse response
+            , HttpServletRequest request) throws Exception {
 
-        // 超时时间 可空
-        String timeout_express="2m";
-        // 销售产品码 必填
-        String product_code="QUICK_WAP_WAY";
-        /**********************/
+        logger.info("****正在支付的openId****" + openId);
+        // 统一下单
+        //String out_trade_no = PayUtil.createOutTradeNo();
+        //int total_fee = 1; // 产品价格1分钱,用于测试
+        String spbill_create_ip = HttpReqUtil.getRemortIP(request);
+        logger.info("支付IP" + spbill_create_ip);
+        String nonce_str = PayUtil.createNonceStr(); // 随机数据
+        //参数组装
+        UnifiedOrderParams unifiedOrderParams = new UnifiedOrderParams();
+        unifiedOrderParams.setAppid(wXPayConfig.getAppId());// 必须
+        unifiedOrderParams.setMch_id(wXPayConfig.getMchId());// 必须
+        unifiedOrderParams.setNonce_str(nonce_str); // 必须
+        unifiedOrderParams.setOut_trade_no(out_trade_no);// 必须
+        unifiedOrderParams.setBody("支付测试");// 必须
+        unifiedOrderParams.setTotal_fee(total_fee); // 必须
 
-        WXPayRequest wxPayRequest = new WXPayRequest(wXPayConfig);
+        unifiedOrderParams.setSpbill_create_ip(spbill_create_ip); // 必须
+        unifiedOrderParams.setTrade_type("MWEB"); // 必须
+        unifiedOrderParams.setOpenid(openId);
+        unifiedOrderParams.setNotify_url(wXPayConfig.getNotifyUrl());// 异步通知url
+        unifiedOrderParams.setScene_info("{\"h5_info\": {\"type\":\"IOS\",\"app_name\": \"H5测试\",\"package_name\": " +
+                "\"com.tencent.tmgp.sgame\"}}");
 
 
-        return "";
+        JsPayResult result = null;
+        String wxPayUrl = null;
+        // 统一下单 请求的Xml(正常的xml格式)
+        String unifiedXmL = wechatPayService.abstractPayToXml(unifiedOrderParams);////签名并入service
+        // 返回<![CDATA[SUCCESS]]>格式的XML
+        String unifiedOrderResultXmL =
+                HttpReqUtil.HttpsDefaultExecute(HttpReqUtil.POST_METHOD, wXPayConfig.getUnifiedOrderUrl(),
+                null, unifiedXmL);
+        // 进行签名校验
+        if (SignatureUtil.checkIsSignValidFromWeiXin(unifiedOrderResultXmL)) {
+            String timeStamp = PayUtil.createTimeStamp();
+            //统一下单响应
+            UnifiedOrderResult unifiedOrderResult = XmlUtil.getObjectFromXML(unifiedOrderResultXmL, UnifiedOrderResult.class);
+            wxPayUrl = unifiedOrderResult.getMweb_url();
+            /**** 用map方式进行签名 ****/
+            // SortedMap<Object, Object> signMap = new TreeMap<Object,
+            // Object>();
+            // signMap.put("appId", WeiXinConfig.APP_ID); // 必须
+            // signMap.put("timeStamp", timeStamp);
+            // signMap.put("nonceStr", nonceStr);
+            // signMap.put("signType", "MD5");
+            // signMap.put("package", "prepay_id=" + prepay_id);
+            // String paySign = SignatureUtil.createSign(signMap, key, SystemConfig.CHARACTER_ENCODING);
+            result = new JsPayResult();
+            result.setAppId(wXPayConfig.getAppId());
+            result.setTimeStamp(timeStamp);
+            result.setNonceStr(unifiedOrderResult.getNonce_str());//直接用返回的
+            /**** prepay_id 2小时内都有效，再次支付方法自己重写 ****/
+            result.setPackageStr("prepay_id=" + unifiedOrderResult.getPrepay_id());
+            /**** 用对象进行签名 ****/
+            String paySign = SignatureUtil.createSign(result, WXPayConfig.apiKey,
+                    SystemConfig.CHARACTER_ENCODING);
+            result.setPaySign(paySign);
+            result.setResultCode(unifiedOrderResult.getResult_code());
+        } else {
+            logger.info("签名验证错误");
+        }
+
+
+        if(StringUtils.isNotBlank(wxPayUrl)){
+            response.sendRedirect(wxPayUrl);
+
+        }
+
+//        /**** 返回对象给页面 ****/
+//        return result;
     }
 
-    @GetMapping("return")
+    @PostMapping("callback")
     @ResponseBody
-    public String callback(HttpServletRequest request, HttpServletResponse response) {
+    public void callback(HttpServletRequest request, HttpServletResponse response) throws IOException, SAXException,
+            ParserConfigurationException {
 
-        boolean verify_result = true;
-        if(verify_result){//验证成功
-            //////////////////////////////////////////////////////////////////////////////////////////
-            //请在这里加上商户的业务逻辑程序代码
-            //该页面可做页面美工编辑
-            return "验证成功<br />";
-            //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 
-            //////////////////////////////////////////////////////////////////////////////////////////
-        }else{
-            //该页面可做页面美工编辑
-            return "验证失败";
-        }
+        String retStr = new String(Util.readInput(request.getInputStream()),"utf-8");
+        logger.info("retStr:\n" + retStr);
+        Map<String, Object> map = XMLParser.getMapFromXML(retStr);
+        //返回的数据
+
+        //支付回调处理订单 更改订单状态
+
+        response.setContentType("text/xml");
+        String xml= "<xml>"
+                + "<return_code><![CDATA[SUCCESS]]></return_code>"
+                + "<return_msg><![CDATA[OK]]></return_msg>"
+                + "</xml>";
+        response.getWriter().print(xml);
+        response.getWriter().flush();
+        response.getWriter().close();
+
+
+//        boolean verify_result = true;
+//        if(verify_result){//验证成功
+//            //////////////////////////////////////////////////////////////////////////////////////////
+//            //请在这里加上商户的业务逻辑程序代码
+//            //该页面可做页面美工编辑
+//            //return "验证成功<br />";
+//            return "<xml>\n" +
+//                    "  <return_code><![CDATA[SUCCESS]]></return_code>\n" +
+//                    "  <return_msg><![CDATA[OK]]></return_msg>\n" +
+//                    "</xml>";
+//            //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
+//
+//            //////////////////////////////////////////////////////////////////////////////////////////
+//        }else{
+//            //该页面可做页面美工编辑
+//            return "验证失败";
+//
+//        }
     }
 
     /**

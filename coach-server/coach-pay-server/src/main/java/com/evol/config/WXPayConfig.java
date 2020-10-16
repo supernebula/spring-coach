@@ -30,13 +30,25 @@ public  class WXPayConfig {
      */
     private String mchId = "";
 
+    private String notifyUrl = "";
+
+    private String authCodeUrl = "";
+
+    private String unifiedOrderUrl =  "";
+
+
+
 
     /**
      * 获取 API 密钥
      *
      * @return API密钥
      */
-    private String key = "";
+    public static final String apiKey = "";
+
+    public String getKey(){
+        return  apiKey;
+    }
 
     private String certPath = ".p12";
 

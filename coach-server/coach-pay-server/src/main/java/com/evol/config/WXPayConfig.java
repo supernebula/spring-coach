@@ -18,9 +18,9 @@ public  class WXPayConfig {
      *
      * @return App ID
      */
-    private String appId = "";
+    private String appId = "30";
 
-    private String appSecret = "";
+    private String appSecret = "15";
 
 
     /**
@@ -30,11 +30,11 @@ public  class WXPayConfig {
      */
     private String mchId = "";
 
-    private String notifyUrl = "";
+    private String notifyUrl = "http://h5test.dd.com/wx/callback";
 
-    private String authCodeUrl = "";
+    private String authCodeUrl = "http://h5test.dd.com/wx/getCode";
 
-    private String unifiedOrderUrl =  "";
+    private String unifiedOrderUrl =  "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
 
 
@@ -44,13 +44,13 @@ public  class WXPayConfig {
      *
      * @return API密钥
      */
-    public static final String apiKey = "";
+    public static final String apiKey = "0F";
 
     public String getKey(){
         return  apiKey;
     }
 
-    private String certPath = ".p12";
+    private String certPath = "cert.p12";
 
     /**
      * 获取商户证书内容

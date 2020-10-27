@@ -1,6 +1,10 @@
 spring:
   application:
     name: coach-register     #应用名称，也是服务注册的名称
+  security:
+    user:
+      name: admin
+      password: admin
 
 server:
   port: 8761         #开启端口
@@ -10,7 +14,7 @@ eureka:
     fetch-registry: false                           #是否从Eureka Server查询注册信息erver 默认为true
     register-with-eureka: true                     #是否将自己注册到Eureka S
     serviceUrl:
-      defaultZone: http://127.0.0.1:8761/eureka/   #与Eureka Server交互的地址，查询服务和服务注册都需要依赖这个地址
+      defaultZone: http://admin:admin@127.0.0.1:8761/eureka/   #与Eureka Server交互的地址，查询服务和服务注册都需要依赖这个地址
       #默认为http://localhost:8761/eureka,  多个地址用","分割
 
 #instance:

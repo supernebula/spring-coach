@@ -11,6 +11,10 @@ Spring Cloud Eureka集群配置及注意事项(Greenwich版本)
 
 http://www.easysb.cn/2019/06/411.html
 
+Spring Cloud Eureka整合使用和配置
+
+https://www.imooc.com/article/293962
+
 # 遇到的问题
 Spring cloud eureka 客户端无法注册到注册中心
 解决：

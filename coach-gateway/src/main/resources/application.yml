@@ -1,16 +1,28 @@
-server:
-  port: 8080
 spring:
   application:
-    name: api-gateway
+    name: coach-gateway
   cloud:
     gateway:
       routes:
-        - id: url-proxy-1
-          uri: https://blog.csdn.net
+        - id: coach-user-server
+          uri: lb://coach-user-server
           predicates:
-            - Path=/csdn
-        - id: url-proxy-2
-          uri: https://www.baidu.com
+            - Path=/api-user/**
+          filters:
+            - StripPrefix=1
+        - id: coach-business-server
+          uri: lb://coach-business-server
           predicates:
-            - Path=/baidu
+            - Path=/api-business/**
+          filters:
+              - StripPrefix=1
+server:
+  port: 9000
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8761/eureka/
+    enabled: true
+
+    register-with-eureka: true
+    fetch-registry: true

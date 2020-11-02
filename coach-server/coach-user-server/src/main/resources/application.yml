@@ -1,25 +1,14 @@
+锘縮pring:
+  application:
+    name: coach-user-server  #搴旂敤鍚嶇О锛屼篃鏄湇鍔℃敞鍐岀殑鍚嶇О
+
 server:
   port: 8081
-
-spring:
-  application:
-    name: coach-user-server     #应用名称，也是服务注册的名称
-
 eureka:
   client:
-    # eureka服务的位置，如配置错误，则：Cannot execute request on any known server
-    # 详见：com.netflix.discovery.endpoint.EndpointUtils
     service-url:
-      defaultZone: http://admin:admin@localhost:8761/eureka/ #应用的主机名称
-    # 是否启用eureka客户端。默认true
-    enabled: true # 本地调试时，若不想启动eureka，可配置false即可，而不需要注释掉@EnableDiscoveryClient这么麻烦。感谢永超，从他的书知道这个属性。
-    # 支持registerWithEureka(John、周立)和register-with-eureka(翟永超)两种写法，eclipse的STS默认使用后者。
-    # 基本所有配置使用横杠或者驼峰都可以，鼠标放在上面，eclipse都可以显示详细注解和默认值（如果有）。
-    registerWithEureka: true # 默认true，因此也可省略。
-    fetchRegistry: true # 默认true，此处可不配置。
+      defaultZone: http://admin:admin@localhost:8761/eureka/
+    enabled: true
 
-
-
-
-
-
+    register-with-eureka: true
+    fetch-registry: true

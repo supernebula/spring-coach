@@ -15,4 +15,10 @@ public class TestController {
 
     }
 
+    @GetMapping("/index")
+    public Object index(){
+        return "testindex";
+    }
+
+
 }

@@ -1,0 +1,26 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: coach-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: url-proxy-1
+          uri: https://blog.csdn.net
+          predicates:
+            - Path=/csdn
+        - id: url-proxy-2
+          uri: https://www.baidu.com
+          predicates:
+            - Path=/baidu
+      enabled: false #如果包含启动器，但是由于某些原因，您不希望启用网关, 设置为false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8761/eureka/ #应用的主机名称

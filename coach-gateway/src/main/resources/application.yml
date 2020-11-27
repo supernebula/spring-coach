@@ -4,6 +4,10 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: url-proxy-1
+          uri: https://blog.csdn.net
+          predicates:
+            - Path=/csdn
         - id: coach-user-server
           uri: lb://coach-user-server
           predicates:

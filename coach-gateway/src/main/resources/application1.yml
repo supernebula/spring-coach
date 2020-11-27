@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 9000
 spring:
   application:
     name: coach-gateway
@@ -18,7 +18,7 @@ spring:
           uri: https://www.baidu.com
           predicates:
             - Path=/baidu
-      enabled: false #如果包含启动器，但是由于某些原因，您不希望启用网关, 设置为false
+      enabled: true #如果包含启动器，但是由于某些原因，您不希望启用网关, 设置为false
 
 eureka:
   client:

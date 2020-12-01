@@ -11,10 +11,10 @@ import java.util.List;
 @FeignClient("coach-user-server")
 public interface UserClient {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/users")
+    @RequestMapping(method = RequestMethod.GET, value = "/users/list")
     List<User> getUsers();
 
-    @RequestMapping(method = RequestMethod.POST, value = "/users/{userId}", consumes = "application/json")
+    @RequestMapping(method = RequestMethod.POST, value = "/users/upsert/{userId}", consumes = "application/json")
     User update(@PathVariable("userId") Long userId, User user);
 
 }

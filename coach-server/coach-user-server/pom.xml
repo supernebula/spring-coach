@@ -45,6 +45,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.evol</groupId>
+            <artifactId>coach-base-client</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

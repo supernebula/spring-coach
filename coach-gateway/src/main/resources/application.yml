@@ -20,6 +20,13 @@ spring:
             - Path=/api-business/**
           filters:
               - StripPrefix=1
+        - id: coach-pay-server
+          uri: lb://coach-pay-server
+          predicates:
+            - Path=/api-pay/**
+          filters:
+            - StripPrefix=1
+
 server:
   port: 9000
 eureka:

@@ -44,3 +44,13 @@ Spring cloud eureka 客户端无法注册到注册中心
 spring-cloud-netflix-eureka-client
 改为
 spring-cloud-starter-netflix-eureka-client
+
+#nacos
+
+https://www.cnblogs.com/nijunyang/p/14141769.html
+
+swagger
+
+https://github.com/xiaoymin/swagger-bootstrap-ui
+
+https://blog.csdn.net/u010192145/article/details/79216037

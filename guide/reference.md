@@ -37,7 +37,7 @@ https://www.jianshu.com/p/6ff196940b67
 https://www.springcloud.cc/spring-cloud-greenwich.html#spring-cloud-feign
 
 
-# 遇到的问题
+## 遇到的问题
 Spring cloud eureka 客户端无法注册到注册中心
 解决：
 客户端maven依赖
@@ -45,12 +45,22 @@ spring-cloud-netflix-eureka-client
 改为
 spring-cloud-starter-netflix-eureka-client
 
-#nacos
+## nacos
 
 https://www.cnblogs.com/nijunyang/p/14141769.html
 
-swagger
+## swagger
 
 https://github.com/xiaoymin/swagger-bootstrap-ui
 
 https://blog.csdn.net/u010192145/article/details/79216037
+
+## zipkin 
+
+https://zipkin.io/pages/quickstart.html
+
+Zipkin 与 Spring Cloud 的集成
+
+https://www.cnblogs.com/jmcui/p/10940372.html
+
+https://www.cnblogs.com/wucy/p/13642289.html

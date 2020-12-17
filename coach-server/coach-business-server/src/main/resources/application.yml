@@ -1,6 +1,8 @@
 spring:
   application:
     name: coach-business-server
+  zipkin:
+    base-url: http://192.168.0.30:9411/
 
 server:
   port: 8083

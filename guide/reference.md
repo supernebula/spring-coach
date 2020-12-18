@@ -64,3 +64,13 @@ Zipkin 与 Spring Cloud 的集成
 https://www.cnblogs.com/jmcui/p/10940372.html
 
 https://www.cnblogs.com/wucy/p/13642289.html
+
+## 多数据源 / 动态数据源
+
+## docker
+
+## ES、Mongo、redis、clickhouse、influxdb
+
+## 分布式事务
+
+https://cloud.tencent.com/developer/article/1536348

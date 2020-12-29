@@ -32,6 +32,10 @@ https://www.springcloud.cc/spring-cloud-greenwich.html#_spring_cloud_gateway
 
 https://www.jianshu.com/p/6ff196940b67
 
+### 限流 
+
+https://blog.csdn.net/m0_37834471/article/details/82621353?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control
+
 ## Feign
 
 https://www.springcloud.cc/spring-cloud-greenwich.html#spring-cloud-feign

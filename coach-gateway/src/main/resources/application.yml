@@ -1,6 +1,10 @@
 spring:
   application:
     name: coach-gateway
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
   cloud:
     gateway:
       routes:
@@ -14,6 +18,11 @@ spring:
             - Path=/api-user/**
           filters:
             - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 2000
+                redis-rate-limiter.burstCapacity: 2000
+                key-resolver: "#{@remoteUrlPathKeyResolver}"
         - id: coach-business-server
           uri: lb://coach-business-server
           predicates:

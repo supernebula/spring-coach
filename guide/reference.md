@@ -73,6 +73,19 @@ https://www.cnblogs.com/wucy/p/13642289.html
 
 ## docker
 
+https://www.runoob.com/docker/centos-docker-install.html
+
+http://www.ityouknow.com/docker.html
+
+https://deepmind.t-salon.cc/article/1849
+
+https://mp.weixin.qq.com/s/JUfxQtiTa21SFNYD7llEoA
+
+
+https://www.cnblogs.com/binghe001/p/12885714.html
+
+http://zouliming.cn/2019/04/03/docker-%E5%AF%BC%E5%85%A5%E9%95%9C%E5%83%8F%E6%97%B6%E6%8F%90%E7%A4%BAerror-processing-tar-fileexit-status-1-archivetar-invalid-tar-header/
+
 ## ES、Mongo、redis、clickhouse、influxdb
 
 ## 分布式事务

@@ -2,7 +2,7 @@ spring:
   application:
     name: coach-gateway
   redis:
-    host: 127.0.0.1
+    host: 192.168.0.9
     port: 6379
     password:
   cloud:
@@ -17,12 +17,13 @@ spring:
           predicates:
             - Path=/api-user/**
           filters:
-            - StripPrefix=1
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 2000
-                redis-rate-limiter.burstCapacity: 2000
-                key-resolver: "#{@remoteUrlPathKeyResolver}"
+          - name: RequestRateLimiter
+            args:
+              redis-rate-limiter.replenishRate: 1500000
+              redis-rate-limiter.burstCapacity: 2000000
+              key-resolver: "#{@remoteUrlPathKeyResolver}"
+          - TokenDecoderFilter
+          - StripPrefix=1
         - id: coach-business-server
           uri: lb://coach-business-server
           predicates:
@@ -41,7 +42,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://admin:admin@localhost:8761/eureka/
+      defaultZone: http://admin:admin@192.168.0.9:8761/eureka/
     enabled: true
     register-with-eureka: true
     fetch-registry: true

@@ -28,6 +28,17 @@ public class innerUserController {
         return list;
     }
 
+    @ApiOperation(value = "查询用户列表v",notes = "查询用户列表n")
+    @GetMapping("listTime")
+    public List<User> listTime() throws InterruptedException {
+        List<User> list = new ArrayList<User>();
+        list.add(new User(1, "nameTime1", "13688885555", "地址Time1"));
+        list.add(new User(1, "nameTime2", "17811113333", "地址Time2"));
+        list.add(new User(1, "nameTime3", "13814244445", "地址Time3"));
+        Thread.sleep(1000);
+        return list;
+    }
+
     @PostMapping("upsert")
     public User upsert(User user, Long userId){
         if(user == null){

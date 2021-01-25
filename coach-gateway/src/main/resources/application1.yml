@@ -23,4 +23,4 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://admin:admin@localhost:8761/eureka/ #应用的主机名称
+      defaultZone: http://admin:admin@192.168.0.9:8761/eureka/ #应用的主机名称

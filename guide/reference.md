@@ -79,7 +79,7 @@ https://www.cnblogs.com/wucy/p/13642289.html
 
 ## 多数据源 / 动态数据源
 
-## docker
+## docker 
 
 https://www.runoob.com/docker/centos-docker-install.html
 
@@ -99,3 +99,21 @@ http://zouliming.cn/2019/04/03/docker-%E5%AF%BC%E5%85%A5%E9%95%9C%E5%83%8F%E6%97
 ## 分布式事务
 
 https://cloud.tencent.com/developer/article/1536348
+
+
+## logback
+
+Spring Boot干货系列：（七）默认日志logback配置解析
+
+推荐logback-spring.xml来配置
+
+https://github.com/tengj/SpringBootDemo/tree/master
+
+http://tengj.top/2017/04/05/springboot7/
+
+## AOP
+
+SpringBoot：切面AOP实现权限校验：实例演示与注解全解
+
+https://www.mdeditor.tw/pl/pTuZ
+

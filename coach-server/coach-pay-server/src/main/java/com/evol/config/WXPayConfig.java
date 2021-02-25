@@ -11,6 +11,17 @@ import java.io.InputStream;
 @Data
 public  class WXPayConfig {
 
+    /**
+     * 获取授权code的地址
+     */
+    private String wxAuthorizeUrl = "https://open.weixin.qq.com/connect/oauth2/authorize";
+
+    /**
+     * 获取accessToken获取地址
+     */
+    private String wxTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token";
+
+
 
 
     /**

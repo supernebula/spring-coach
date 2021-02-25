@@ -1,14 +1,20 @@
 package com.evol.model.request;
 
 import com.evol.model.annotation.NotRequire;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 
 @Data
 public class AbstractPayParams {
-    private String appid; // 公众号id
-    private String mch_id; // 商户号
-    private String nonce_str; // 随机字符串
+    @XStreamAlias("appid")
+    private String appId; // 公众号id
+    @XStreamAlias("mch_id")
+    private String mchId; // 商户号
+    @XStreamAlias("nonce_str")
+    private String nonceStr; // 随机字符串
+    @XStreamAlias("sign")
     private String sign; // 签名
     @NotRequire
-    private String sign_type; // 签名类型
+    @XStreamAlias("sign_type")
+    private String signType; // 签名类型
 }

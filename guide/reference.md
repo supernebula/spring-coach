@@ -117,3 +117,11 @@ SpringBoot：切面AOP实现权限校验：实例演示与注解全解
 
 https://www.mdeditor.tw/pl/pTuZ
 
+## Mybatis 
+
+Mybatis Generator最完整配置详解
+
+https://www.cnblogs.com/maanshancss/p/6027999.html
+
+（JDBC 同一个数据链接生成主键并返回，避免再次查询）
+

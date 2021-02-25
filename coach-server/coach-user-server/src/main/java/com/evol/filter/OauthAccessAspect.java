@@ -47,11 +47,21 @@ public class OauthAccessAspect {
 
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        logger.debug("请求url===================" + request.getRequestURI());
+        logger.debug("doFilter, querystring : "+ request.getQueryString());
+
+        if(!sign){
+            return OpenApiResponse.fail(OpenApiResponseEnum.SIGN_ERROR);
+        }
 
         if(!token){
             return OpenApiResponse.fail(OpenApiResponseEnum.TOKEN_ERROR);
         }
+
+
+
         return joinPoint.proceed();
+
 
 
     }

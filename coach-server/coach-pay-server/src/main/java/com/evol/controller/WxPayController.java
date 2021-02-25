@@ -115,47 +115,48 @@ public class WxPayController {
 
     /**
      * 微信统一下单接口 https://api.mch.weixin.qq.com/pay/unifiedorder
-     * @param out_trade_no 商户订单号，商户网站订单系统中唯一订单号，必填
+     * @param outTradeNo 商户订单号，商户网站订单系统中唯一订单号，必填
      * @param body 订单名称，必填
-     * @param total_fee 付款金额，必填
+     * @param totalFee 付款金额，必填
      * @param detail 商品描述，可空
      * @return
      */
     @PostMapping("pay")
     @ResponseBody
-    public void postPay(@RequestParam(name = "out_trade_no", required = true) String out_trade_no
+    public void postPay(@RequestParam(name = "outTradeNo", required = true) String outTradeNo
             , @RequestParam(name = "body", required = true) String body
-            , @RequestParam(name = "total_fee", required = true) Integer total_fee
+            , @RequestParam(name = "totalFee", required = true) Integer totalFee
             , @RequestParam(name = "detail", required = false) String detail
             , @RequestParam(name = "openId", required = false) String openId
             , HttpServletResponse response
             , HttpServletRequest request) throws Exception {
 
         logger.info("****正在支付的openId****" + openId);
+        String spbillCreateIp = HttpReqUtil.getRemortIP(request);
+        logger.info("支付IP" + spbillCreateIp);
         // 统一下单
         //String out_trade_no = PayUtil.createOutTradeNo();
         //int total_fee = 1; // 产品价格1分钱,用于测试
-        String spbill_create_ip = HttpReqUtil.getRemortIP(request);
-        logger.info("支付IP" + spbill_create_ip);
-        String nonce_str = PayUtil.createNonceStr(); // 随机数据
+
+        String nonceStr = PayUtil.createNonceStr(); // 随机数据
         //参数组装
         UnifiedOrderParams unifiedOrderParams = new UnifiedOrderParams();
-        unifiedOrderParams.setAppid(wXPayConfig.getAppId());// 必须
-        unifiedOrderParams.setMch_id(wXPayConfig.getMchId());// 必须
-        unifiedOrderParams.setNonce_str(nonce_str); // 必须
-        unifiedOrderParams.setOut_trade_no(out_trade_no);// 必须
+        unifiedOrderParams.setAppId(wXPayConfig.getAppId());// 必须
+        unifiedOrderParams.setMchId(wXPayConfig.getMchId());// 必须
+        unifiedOrderParams.setNonceStr(nonceStr); // 必须
+        unifiedOrderParams.setOutTradeNo(outTradeNo);// 必须
         unifiedOrderParams.setBody("支付测试");// 必须
-        unifiedOrderParams.setTotal_fee(total_fee); // 必须
+        unifiedOrderParams.setTotalFee(totalFee); // 必须
 
-        unifiedOrderParams.setSpbill_create_ip(spbill_create_ip); // 必须
-        unifiedOrderParams.setTrade_type("MWEB"); // 必须
-        unifiedOrderParams.setOpenid(openId);
-        unifiedOrderParams.setNotify_url(wXPayConfig.getNotifyUrl());// 异步通知url
-        unifiedOrderParams.setScene_info("{\"h5_info\": {\"type\":\"IOS\",\"app_name\": \"H5测试\",\"package_name\": " +
+        unifiedOrderParams.setSpbillCreateIp(spbillCreateIp); // 必须
+        unifiedOrderParams.setTradeType("MWEB"); // 必须
+        unifiedOrderParams.setOpenId(openId);
+        unifiedOrderParams.setNotifyUrl(wXPayConfig.getNotifyUrl());// 异步通知url
+        unifiedOrderParams.setSceneInfo("{\"h5_info\": {\"type\":\"IOS\",\"app_name\": \"H5测试\",\"package_name\": " +
                 "\"com.tencent.tmgp.sgame\"}}");
 
 
-        JsPayResult result = null;
+        JsPayResult result;
         String wxPayUrl = null;
         // 统一下单 请求的Xml(正常的xml格式)
         String unifiedXmL = wechatPayService.abstractPayToXml(unifiedOrderParams);////签名并入service

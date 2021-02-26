@@ -1,5 +1,10 @@
 package com.evol.controller;
 
+import com.arronlong.httpclientutil.HttpClientUtil;
+import com.arronlong.httpclientutil.common.HttpConfig;
+import com.arronlong.httpclientutil.common.HttpHeader;
+import com.arronlong.httpclientutil.common.Utils;
+import com.arronlong.httpclientutil.exception.HttpProcessException;
 import com.evol.WxPayConfig;
 import com.evol.config.SystemConfig;
 import com.evol.config.WXPayConfig;
@@ -15,6 +20,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.Header;
 import org.apache.http.HttpRequest;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.HttpClientUtils;
@@ -121,10 +127,10 @@ public class WxPayController {
      * @param detail 商品描述，可空
      * @return
      */
-    @PostMapping("pay")
+    @PostMapping("pay0")
     @ResponseBody
-    public void postPay(@RequestParam(name = "outTradeNo", required = true) String outTradeNo
-            , @RequestParam(name = "body", required = true) String body
+    public void postPay0(@RequestParam(name = "outTradeNo", required = true) String outTradeNo
+            , @RequestParam(name = "subject", required = true) String body
             , @RequestParam(name = "totalFee", required = true) Integer totalFee
             , @RequestParam(name = "detail", required = false) String detail
             , @RequestParam(name = "openId", required = false) String openId
@@ -159,7 +165,7 @@ public class WxPayController {
         JsPayResult result;
         String wxPayUrl = null;
         // 统一下单 请求的Xml(正常的xml格式)
-        String unifiedXmL = wechatPayService.abstractPayToXml(unifiedOrderParams);////签名并入service
+        String unifiedXmL = wechatPayService.abstractPayToXml(unifiedOrderParams, UnifiedOrderParams.class);////签名并入service
         // 返回<![CDATA[SUCCESS]]>格式的XML
         String unifiedOrderResultXmL =
                 HttpReqUtil.HttpsDefaultExecute(HttpReqUtil.POST_METHOD, wXPayConfig.getUnifiedOrderUrl(),
@@ -169,7 +175,7 @@ public class WxPayController {
             String timeStamp = PayUtil.createTimeStamp();
             //统一下单响应
             UnifiedOrderResult unifiedOrderResult = XmlUtil.getObjectFromXML(unifiedOrderResultXmL, UnifiedOrderResult.class);
-            wxPayUrl = unifiedOrderResult.getMweb_url();
+            wxPayUrl = unifiedOrderResult.getMwebUrl();
             /**** 用map方式进行签名 ****/
             // SortedMap<Object, Object> signMap = new TreeMap<Object,
             // Object>();
@@ -184,12 +190,124 @@ public class WxPayController {
             result.setTimeStamp(timeStamp);
             result.setNonceStr(unifiedOrderResult.getNonce_str());//直接用返回的
             /**** prepay_id 2小时内都有效，再次支付方法自己重写 ****/
-            result.setPackageStr("prepay_id=" + unifiedOrderResult.getPrepay_id());
+            result.setPackageStr("prepay_id=" + unifiedOrderResult.getPrepayId());
             /**** 用对象进行签名 ****/
             String paySign = SignatureUtil.createSign(result, WXPayConfig.apiKey,
                     SystemConfig.CHARACTER_ENCODING);
             result.setPaySign(paySign);
-            result.setResultCode(unifiedOrderResult.getResult_code());
+            result.setResultCode(unifiedOrderResult.getResultCode());
+        } else {
+            logger.info("签名验证错误");
+        }
+
+
+        if(StringUtils.isNotBlank(wxPayUrl)){
+            response.sendRedirect(wxPayUrl);
+
+        }
+
+//        /**** 返回对象给页面 ****/
+//        return result;
+    }
+
+    /**
+     * 微信统一下单接口 https://api.mch.weixin.qq.com/pay/unifiedorder
+     * @param outTradeNo 商户订单号，商户网站订单系统中唯一订单号，必填
+     * @param subject 订单名称，必填
+     * @param totalFee 付款金额，必填
+     * @param detail 商品描述，可空
+     * @return
+     */
+    @PostMapping("pay")
+    @ResponseBody
+    public void postPay(@RequestParam(name = "outTradeNo", required = true) String outTradeNo
+            , @RequestParam(name = "subject", required = true) String subject
+            , @RequestParam(name = "totalFee", required = true) Integer totalFee
+            , @RequestParam(name = "detail", required = false) String detail
+            , @RequestParam(name = "openId", required = false) String openId
+            , HttpServletResponse response
+            , HttpServletRequest request) throws Exception {
+
+        logger.info("****正在支付的openId****" + openId);
+        String spbillCreateIp = HttpReqUtil.getRemortIP(request);
+        logger.info("支付IP" + spbillCreateIp);
+        // 统一下单
+        //String out_trade_no = PayUtil.createOutTradeNo();
+        //int total_fee = 1; // 产品价格1分钱,用于测试
+
+        String nonceStr = PayUtil.createNonceStr(); // 随机数据
+        //参数组装
+        UnifiedOrderParams unifiedOrderParams = new UnifiedOrderParams();
+        unifiedOrderParams.setAppId(wXPayConfig.getAppId());// 必须
+        unifiedOrderParams.setMchId(wXPayConfig.getMchId());// 必须
+        unifiedOrderParams.setNonceStr(nonceStr); // 必须
+        unifiedOrderParams.setOutTradeNo(outTradeNo);// 必须
+        unifiedOrderParams.setBody("支付测试");// 必须
+        unifiedOrderParams.setTotalFee(totalFee); // 必须
+
+        unifiedOrderParams.setSpbillCreateIp(spbillCreateIp); // 必须
+        unifiedOrderParams.setTradeType("MWEB"); // 必须
+        unifiedOrderParams.setOpenId(openId);
+        unifiedOrderParams.setNotifyUrl(wXPayConfig.getNotifyUrl());// 异步通知url
+        unifiedOrderParams.setSceneInfo("{\"h5_info\": {\"type\":\"IOS\",\"app_name\": \"H5测试\",\"package_name\": " +
+                "\"com.tencent.tmgp.sgame\"}}");
+
+
+        JsPayResult result;
+        String wxPayUrl = null;
+        // 统一下单 请求的Xml(正常的xml格式)
+        String unifiedXmL = wechatPayService.abstractPayToXml(unifiedOrderParams, UnifiedOrderParams.class);
+        ////签名并入service
+        // 返回<![CDATA[SUCCESS]]>格式的XML
+
+
+        String unifiedOrderResultXmL =
+                HttpReqUtil.HttpsDefaultExecute(HttpReqUtil.POST_METHOD, wXPayConfig.getUnifiedOrderUrl(),
+                        null, unifiedXmL);
+
+
+
+
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put(Utils.ENTITY_STRING, unifiedXmL);
+        Header[] headers = HttpHeader.custom().contentType("application/xml; charset=utf-8").build();
+        HttpConfig config = HttpConfig.custom().url(wXPayConfig.getUnifiedOrderUrl()).headers(headers).map(map1);
+        //简单调用
+        String resp = null;
+        try {
+            resp = HttpClientUtil.post(config);
+        } catch (HttpProcessException e) {
+            e.printStackTrace();
+        }
+
+
+
+        // 进行签名校验
+        if (SignatureUtil.checkIsSignValidFromWeiXin(unifiedOrderResultXmL)) {
+            String timeStamp = PayUtil.createTimeStamp();
+            //统一下单响应
+            UnifiedOrderResult unifiedOrderResult = XmlUtil.getObjectFromXML(unifiedOrderResultXmL, UnifiedOrderResult.class);
+            wxPayUrl = unifiedOrderResult.getMwebUrl();
+            /**** 用map方式进行签名 ****/
+            // SortedMap<Object, Object> signMap = new TreeMap<Object,
+            // Object>();
+            // signMap.put("appId", WeiXinConfig.APP_ID); // 必须
+            // signMap.put("timeStamp", timeStamp);
+            // signMap.put("nonceStr", nonceStr);
+            // signMap.put("signType", "MD5");
+            // signMap.put("package", "prepay_id=" + prepay_id);
+            // String paySign = SignatureUtil.createSign(signMap, key, SystemConfig.CHARACTER_ENCODING);
+            result = new JsPayResult();
+            result.setAppId(wXPayConfig.getAppId());
+            result.setTimeStamp(timeStamp);
+            result.setNonceStr(unifiedOrderResult.getNonce_str());//直接用返回的
+            /**** prepay_id 2小时内都有效，再次支付方法自己重写 ****/
+            result.setPackageStr("prepay_id=" + unifiedOrderResult.getPrepayId());
+            /**** 用对象进行签名 ****/
+            String paySign = SignatureUtil.createSign(result, WXPayConfig.apiKey,
+                    SystemConfig.CHARACTER_ENCODING);
+            result.setPaySign(paySign);
+            result.setResultCode(unifiedOrderResult.getResultCode());
         } else {
             logger.info("签名验证错误");
         }

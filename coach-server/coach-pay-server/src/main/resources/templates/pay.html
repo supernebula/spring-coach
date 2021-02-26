@@ -142,22 +142,22 @@
     <h1>支付宝手机网站支付接口快速通道(接口名：alipay.trade.wap.pay)</h1>
 </header>
 <div id="main">
-    <form name=alipayment action='' method=post target="_blank">
+    <form name="alipayment" action='/wx/pay' method="post" target="_self">
         <div id="body" style="clear:left">
             <dl class="content">
                 <dt>商户订单号：</dt>
                 <dd>
-                    <input id="out_trade_no" name="out_trade_no" />
+                    <input id="outTradeNo" name="outTradeNo" />
                 </dd>
                 <hr class="one_line">
                 <dt>商品描述：</dt>
                 <dd>
-                    <input id="body" name="body" />
+                    <input id="subject" name="subject" />
                 </dd>
                 <hr class="one_line">
-                <dt>总金额：</dt>
+                <dt>总金额(分)：</dt>
                 <dd>
-                    <input id="total_fee" name="total_fee" />
+                    <input id="totalFee" name="totalFee" />
                 </dd>
                 <hr class="one_line"/>
                 <dt>商品详情：</dt>
@@ -195,10 +195,10 @@
         sNow += String(vNow.getMinutes());
         sNow += String(vNow.getSeconds());
         sNow += String(vNow.getMilliseconds());
-        document.getElementById("WIDout_trade_no").value =  sNow;
-        document.getElementById("WIDsubject").value = "手机网站支付测试商品";
-        document.getElementById("WIDtotal_amount").value = "0.01";
-        document.getElementById("WIDbody").value = "购买测试商品0.01元";
+        document.getElementById("outTradeNo").value =  "TESTNO" + sNow;
+        document.getElementById("subject").value = "手机网站支付测试商品";
+        document.getElementById("totalFee").value = "1";
+        document.getElementById("detail").value = "购买测试商品0.01元";
     }
     GetDateNow();
 </script>

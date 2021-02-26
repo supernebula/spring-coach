@@ -248,6 +248,21 @@ public class XmlUtil {
      * @param obj
      * @return
      */
+    public static String toSplitXml(Object obj, Class classz) {
+        String result = "";
+        XStream xstream = XStreamFactroy.initSplitLine();
+        xstream.processAnnotations(classz);
+        xstream.alias("xml", obj.getClass());
+        result = xstream.toXML(obj);
+        return result;
+    }
+
+    /**
+     * 将java对象转换为xml文件,并去除 _ 应用场景是 去除实体中有_划线的实体, 默认会有两个_,调用该方法则会去除一个
+     *
+     * @param obj
+     * @return
+     */
     public static String toSplitXml(Object obj) {
         String result = "";
         XStream xstream = XStreamFactroy.initSplitLine();

@@ -120,7 +120,15 @@
             <artifactId>spring-cloud-starter-zipkin</artifactId>
         </dependency>
 
-<!--        <dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.arronlong/httpclientutil -->
+        <dependency>
+            <groupId>com.arronlong</groupId>
+            <artifactId>httpclientutil</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+
+
+        <!--        <dependency>-->
 <!--            <groupId>net.sf.ehcache</groupId>-->
 <!--            <artifactId>ehcache</artifactId>-->
 <!--        </dependency>-->

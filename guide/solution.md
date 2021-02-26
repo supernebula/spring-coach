@@ -19,6 +19,7 @@ ACM（Nacos）
 logback
 ehcache
 多数据源
+quraz 定时器
 
 
 # data

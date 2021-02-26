@@ -18,9 +18,9 @@ public class WechatPayServiceImpl implements WechatPayService {
     private WXPayConfig wXPayConfig;
 
     @Override
-    public String abstractPayToXml(AbstractPayParams params){
+    public String abstractPayToXml(AbstractPayParams params, Class paramClazz){
         String sign = SignatureUtil.createSign(params, WXPayConfig.apiKey, SystemConfig.CHARACTER_ENCODING);
         params.setSign(sign);
-        return XmlUtil.toSplitXml(params);
+        return XmlUtil.toSplitXml(params, paramClazz);
     }
 }

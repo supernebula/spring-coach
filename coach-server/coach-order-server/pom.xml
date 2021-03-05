@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.evol</groupId>
-    <artifactId>coach-business-server</artifactId>
+    <artifactId>coach-order-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>coach-business-server</name>
+    <name>coach-order-server</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

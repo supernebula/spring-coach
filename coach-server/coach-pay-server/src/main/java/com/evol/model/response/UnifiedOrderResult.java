@@ -1,7 +1,6 @@
 package com.evol.model.response;
 
 import com.evol.model.annotation.NotRequire;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -20,44 +19,34 @@ public class UnifiedOrderResult extends AbstractPayResult implements Serializabl
      */
     private static final long serialVersionUID = 9030465964635155064L;
 
-    @XStreamAlias("return_code")
-    private String returnCode; // 返回状态码
+    private String return_code; // 返回状态码
 
-    @XStreamAlias("return_msg")
-    private String returnMsg; // 返回信息
+    private String return_msg; // 返回信息
 
     // 以下字段在return_code为SUCCESS的时候有返回(包括父类)
-    @XStreamAlias("device_info")
-    private String deviceInfo; // 设备号
-    @XStreamAlias("return_code")
-    private String resultCode; // 业务结果 SUCCESS/FAIL
+    private String device_info; // 设备号
+    private String result_code; // 业务结果 SUCCESS/FAIL
     @NotRequire
-    @XStreamAlias("err_code")
-    private String errCode; // 错误代码
+    private String err_code; // 错误代码
     @NotRequire
-    @XStreamAlias("err_code_des")
-    private String errCodeDes; // 错误代码描述
+    private String err_code_des; // 错误代码描述
 
     // 以下字段在return_code 和result_code都为SUCCESS的时候有返回
-    @XStreamAlias("trade_type")
-    private String tradeType; // 交易类型
-    @XStreamAlias("prepay_id")
-    private String prepayId; // 预支付交易会话标识，有效期为2小时
+    private String trade_type; // 交易类型
+    private String prepay_id; // 预支付交易会话标识，有效期为2小时
     @NotRequire
-    @XStreamAlias("code_url")
-    private String codeUrl; // 二维码链接
+    private String code_url; // 二维码链接
     @NotRequire
-    @XStreamAlias("mweb_url")
-    private String mwebUrl; //mweb_url为拉起微信支付收银台的中间页面，可通过访问该url来拉起微信客户端，完成支付,mweb_url的有效期为5分钟。
+    private String mweb_url; //mweb_url为拉起微信支付收银台的中间页面，可通过访问该url来拉起微信客户端，完成支付,mweb_url的有效期为5分钟。
 
 
 
     @Override
     public String toString() {
-        return "UnifiedOrderResult [return_code=" + returnCode + ", return_msg=" + returnMsg + ", device_info="
-                + deviceInfo + ", result_code=" + resultCode + ", err_code=" + errCode + ", err_code_des="
-                + errCodeDes + ", trade_type=" + tradeType + ", prepay_id=" + prepayId + ", code_url=" + codeUrl
-                + ", mweb_url = " + mwebUrl + "]";
+        return "UnifiedOrderResult [return_code=" + return_code + ", return_msg=" + return_msg + ", device_info="
+                + device_info + ", result_code=" + result_code + ", err_code=" + err_code + ", err_code_des="
+                + err_code_des + ", trade_type=" + trade_type + ", prepay_id=" + prepay_id + ", code_url=" + code_url
+                + ", mweb_url = " + mweb_url + "]";
     }
 
 }

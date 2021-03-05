@@ -39,7 +39,7 @@ public  class WXPayConfig {
      *
      * @return Mch ID
      */
-    private String mchId = "";
+    private String mchId = "41";
 
     private String notifyUrl = "http://h5test.dd.com/wx/callback";
 

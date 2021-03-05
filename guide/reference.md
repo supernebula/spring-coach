@@ -6,6 +6,10 @@ https://blog.csdn.net/qq_25385555/article/details/103780162
 
 http://springcloud.fun/
 
+https://www.cnblogs.com/binghe001/p/14466792.html
+
+https://github.com/sunshinelyz/technology-binghe
+
 
 ## Eureka
 
@@ -79,6 +83,12 @@ https://www.cnblogs.com/wucy/p/13642289.html
 
 ## 多数据源 / 动态数据源
 
+alibaba/druid
+
+https://github.com/alibaba/druid/wiki/%E9%A6%96%E9%A1%B5
+
+https://www.cnblogs.com/softidea/p/7127874.html
+
 ## docker 
 
 https://www.runoob.com/docker/centos-docker-install.html
@@ -124,4 +134,6 @@ Mybatis Generator最完整配置详解
 https://www.cnblogs.com/maanshancss/p/6027999.html
 
 （JDBC 同一个数据链接生成主键并返回，避免再次查询）
+
+
 

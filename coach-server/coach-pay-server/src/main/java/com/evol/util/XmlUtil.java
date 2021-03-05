@@ -248,10 +248,9 @@ public class XmlUtil {
      * @param obj
      * @return
      */
-    public static String toSplitXml(Object obj, Class classz) {
+    public static String toSplitXml(Object obj) {
         String result = "";
         XStream xstream = XStreamFactroy.initSplitLine();
-        xstream.processAnnotations(classz);
         xstream.alias("xml", obj.getClass());
         result = xstream.toXML(obj);
         return result;
@@ -263,9 +262,10 @@ public class XmlUtil {
      * @param obj
      * @return
      */
-    public static String toSplitXml(Object obj) {
+    public static String toSplitXmlByClass(Object obj, Class classz) {
         String result = "";
         XStream xstream = XStreamFactroy.initSplitLine();
+        xstream.processAnnotations(classz);
         xstream.alias("xml", obj.getClass());
         result = xstream.toXML(obj);
         return result;

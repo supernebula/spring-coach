@@ -2,6 +2,7 @@ package com.evol.service.impl;
 
 import com.evol.config.SystemConfig;
 import com.evol.config.WXPayConfig;
+import com.evol.model.request.AbstractPayCustomParams;
 import com.evol.model.request.AbstractPayParams;
 import com.evol.service.WechatPayService;
 import com.evol.util.SignatureUtil;
@@ -18,9 +19,16 @@ public class WechatPayServiceImpl implements WechatPayService {
     private WXPayConfig wXPayConfig;
 
     @Override
-    public String abstractPayToXml(AbstractPayParams params, Class paramClazz){
+    public String abstractPayToXml(AbstractPayParams params){
         String sign = SignatureUtil.createSign(params, WXPayConfig.apiKey, SystemConfig.CHARACTER_ENCODING);
         params.setSign(sign);
-        return XmlUtil.toSplitXml(params, paramClazz);
+        return XmlUtil.toSplitXml(params);
+    }
+
+    @Override
+    public String abstractCustomPayToXml(AbstractPayCustomParams params, Class paramClazz){
+        String sign = SignatureUtil.createSign(params, WXPayConfig.apiKey, SystemConfig.CHARACTER_ENCODING);
+        params.setSign(sign);
+        return XmlUtil.toSplitXmlByClass(params, paramClazz);
     }
 }

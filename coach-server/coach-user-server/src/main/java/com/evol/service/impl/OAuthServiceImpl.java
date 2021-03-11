@@ -5,6 +5,9 @@ import com.evol.domain.common.RespResultEnum;
 import com.evol.domain.dto.UserRegisterRespDTO;
 import com.evol.domain.dto.WeiXinOAuthRespDTO;
 import com.evol.domain.dto.WeiXinOAuthUserInfoRespDTO;
+import com.evol.domain.dto.WxOAuthTokenRespDTO;
+import com.evol.domain.dto.WxOAuthUserInfoRespDTO;
+import com.evol.domain.dto.WxTokenRespDTO;
 import com.evol.domain.entity.UserDO;
 import com.evol.domain.enums.UserTypeEnum;
 import com.evol.mapper.UserMapper;
@@ -13,6 +16,8 @@ import com.evol.service.common.CommonTemplateService;
 import com.evol.utils.JwtUtils;
 import com.evol.utils.WeChatAuthorizeUtil;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +25,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.time.Duration;
+import okhttp3.OkHttpClient;
 
 @Service
 @Slf4j
@@ -39,6 +47,8 @@ public class OAuthServiceImpl implements OAuthService {
 
     @Autowired
     private HttpServletResponse response;
+
+
 
     @Override
     public void getWXUserInfoOAuth(String code) {
@@ -89,6 +99,50 @@ public class OAuthServiceImpl implements OAuthService {
         } catch (Exception e) {
             log.error(" getWXUserInfoOAuth error: " + e.getMessage());
         }
+    }
+
+    @Override
+    public WxOAuthTokenRespDTO getToken(String code) {
+
+        String tokenUri = weChatAuthorizeUtil.getAccessTokenUrl(code);
+
+
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(Duration.ofSeconds(10))//连接超时
+                .writeTimeout(Duration.ofSeconds(5))//写超时，也就是请求超时
+                .readTimeout(Duration.ofSeconds(5))//读取超时
+                .callTimeout(Duration.ofSeconds(15))//调用超时，也是整个请求过程的超时
+                .build();
+
+        Request request = new Request.Builder().url(tokenUri).build();
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            okhttp3.ResponseBody body = response.body();
+            if (!response.isSuccessful()) {
+                log.error("error,statusCode={\" + response.code() + \"}");
+                return null;
+            }
+            String bodyStr = body.string();
+            WxOAuthTokenRespDTO wxTokenRespDTO = JSON.parseObject(bodyStr, WxOAuthTokenRespDTO.class);
+            return wxTokenRespDTO;
+
+
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+        return null;
+
+    }
+
+    public WxOAuthUserInfoRespDTO getWxUserInfoByToken(String accessToken, String openId){
+
+        String tokenUri = weChatAuthorizeUtil.getUserInfoUrl(accessToken, openId);
+
+        //Http 请求代码
+        String bodyStr = "";
+        WxOAuthUserInfoRespDTO wxUserDTO = JSON.parseObject(bodyStr, WxOAuthUserInfoRespDTO.class);
+
+
     }
 
     private UserDO getUserByOpenId(String openId) {

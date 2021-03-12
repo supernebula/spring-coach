@@ -13,7 +13,7 @@ public class WxOAuthUserInfoRespDTO {
     private String nickname;   //用户昵称
 
     @JSONField(name = "sex")
-    private String sex;        //用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
+    private int sex;        //用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
 
     @JSONField(name = "province")
     private String province;   //用户个人资料填写的省份

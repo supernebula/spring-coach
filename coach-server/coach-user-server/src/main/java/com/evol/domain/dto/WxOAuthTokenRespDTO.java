@@ -9,7 +9,7 @@ public class WxOAuthTokenRespDTO {
     @JSONField(name = "access_token")
     private String accessToken;  //网页授权接口调用凭证,注意：此access_token与基础支持的access_token不同
     @JSONField(name = "expires_in")
-    private String expiresIn;    //access_token接口调用凭证超时时间，单位（秒）
+    private int expiresIn;    //access_token接口调用凭证超时时间，单位（秒）
 
     //用户刷新access_token
     @JSONField(name = "refresh_token")

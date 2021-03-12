@@ -60,6 +60,17 @@ public class WeChatAuthorizeUtil {
     }
 
     /**
+     * 第三步：刷新access_token（如果需要） URL
+     * @param refreshToken
+     * @return
+     */
+    public String getRefreshTokenUrl(String refreshToken) {
+        return WechatConfig.OAUTH_REFRESH_TOKEN_URI_TEMPLATE
+                .replace("APPID", wechatConfig.getAppId())
+                .replace("REFRESH_TOKEN", refreshToken);
+    }
+
+    /**
      * 第四步：拉取用户信息(需scope为 snsapi_userinfo)
      * @param accessToken
      * @param openid

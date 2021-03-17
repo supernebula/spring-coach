@@ -12,6 +12,8 @@ public class User implements Serializable {
 
     private String salt;
 
+    private Integer balance;
+
     private String nickname;
 
     private String openId;
@@ -74,6 +76,14 @@ public class User implements Serializable {
 
     public void setSalt(String salt) {
         this.salt = salt == null ? null : salt.trim();
+    }
+
+    public Integer getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Integer balance) {
+        this.balance = balance;
     }
 
     public String getNickname() {
@@ -206,6 +216,7 @@ public class User implements Serializable {
         sb.append(", username=").append(username);
         sb.append(", password=").append(password);
         sb.append(", salt=").append(salt);
+        sb.append(", balance=").append(balance);
         sb.append(", nickname=").append(nickname);
         sb.append(", openId=").append(openId);
         sb.append(", accessToken=").append(accessToken);

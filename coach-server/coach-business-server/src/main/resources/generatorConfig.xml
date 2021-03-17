@@ -62,7 +62,11 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
-        <table schema="" tableName="goods" domainObjectName="Goods">
+        <table schema="" tableName="movie" domainObjectName="Movie">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+
+        <table schema="" tableName="staff" domainObjectName="Staff">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
 

@@ -6,6 +6,7 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="balance" jdbcType="INTEGER" property="balance" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="access_token" jdbcType="VARCHAR" property="accessToken" />
@@ -81,7 +82,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, password, salt, nickname, open_id, access_token, token_expires_in, 
+    id, username, password, salt, balance, nickname, open_id, access_token, token_expires_in, 
     refresh_token, scope, user_img, mobile, gender, province, city, county, last_login_time, 
     create_time, update_time
   </sql>
@@ -117,19 +118,19 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.User" useGeneratedKeys="true">
     insert into user (username, password, salt, 
-      nickname, open_id, access_token, 
-      token_expires_in, refresh_token, scope, 
-      user_img, mobile, gender, 
-      province, city, county, 
-      last_login_time, create_time, update_time
-      )
+      balance, nickname, open_id, 
+      access_token, token_expires_in, refresh_token, 
+      scope, user_img, mobile, 
+      gender, province, city, 
+      county, last_login_time, create_time, 
+      update_time)
     values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{accessToken,jdbcType=VARCHAR}, 
-      #{tokenExpiresIn,jdbcType=TIMESTAMP}, #{refreshToken,jdbcType=VARCHAR}, #{scope,jdbcType=VARCHAR}, 
-      #{userImg,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
-      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{county,jdbcType=VARCHAR}, 
-      #{lastLoginTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{balance,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
+      #{accessToken,jdbcType=VARCHAR}, #{tokenExpiresIn,jdbcType=TIMESTAMP}, #{refreshToken,jdbcType=VARCHAR}, 
+      #{scope,jdbcType=VARCHAR}, #{userImg,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{county,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.User" useGeneratedKeys="true">
     insert into user
@@ -142,6 +143,9 @@
       </if>
       <if test="salt != null">
         salt,
+      </if>
+      <if test="balance != null">
+        balance,
       </if>
       <if test="nickname != null">
         nickname,
@@ -198,6 +202,9 @@
       </if>
       <if test="salt != null">
         #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=INTEGER},
       </if>
       <if test="nickname != null">
         #{nickname,jdbcType=VARCHAR},
@@ -267,6 +274,9 @@
       <if test="record.salt != null">
         salt = #{record.salt,jdbcType=VARCHAR},
       </if>
+      <if test="record.balance != null">
+        balance = #{record.balance,jdbcType=INTEGER},
+      </if>
       <if test="record.nickname != null">
         nickname = #{record.nickname,jdbcType=VARCHAR},
       </if>
@@ -323,6 +333,7 @@
       username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       salt = #{record.salt,jdbcType=VARCHAR},
+      balance = #{record.balance,jdbcType=INTEGER},
       nickname = #{record.nickname,jdbcType=VARCHAR},
       open_id = #{record.openId,jdbcType=VARCHAR},
       access_token = #{record.accessToken,jdbcType=VARCHAR},
@@ -353,6 +364,9 @@
       </if>
       <if test="salt != null">
         salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=INTEGER},
       </if>
       <if test="nickname != null">
         nickname = #{nickname,jdbcType=VARCHAR},
@@ -407,6 +421,7 @@
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=INTEGER},
       nickname = #{nickname,jdbcType=VARCHAR},
       open_id = #{openId,jdbcType=VARCHAR},
       access_token = #{accessToken,jdbcType=VARCHAR},

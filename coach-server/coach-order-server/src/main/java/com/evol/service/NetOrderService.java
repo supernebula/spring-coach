@@ -7,6 +7,6 @@ public interface NetOrderService {
 
     CreateOrderResponse newOrder(CreateOrderRequest reqParam);
 
-    void paidOrder();
+    void paidUpdateOrder();
 
 }

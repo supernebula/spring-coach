@@ -1,6 +1,7 @@
 package com.evol.controller;
 
 import com.evol.base.client.User;
+import com.evol.domain.dto.UserBalanceDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +47,11 @@ public class innerUserController {
         }
         user.setAddress(user.getAddress() + "_upsert");
         return user;
+    }
+
+    public UserBalanceDTO queryUserBalance(Integer userId){
+
+        return null;
     }
 
 }

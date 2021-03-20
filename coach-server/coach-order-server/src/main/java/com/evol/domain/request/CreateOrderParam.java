@@ -1,6 +1,6 @@
 package com.evol.domain.request;
 
-public class CreateOrderRequest {
+public class CreateOrderParam {
 
     private Integer userId;
 

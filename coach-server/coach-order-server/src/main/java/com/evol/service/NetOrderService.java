@@ -1,12 +1,17 @@
 package com.evol.service;
 
-import com.evol.domain.request.CreateOrderRequest;
-import com.evol.domain.response.CreateOrderResponse;
+import com.evol.domain.model.NetOrders;
+import com.evol.domain.request.CreateOrderParam;
+import com.evol.domain.request.PayOrderParam;
+import com.evol.domain.response.CreateOrderResult;
+import com.evol.domain.response.PaidHandleOrderResult;
 
 public interface NetOrderService {
 
-    CreateOrderResponse newOrder(CreateOrderRequest reqParam);
+    CreateOrderResult newOrder(CreateOrderParam reqParam);
 
-    void paidUpdateOrder();
+    PaidHandleOrderResult paidHandleOrder(PayOrderParam payOrderParam);
+
+    NetOrders selectByOrderNo(String orderNo);
 
 }

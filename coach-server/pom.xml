@@ -7,7 +7,7 @@
         <artifactId>coach-cloud</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>ruoyi-service-api</artifactId>
+    <artifactId>coach-server</artifactId>
     <packaging>pom</packaging>
     <modules>
         <module>coach-business-server</module>
@@ -20,6 +20,12 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!-- SpringBoot的依赖配置 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
         </dependency>
     </dependencies>
 </project>

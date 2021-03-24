@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.evol</groupId>
+    <artifactId>coach-cloud</artifactId>
+    <version>0.1-SNAPSHOT</version>
+
+    <name>coach-cloud</name>
+    <url></url>
+    <description>spring coach</description>
+
+    <properties>
+        <ruoyi.version>1.1.0-SNAPSHOT</ruoyi.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <spring-boot.version>2.1.17.RELEASE</spring-boot.version>
+        <spring-cloud.version>Greenwich.SR6</spring-cloud.version>
+        <mybatis-spring-boot.version>2.0.0</mybatis-spring-boot.version>
+        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+        <pagehelper.boot.version>1.2.13</pagehelper.boot.version>
+        <github.pagehelper.version>4.1.6</github.pagehelper.version>
+        <mapper.starter.version>2.1.5</mapper.starter.version>
+        <mysql-connector.version>5.1.47</mysql-connector.version>
+        <swagger-ui.version>1.9.6</swagger-ui.version>
+        <swagger-annotations.version>1.6.2</swagger-annotations.version>
+        <mybatis-spring-boot.version>2.0.0</mybatis-spring-boot.version>
+        <mybatis-generator.verion>1.3.7</mybatis-generator.verion>
+        <guava.version>26.0-jre</guava.version>
+        <openfeign-core>2.2.6.RELEASE</openfeign-core>
+    </properties>
+
+    <!-- 依赖声明 -->
+    <dependencyManagement>
+        <dependencies>
+
+            <!--cloud -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- SpringBoot的依赖配置 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+
+            <!-- swagger-bootstrap-ui -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>${swagger-ui.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox-swagger2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${github.pagehelper.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>2.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-core</artifactId>
+                <version>${mybatis-generator.verion}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-openfeign-core</artifactId>
+                <version>${openfeign-core}</version>
+                <scope>compile</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>coach-base-client</module>
+        <module>coach-gateway</module>
+        <module>coach-monitor</module>
+        <module>coach-register</module>
+        <module>coach-server</module>
+    </modules>
+    <packaging>pom</packaging>
+
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <configuration>
+                    <finalName>${project.build.finalName}</finalName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

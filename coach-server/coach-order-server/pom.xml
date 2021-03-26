@@ -12,13 +12,10 @@
     <parent>
         <groupId>com.evol</groupId>
         <artifactId>coach-server</artifactId>
-        <version/>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.evol</groupId>
     <artifactId>coach-order-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>coach-order-server</name>
     <description>Demo project for Spring Boot</description>
 

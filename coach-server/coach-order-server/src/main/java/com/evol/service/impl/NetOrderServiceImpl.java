@@ -10,6 +10,9 @@ import com.evol.mapper.NetOrdersMapper;
 import com.evol.service.NetOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import com.evol.contant.RabbitContants;
+
 
 import java.util.List;
 
@@ -18,6 +21,9 @@ public class NetOrderServiceImpl implements NetOrderService {
 
     @Autowired
     private NetOrdersMapper netOrdersMapper;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public CreateOrderResult newOrder(CreateOrderParam reqParam) {
@@ -46,5 +52,12 @@ public class NetOrderServiceImpl implements NetOrderService {
             return null;
         }
         return orderList.get(0);
+    }
+
+
+    public void payByUserBalance(){
+
+        rabbitTemplate.convertAndSend(RabbitContants.USER_BALANCE_EXCHANGE, RabbitContants.MSG_ROUTING_KEY, "message1");
+
     }
 }

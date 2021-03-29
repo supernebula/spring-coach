@@ -1,9 +1,9 @@
 package com.evol.controller;
 
-import com.evol.domain.ApiResponse;
 import com.evol.domain.request.CreateOrderParam;
 import com.evol.domain.response.CreateOrderResult;
 import com.evol.service.NetOrderService;
+import com.evol.web.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class NetOrderController {

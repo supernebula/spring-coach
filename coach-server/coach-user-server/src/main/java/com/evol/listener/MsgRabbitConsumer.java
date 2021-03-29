@@ -16,7 +16,7 @@ public class MsgRabbitConsumer {
 
 
     @RabbitListener(bindings = {
-            @QueueBinding(value = @Queue(RabbitContants.MSG_QUEUE), exchange = @Exchange(RabbitContants.MSG_EXCHANGE), key = {RabbitContants.MSG_ROUTING_KEY})
+            @QueueBinding(value = @Queue(RabbitContants.USER_BALANCE_QUEUE), exchange = @Exchange(RabbitContants.USER_BALANCE_EXCHANGE), key = {RabbitContants.USER_BALANCE_ROUTING_KEY})
     })
     public void receiveMsg(String message){
         log.info("接受到消息为: "+message);

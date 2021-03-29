@@ -17,8 +17,8 @@ import java.io.IOException;
 @RequestMapping("/WxOAuth")
 public class WxOAuthController {
 
-    @Autowired
-    private OAuthService oAuthService; //授权service层接口
+    //@Autowired
+    //private OAuthService oAuthService; //授权service层接口
 
 
     @Autowired
@@ -39,7 +39,7 @@ public class WxOAuthController {
     @GetMapping(value = "/getCode")
     public void getOAuth(@RequestParam(name = "code", required = false) String code) {
         //此处直接获取请求的code，因为当用户点击授权后，会跳转到授权后重定向地址，也就是这个方法，从而携带过来code
-        oAuthService.getWXUserInfoOAuth(code);
+        //oAuthService.getWXUserInfoOAuth(code);
     }
 
 //    @GetMapping("getCode")

@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>coach-common-core</module>
+        <module>coach-common-redis</module>
     </modules>
 
 

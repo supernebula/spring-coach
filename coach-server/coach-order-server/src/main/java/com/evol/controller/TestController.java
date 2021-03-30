@@ -1,6 +1,7 @@
 package com.evol.controller;
 
 import com.evol.contant.RabbitContants;
+import com.evol.util.RedisCommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -19,6 +20,9 @@ public class TestController {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Autowired
+    private RedisCommonUtil redisCommonUtil;
+
     @PostMapping("/testMqUser")
     public String testMqUser(String message){
         rabbitTemplate.convertAndSend(RabbitContants.USER_BALANCE_EXCHANGE, RabbitContants.USER_BALANCE_ROUTING_KEY,
@@ -32,5 +36,23 @@ public class TestController {
         logger.debug(message);
         logger.info(message);
         return message;
+    }
+
+    private String atomicLockKey = "20210330";
+
+    @PostMapping("/lockTest")
+    public String lockTest(){
+        boolean lock = redisCommonUtil.atomicLock(atomicLockKey);
+        if(lock){
+            logger.debug("lockTest: 锁定中");
+        }
+        return lock ? "lock ok" : "lock fail";
+
+    }
+
+    @PostMapping("/unlockTest")
+    public String unlockCheckTest(){
+        boolean flag = redisCommonUtil.delete("redis_lock" + atomicLockKey);
+        return "unlock:" + flag;
     }
 }

@@ -106,6 +106,18 @@ http://zouliming.cn/2019/04/03/docker-%E5%AF%BC%E5%85%A5%E9%95%9C%E5%83%8F%E6%97
 
 ## ES、Mongo、redis、clickhouse、influxdb
 
+### spring boot redis分布式锁
+
+https://my.oschina.net/dengfuwei/blog/1600681
+
+https://www.cnblogs.com/toutou/p/redis_lock.html
+
+https://github.com/toutouge/javademosecond/tree/master/hellospringboot
+
+https://blog.csdn.net/weixin_38399962/article/details/82753763
+
+https://github.com/zjhzzhouzhou/SpringBootProject
+
 ## 分布式事务
 
 https://cloud.tencent.com/developer/article/1536348

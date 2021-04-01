@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisCommonUtil {
     public static final String LOCK_PREFIX = "redis_lock";
-    public static final int LOCK_EXPIRE = 300; // ms
+    public static final int LOCK_EXPIRE = 1000; // ms
 
     @Autowired
     RedisTemplate redisTemplate;

@@ -9,13 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>coach-common</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>coach-common-core</module>
-        <module>coach-common-redis</module>
-        <module>coach-common-protobuf</module>
-    </modules>
+    <artifactId>test</artifactId>
 
 
 </project>

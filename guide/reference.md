@@ -89,6 +89,14 @@ https://github.com/alibaba/druid/wiki/%E9%A6%96%E9%A1%B5
 
 https://www.cnblogs.com/softidea/p/7127874.html
 
+https://juejin.cn/post/6844903566717485069
+
+https://juejin.cn/post/6844903744967016456
+
+https://learnku.com/articles/48516
+
+http://blog.zollty.com/b/archive/solution-of-spring-multiple-datasource.html
+
 ## docker 
 
 https://www.runoob.com/docker/centos-docker-install.html

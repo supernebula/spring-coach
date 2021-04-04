@@ -7,6 +7,5 @@ public class TestMain {
         MessageUser.MessageUserLogin.Builder builder = MessageUser.MessageUserLogin.newBuilder();
         builder.setAccessToken("20210331-1_res");
         builder.setUsername("abc");
-        builder.
     }
 }

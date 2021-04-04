@@ -79,13 +79,20 @@ Zipkin 与 Spring Cloud 的集成
 
 https://www.cnblogs.com/jmcui/p/10940372.html
 
+
+
 https://www.cnblogs.com/wucy/p/13642289.html
 
 ## 多数据源 / 动态数据源
 
+
+
+
+
+
 alibaba/druid
 
-https://github.com/alibaba/druid/wiki/%E9%A6%96%E9%A1%B5
+https://github.com/alibaba/druid/wiki/%E9%A6%96%E9%A1%B5Q
 
 https://www.cnblogs.com/softidea/p/7127874.html
 
@@ -146,6 +153,11 @@ http://tengj.top/2017/04/05/springboot7/
 SpringBoot：切面AOP实现权限校验：实例演示与注解全解
 
 https://www.mdeditor.tw/pl/pTuZ
+
+
+@Aspect 注解使用详解
+
+https://blog.csdn.net/fz13768884254/article/details/83538709
 
 ## Mybatis 
 

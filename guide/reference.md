@@ -92,6 +92,10 @@ https://www.cnblogs.com/wucy/p/13642289.html
 
 alibaba/druid
 
+阿里巴巴官方文档
+
+https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter
+
 https://github.com/alibaba/druid/wiki/%E9%A6%96%E9%A1%B5Q
 
 https://www.cnblogs.com/softidea/p/7127874.html

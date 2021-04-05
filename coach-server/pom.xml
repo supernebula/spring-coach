@@ -15,5 +15,6 @@
         <module>coach-pay-server</module>
         <module>coach-user-server</module>
         <module>coach-server-common</module>
+        <module>coach-log-server</module>
     </modules>
 </project>

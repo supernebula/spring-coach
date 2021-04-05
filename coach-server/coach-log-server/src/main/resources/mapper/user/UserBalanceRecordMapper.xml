@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evol.mapper.user.UserBalanceRecordMapper">
+  <resultMap id="BaseResultMap" type="com.evol.domain.model.user.UserBalanceRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="history_balance_money" jdbcType="INTEGER" property="historyBalanceMoney" />
+    <result column="current_balance_money" jdbcType="INTEGER" property="currentBalanceMoney" />
+    <result column="change_money" jdbcType="INTEGER" property="changeMoney" />
+    <result column="money_in_out_type" jdbcType="INTEGER" property="moneyInOutType" />
+    <result column="user_trans_record_id" jdbcType="INTEGER" property="userTransRecordId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, history_balance_money, current_balance_money, change_money, money_in_out_type, 
+    user_trans_record_id, remark, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.evol.domain.model.user.UserBalanceRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_balance_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_balance_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_balance_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.evol.domain.model.user.UserBalanceRecordExample">
+    delete from user_balance_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.user.UserBalanceRecord" useGeneratedKeys="true">
+    insert into user_balance_record (user_id, history_balance_money, current_balance_money, 
+      change_money, money_in_out_type, user_trans_record_id, 
+      remark, create_time)
+    values (#{userId,jdbcType=INTEGER}, #{historyBalanceMoney,jdbcType=INTEGER}, #{currentBalanceMoney,jdbcType=INTEGER}, 
+      #{changeMoney,jdbcType=INTEGER}, #{moneyInOutType,jdbcType=INTEGER}, #{userTransRecordId,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.user.UserBalanceRecord" useGeneratedKeys="true">
+    insert into user_balance_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="historyBalanceMoney != null">
+        history_balance_money,
+      </if>
+      <if test="currentBalanceMoney != null">
+        current_balance_money,
+      </if>
+      <if test="changeMoney != null">
+        change_money,
+      </if>
+      <if test="moneyInOutType != null">
+        money_in_out_type,
+      </if>
+      <if test="userTransRecordId != null">
+        user_trans_record_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="historyBalanceMoney != null">
+        #{historyBalanceMoney,jdbcType=INTEGER},
+      </if>
+      <if test="currentBalanceMoney != null">
+        #{currentBalanceMoney,jdbcType=INTEGER},
+      </if>
+      <if test="changeMoney != null">
+        #{changeMoney,jdbcType=INTEGER},
+      </if>
+      <if test="moneyInOutType != null">
+        #{moneyInOutType,jdbcType=INTEGER},
+      </if>
+      <if test="userTransRecordId != null">
+        #{userTransRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.evol.domain.model.user.UserBalanceRecordExample" resultType="java.lang.Long">
+    select count(*) from user_balance_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_balance_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.historyBalanceMoney != null">
+        history_balance_money = #{record.historyBalanceMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.currentBalanceMoney != null">
+        current_balance_money = #{record.currentBalanceMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.changeMoney != null">
+        change_money = #{record.changeMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.moneyInOutType != null">
+        money_in_out_type = #{record.moneyInOutType,jdbcType=INTEGER},
+      </if>
+      <if test="record.userTransRecordId != null">
+        user_trans_record_id = #{record.userTransRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_balance_record
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      history_balance_money = #{record.historyBalanceMoney,jdbcType=INTEGER},
+      current_balance_money = #{record.currentBalanceMoney,jdbcType=INTEGER},
+      change_money = #{record.changeMoney,jdbcType=INTEGER},
+      money_in_out_type = #{record.moneyInOutType,jdbcType=INTEGER},
+      user_trans_record_id = #{record.userTransRecordId,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.evol.domain.model.user.UserBalanceRecord">
+    update user_balance_record
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="historyBalanceMoney != null">
+        history_balance_money = #{historyBalanceMoney,jdbcType=INTEGER},
+      </if>
+      <if test="currentBalanceMoney != null">
+        current_balance_money = #{currentBalanceMoney,jdbcType=INTEGER},
+      </if>
+      <if test="changeMoney != null">
+        change_money = #{changeMoney,jdbcType=INTEGER},
+      </if>
+      <if test="moneyInOutType != null">
+        money_in_out_type = #{moneyInOutType,jdbcType=INTEGER},
+      </if>
+      <if test="userTransRecordId != null">
+        user_trans_record_id = #{userTransRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.evol.domain.model.user.UserBalanceRecord">
+    update user_balance_record
+    set user_id = #{userId,jdbcType=INTEGER},
+      history_balance_money = #{historyBalanceMoney,jdbcType=INTEGER},
+      current_balance_money = #{currentBalanceMoney,jdbcType=INTEGER},
+      change_money = #{changeMoney,jdbcType=INTEGER},
+      money_in_out_type = #{moneyInOutType,jdbcType=INTEGER},
+      user_trans_record_id = #{userTransRecordId,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

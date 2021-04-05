@@ -1,0 +1,195 @@
+package com.evol.domain.model.order;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class NetOrders implements Serializable {
+    private Integer id;
+
+    private String orderNo;
+
+    private Integer userId;
+
+    private String username;
+
+    private Integer moviceId;
+
+    private String moviceName;
+
+    private Integer paidAmount;
+
+    private Integer amount;
+
+    private Integer status;
+
+    private String payOrderNo;
+
+    private Date payTime;
+
+    private String refundOrderNo;
+
+    private Date refundTime;
+
+    private Integer payModeType;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    private static final long serialVersionUID = 1L;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo == null ? null : orderNo.trim();
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
+    }
+
+    public Integer getMoviceId() {
+        return moviceId;
+    }
+
+    public void setMoviceId(Integer moviceId) {
+        this.moviceId = moviceId;
+    }
+
+    public String getMoviceName() {
+        return moviceName;
+    }
+
+    public void setMoviceName(String moviceName) {
+        this.moviceName = moviceName == null ? null : moviceName.trim();
+    }
+
+    public Integer getPaidAmount() {
+        return paidAmount;
+    }
+
+    public void setPaidAmount(Integer paidAmount) {
+        this.paidAmount = paidAmount;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getPayOrderNo() {
+        return payOrderNo;
+    }
+
+    public void setPayOrderNo(String payOrderNo) {
+        this.payOrderNo = payOrderNo == null ? null : payOrderNo.trim();
+    }
+
+    public Date getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(Date payTime) {
+        this.payTime = payTime;
+    }
+
+    public String getRefundOrderNo() {
+        return refundOrderNo;
+    }
+
+    public void setRefundOrderNo(String refundOrderNo) {
+        this.refundOrderNo = refundOrderNo == null ? null : refundOrderNo.trim();
+    }
+
+    public Date getRefundTime() {
+        return refundTime;
+    }
+
+    public void setRefundTime(Date refundTime) {
+        this.refundTime = refundTime;
+    }
+
+    public Integer getPayModeType() {
+        return payModeType;
+    }
+
+    public void setPayModeType(Integer payModeType) {
+        this.payModeType = payModeType;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", orderNo=").append(orderNo);
+        sb.append(", userId=").append(userId);
+        sb.append(", username=").append(username);
+        sb.append(", moviceId=").append(moviceId);
+        sb.append(", moviceName=").append(moviceName);
+        sb.append(", paidAmount=").append(paidAmount);
+        sb.append(", amount=").append(amount);
+        sb.append(", status=").append(status);
+        sb.append(", payOrderNo=").append(payOrderNo);
+        sb.append(", payTime=").append(payTime);
+        sb.append(", refundOrderNo=").append(refundOrderNo);
+        sb.append(", refundTime=").append(refundTime);
+        sb.append(", payModeType=").append(payModeType);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
+    }
+}

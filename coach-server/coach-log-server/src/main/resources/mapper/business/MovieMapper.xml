@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evol.mapper.business.MovieMapper">
+  <resultMap id="BaseResultMap" type="com.evol.domain.model.business.Movie">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="foreign_name" jdbcType="VARCHAR" property="foreignName" />
+    <result column="release_date" jdbcType="TIMESTAMP" property="releaseDate" />
+    <result column="minutes" jdbcType="INTEGER" property="minutes" />
+    <result column="discount_count" jdbcType="INTEGER" property="discountCount" />
+    <result column="discount_price" jdbcType="INTEGER" property="discountPrice" />
+    <result column="release_region" jdbcType="VARCHAR" property="releaseRegion" />
+    <result column="space_type" jdbcType="INTEGER" property="spaceType" />
+    <result column="cover_uri" jdbcType="VARCHAR" property="coverUri" />
+    <result column="images" jdbcType="VARCHAR" property="images" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="ratings" jdbcType="INTEGER" property="ratings" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, foreign_name, release_date, minutes, discount_count, discount_price, release_region, 
+    space_type, cover_uri, images, description, ratings, language, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.evol.domain.model.business.MovieExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from movie
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from movie
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from movie
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.evol.domain.model.business.MovieExample">
+    delete from movie
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.business.Movie" useGeneratedKeys="true">
+    insert into movie (name, foreign_name, release_date, 
+      minutes, discount_count, discount_price, 
+      release_region, space_type, cover_uri, 
+      images, description, ratings, 
+      language, create_time, update_time
+      )
+    values (#{name,jdbcType=VARCHAR}, #{foreignName,jdbcType=VARCHAR}, #{releaseDate,jdbcType=TIMESTAMP}, 
+      #{minutes,jdbcType=INTEGER}, #{discountCount,jdbcType=INTEGER}, #{discountPrice,jdbcType=INTEGER}, 
+      #{releaseRegion,jdbcType=VARCHAR}, #{spaceType,jdbcType=INTEGER}, #{coverUri,jdbcType=VARCHAR}, 
+      #{images,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{ratings,jdbcType=INTEGER}, 
+      #{language,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.business.Movie" useGeneratedKeys="true">
+    insert into movie
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="foreignName != null">
+        foreign_name,
+      </if>
+      <if test="releaseDate != null">
+        release_date,
+      </if>
+      <if test="minutes != null">
+        minutes,
+      </if>
+      <if test="discountCount != null">
+        discount_count,
+      </if>
+      <if test="discountPrice != null">
+        discount_price,
+      </if>
+      <if test="releaseRegion != null">
+        release_region,
+      </if>
+      <if test="spaceType != null">
+        space_type,
+      </if>
+      <if test="coverUri != null">
+        cover_uri,
+      </if>
+      <if test="images != null">
+        images,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="ratings != null">
+        ratings,
+      </if>
+      <if test="language != null">
+        language,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="foreignName != null">
+        #{foreignName,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseDate != null">
+        #{releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="minutes != null">
+        #{minutes,jdbcType=INTEGER},
+      </if>
+      <if test="discountCount != null">
+        #{discountCount,jdbcType=INTEGER},
+      </if>
+      <if test="discountPrice != null">
+        #{discountPrice,jdbcType=INTEGER},
+      </if>
+      <if test="releaseRegion != null">
+        #{releaseRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="spaceType != null">
+        #{spaceType,jdbcType=INTEGER},
+      </if>
+      <if test="coverUri != null">
+        #{coverUri,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null">
+        #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="ratings != null">
+        #{ratings,jdbcType=INTEGER},
+      </if>
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.evol.domain.model.business.MovieExample" resultType="java.lang.Long">
+    select count(*) from movie
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update movie
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foreignName != null">
+        foreign_name = #{record.foreignName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.releaseDate != null">
+        release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.minutes != null">
+        minutes = #{record.minutes,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountCount != null">
+        discount_count = #{record.discountCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountPrice != null">
+        discount_price = #{record.discountPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.releaseRegion != null">
+        release_region = #{record.releaseRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spaceType != null">
+        space_type = #{record.spaceType,jdbcType=INTEGER},
+      </if>
+      <if test="record.coverUri != null">
+        cover_uri = #{record.coverUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.images != null">
+        images = #{record.images,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ratings != null">
+        ratings = #{record.ratings,jdbcType=INTEGER},
+      </if>
+      <if test="record.language != null">
+        language = #{record.language,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update movie
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      foreign_name = #{record.foreignName,jdbcType=VARCHAR},
+      release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
+      minutes = #{record.minutes,jdbcType=INTEGER},
+      discount_count = #{record.discountCount,jdbcType=INTEGER},
+      discount_price = #{record.discountPrice,jdbcType=INTEGER},
+      release_region = #{record.releaseRegion,jdbcType=VARCHAR},
+      space_type = #{record.spaceType,jdbcType=INTEGER},
+      cover_uri = #{record.coverUri,jdbcType=VARCHAR},
+      images = #{record.images,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      ratings = #{record.ratings,jdbcType=INTEGER},
+      language = #{record.language,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.evol.domain.model.business.Movie">
+    update movie
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="foreignName != null">
+        foreign_name = #{foreignName,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseDate != null">
+        release_date = #{releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="minutes != null">
+        minutes = #{minutes,jdbcType=INTEGER},
+      </if>
+      <if test="discountCount != null">
+        discount_count = #{discountCount,jdbcType=INTEGER},
+      </if>
+      <if test="discountPrice != null">
+        discount_price = #{discountPrice,jdbcType=INTEGER},
+      </if>
+      <if test="releaseRegion != null">
+        release_region = #{releaseRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="spaceType != null">
+        space_type = #{spaceType,jdbcType=INTEGER},
+      </if>
+      <if test="coverUri != null">
+        cover_uri = #{coverUri,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null">
+        images = #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="ratings != null">
+        ratings = #{ratings,jdbcType=INTEGER},
+      </if>
+      <if test="language != null">
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.evol.domain.model.business.Movie">
+    update movie
+    set name = #{name,jdbcType=VARCHAR},
+      foreign_name = #{foreignName,jdbcType=VARCHAR},
+      release_date = #{releaseDate,jdbcType=TIMESTAMP},
+      minutes = #{minutes,jdbcType=INTEGER},
+      discount_count = #{discountCount,jdbcType=INTEGER},
+      discount_price = #{discountPrice,jdbcType=INTEGER},
+      release_region = #{releaseRegion,jdbcType=VARCHAR},
+      space_type = #{spaceType,jdbcType=INTEGER},
+      cover_uri = #{coverUri,jdbcType=VARCHAR},
+      images = #{images,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      ratings = #{ratings,jdbcType=INTEGER},
+      language = #{language,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

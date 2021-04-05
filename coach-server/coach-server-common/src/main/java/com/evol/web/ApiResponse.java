@@ -66,6 +66,16 @@ public class ApiResponse<T> implements Serializable {
         return response;
     }
 
+    public static <T> ApiResponse success(T data){
+        ApiResponse response = new ApiResponse();
+        response.setCode(ApiResponseEnum.SUCCESS.getCode());
+        response.setMsg(ApiResponseEnum.SUCCESS.getDescription());
+        response.setSubCode(1);
+        response.setSubMsg("ok");
+        response.setData(data);
+        return response;
+    }
+
     public ApiResponse(){}
 
     public ApiResponse(ApiResponseEnum responseEnum, T data) {
@@ -83,4 +93,5 @@ public class ApiResponse<T> implements Serializable {
         this.subMsg = subMsg;
         this.data = data;
     }
+
 }

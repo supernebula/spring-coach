@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 @EnableEurekaClient
 @ConditionalOnClass(CoachLogServerApplication.class)
-@MapperScan("com.evol.mapper")
+@MapperScan("com.evol.mapper.*")
 public class CoachLogServerApplication  implements WebMvcConfigurer {
     public static void main(String[] args) {
         SpringApplication.run(CoachLogServerApplication.class, args);

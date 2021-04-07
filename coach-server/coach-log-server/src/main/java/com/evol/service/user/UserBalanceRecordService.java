@@ -1,4 +1,4 @@
-package com.evol.service;
+package com.evol.service.user;
 
 import com.evol.domain.model.user.UserBalanceRecord;
 

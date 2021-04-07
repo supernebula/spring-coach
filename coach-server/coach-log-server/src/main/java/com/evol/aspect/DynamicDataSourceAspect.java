@@ -20,13 +20,13 @@ public class DynamicDataSourceAspect {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Pointcut("execution(public * com.evol.buniness.*.*(..))")
+    @Pointcut("execution(public * com.evol.service.business.*.*(..))")
     public void buninessCut(){}
 
-    @Pointcut("execution(public * com.evol.order.*.*(..))")
+    @Pointcut("execution(public * com.evol.service.order.*.*(..))")
     public void orderCut(){}
 
-    @Pointcut("execution(public * com.evol.user.*.*(..))")
+    @Pointcut("execution(public * com.evol.service.user.*.*(..))")
     public void userCut(){}
 
     @Before("buninessCut()")

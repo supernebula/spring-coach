@@ -1,9 +1,9 @@
-package com.evol.service.impl;
+package com.evol.service.order.impl;
 
 import com.evol.domain.model.order.NetOrders;
 import com.evol.domain.model.order.NetOrdersExample;
 import com.evol.mapper.order.NetOrdersMapper;
-import com.evol.service.NetOrdersService;
+import com.evol.service.order.NetOrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

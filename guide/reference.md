@@ -12,7 +12,6 @@ https://github.com/sunshinelyz/technology-binghe
 
 
 ## Eureka
-1
 
 spring cloud 搭建注册中心Eureka（单节点）
 https://www.cnblogs.com/yhood/p/11558288.html
@@ -108,6 +107,8 @@ https://juejin.cn/post/6844903744967016456
 https://learnku.com/articles/48516
 
 http://blog.zollty.com/b/archive/solution-of-spring-multiple-datasource.html
+
+https://blog.csdn.net/boling_cavalry/article/details/108179671
 
 ## docker 
 

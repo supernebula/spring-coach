@@ -1,4 +1,4 @@
-package com.evol.service;
+package com.evol.service.business;
 
 import com.evol.domain.model.business.Movie;
 

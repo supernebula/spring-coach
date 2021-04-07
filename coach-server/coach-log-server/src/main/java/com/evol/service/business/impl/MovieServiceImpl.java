@@ -1,8 +1,8 @@
-package com.evol.service.impl;
+package com.evol.service.business.impl;
 
 import com.evol.domain.model.business.Movie;
 import com.evol.mapper.business.MovieMapper;
-import com.evol.service.MovieService;
+import com.evol.service.business.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

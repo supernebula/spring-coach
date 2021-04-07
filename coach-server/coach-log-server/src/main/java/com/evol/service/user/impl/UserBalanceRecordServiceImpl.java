@@ -1,9 +1,9 @@
-package com.evol.service.impl;
+package com.evol.service.user.impl;
 
 import com.evol.domain.model.user.UserBalanceRecord;
 import com.evol.domain.model.user.UserBalanceRecordExample;
 import com.evol.mapper.user.UserBalanceRecordMapper;
-import com.evol.service.UserBalanceRecordService;
+import com.evol.service.user.UserBalanceRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

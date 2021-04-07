@@ -12,6 +12,7 @@ https://github.com/sunshinelyz/technology-binghe
 
 
 ## Eureka
+1
 
 spring cloud 搭建注册中心Eureka（单节点）
 https://www.cnblogs.com/yhood/p/11558288.html

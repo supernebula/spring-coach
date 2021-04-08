@@ -35,29 +35,26 @@ public class DataSourceConfigurer {
     @ConfigurationProperties(prefix = "spring.datasource.druid.business")
     public DataSource businessDataSource(){
         return DruidDataSourceBuilder.create().build();
-
     }
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.druid.order")
     public DataSource orderDataSource(){
         return DruidDataSourceBuilder.create().build();
-
     }
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.druid.user")
     public DataSource userDataSource(){
         return DruidDataSourceBuilder.create().build();
-
     }
 
     @Bean
     @Primary
-    public DataSource dynamicDataSource(){
+    public DataSource dataSource(){
         DynamicRoutingDataSource dataSource = new DynamicRoutingDataSource();
         Map<Object, Object> dataSourceMap = new HashMap<>();
-        //dataSourceMap.put(DataSourceKeyEnum.DATA_SOURCE_KEY_BUSINESS, this.businessDataSource());
+        dataSourceMap.put(DataSourceKeyEnum.DATA_SOURCE_KEY_BUSINESS, this.businessDataSource());
         dataSourceMap.put(DataSourceKeyEnum.DATA_SOURCE_KEY_ORDER, this.orderDataSource());
         dataSourceMap.put(DataSourceKeyEnum.DATA_SOURCE_KEY_USER, this.userDataSource());
         dataSource.setTargetDataSources(dataSourceMap);
@@ -80,18 +77,17 @@ public class DataSourceConfigurer {
 //        return sqlSessionFactoryBean.getObject();
 //    }
 
-    @Bean
-    public SqlSessionFactory sqlSessionFactory( DataSource dataSource) throws Exception {
-        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setDataSource(this.dynamicDataSource());
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mappers/second/**/*Mapper.xml"));
-        return bean.getObject();
-    }
+//    @Bean
+//    public SqlSessionFactory sqlSessionFactory( DataSource dataSource) throws Exception {
+//        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+//        bean.setDataSource(this.dataSource());
+//        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mappers/second/**/*Mapper.xml"));
+//        return bean.getObject();
+//    }
 
 
     @Bean // 将数据源纳入spring事物管理
     public DataSourceTransactionManager transactionManager(@Qualifier("dataSource") DataSource dataSource){
         return new DataSourceTransactionManager(dataSource);
     }
-
 }

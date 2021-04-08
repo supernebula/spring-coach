@@ -70,12 +70,12 @@ public class DataSourceConfigurer {
 //        return new DataSourceTransactionManager(dynamicDataSource());
 //    }
 //
-//    public SqlSessionFactory sqlSessionFactory() throws Exception {
-//        SqlSessionFactoryBean sqlSessionFactoryBean =
-//                new SqlSessionFactoryBean();
-//        sqlSessionFactoryBean.setDataSource(this.dynamicDataSource());
-//        return sqlSessionFactoryBean.getObject();
-//    }
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
+        SqlSessionFactoryBean sqlSessionFactoryBean =
+                new SqlSessionFactoryBean();
+        sqlSessionFactoryBean.setDataSource(this.dataSource());
+        return sqlSessionFactoryBean.getObject();
+    }
 
 //    @Bean
 //    public SqlSessionFactory sqlSessionFactory( DataSource dataSource) throws Exception {

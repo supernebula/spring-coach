@@ -1,8 +1,10 @@
 package com.evol.aspect;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -70,6 +72,43 @@ public class DataSourceConfigurer {
 //        return new DataSourceTransactionManager(dynamicDataSource());
 //    }
 //
+
+    @Bean
+    public MybatisSqlSessionFactoryBean sqlSessionFactoryBean(@Qualifier("dataSource") DataSource dataSource) throws Exception {
+        MybatisSqlSessionFactoryBean sessionFactory = new MybatisSqlSessionFactoryBean();
+        // 配置数据源，此处配置为关键配置，如果没有将 dynamicDataSource作为数据源则不能实现切换
+        sessionFactory.setDataSource(dataSource);
+
+        // 扫描Model
+        // sessionFactory.setTypeAliasesPackage("cn.qlq");
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        // 扫描映射文件
+        sessionFactory.setMapperLocations(resolver.getResources("classpath*:mapper/**/*Mapper.xml"));
+
+//        // 添加插件
+//        Interceptor[] interceptors = getPlugins();
+//        if (ArrayUtils.isNotEmpty(interceptors)) {
+//            sessionFactory.setPlugins(interceptors);
+//        }
+
+        return sessionFactory;
+    }
+
+//    private Interceptor[] getPlugins() {
+//        Interceptor[] plugins = new Interceptor[0];
+//
+//        // PageHelper分页插件
+//        PageInterceptor pageInterceptor = new PageInterceptor();
+//        Properties properties = new Properties();
+//        properties.setProperty("helperDialect", "mysql");
+//        properties.setProperty("reasonable", "true");
+//        pageInterceptor.setProperties(properties);
+//
+//        plugins = ArrayUtils.add(plugins, pageInterceptor);
+//        return plugins;
+//    }
+
+    @Bean
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean =
                 new SqlSessionFactoryBean();

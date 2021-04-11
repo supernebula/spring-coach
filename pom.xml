@@ -22,7 +22,7 @@
         <mybatis-spring-boot.version>2.0.0</mybatis-spring-boot.version>
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <pagehelper.boot.version>1.2.13</pagehelper.boot.version>
-        <github.pagehelper.version>4.1.6</github.pagehelper.version>
+        <github.pagehelper.version>5.0.4</github.pagehelper.version>
         <mapper.starter.version>2.1.5</mapper.starter.version>
         <mysql-connector.version>5.1.47</mysql-connector.version>
         <swagger-ui.version>1.9.6</swagger-ui.version>

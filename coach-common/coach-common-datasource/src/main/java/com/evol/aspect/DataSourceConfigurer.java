@@ -2,12 +2,10 @@ package com.evol.aspect;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
-import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -16,10 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +27,6 @@ import java.util.Properties;
 @ConditionalOnProperty(name = {"spring.datasource.dynamic.enable"}, matchIfMissing = true, havingValue = "true")
 @MapperScan("com.evol.mapper")
 public class DataSourceConfigurer {
-
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.druid.business")
@@ -80,33 +75,33 @@ public class DataSourceConfigurer {
         sessionFactory.setDataSource(dataSource);
 
         // 扫描Model
-        // sessionFactory.setTypeAliasesPackage("cn.qlq");
+        sessionFactory.setTypeAliasesPackage("com.evol.domain");
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         // 扫描映射文件
         sessionFactory.setMapperLocations(resolver.getResources("classpath*:mapper/**/*Mapper.xml"));
 
-//        // 添加插件
-//        Interceptor[] interceptors = getPlugins();
-//        if (ArrayUtils.isNotEmpty(interceptors)) {
-//            sessionFactory.setPlugins(interceptors);
-//        }
+        // 添加插件
+        Interceptor[] interceptors = getPlugins();
+        if (ArrayUtils.isNotEmpty(interceptors)) {
+            sessionFactory.setPlugins(interceptors);
+        }
 
         return sessionFactory;
     }
 
-//    private Interceptor[] getPlugins() {
-//        Interceptor[] plugins = new Interceptor[0];
-//
-//        // PageHelper分页插件
-//        PageInterceptor pageInterceptor = new PageInterceptor();
-//        Properties properties = new Properties();
-//        properties.setProperty("helperDialect", "mysql");
-//        properties.setProperty("reasonable", "true");
-//        pageInterceptor.setProperties(properties);
-//
-//        plugins = ArrayUtils.add(plugins, pageInterceptor);
-//        return plugins;
-//    }
+    private Interceptor[] getPlugins() {
+        Interceptor[] plugins = new Interceptor[0];
+
+        // PageHelper分页插件
+        PageInterceptor pageInterceptor = new PageInterceptor();
+        Properties properties = new Properties();
+        properties.setProperty("helperDialect", "mysql");
+        properties.setProperty("reasonable", "true");
+        pageInterceptor.setProperties(properties);
+
+        plugins = (Interceptor[]) ArrayUtils.add(plugins, pageInterceptor);
+        return plugins;
+    }
 
 //    @Bean
 //    public SqlSessionFactory sqlSessionFactory() throws Exception {

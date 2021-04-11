@@ -28,6 +28,4 @@ public enum ApiResponseEnum {
     private Integer code;
 
     private String description;
-
-
 }

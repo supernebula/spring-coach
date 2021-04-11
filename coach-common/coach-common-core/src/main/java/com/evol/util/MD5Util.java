@@ -1,6 +1,9 @@
 package com.evol.util;
 
 
+import lombok.extern.slf4j.Slf4j;
+
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.nio.charset.Charset;
 
@@ -11,6 +14,7 @@ import java.nio.charset.Charset;
  * @date 2017年7月2日
  *
  */
+@Slf4j
 public class MD5Util {
 
     private static final String hexDigits[] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d",
@@ -46,18 +50,19 @@ public class MD5Util {
                 resultString = byteArrayToHexString(md.digest(resultString.getBytes(charsetname)));
             }
         } catch (Exception exception) {
+            log.error(exception.getMessage());
         }
         return resultString;
     }
 
     public static String MD5(String str, String salt){
-        MD5Encode(str + salt, Charset.forName("utf8").name());
+        return MD5Encode(str + salt, StandardCharsets.UTF_8.name());
     }
 
-    public static void main(String args[]) {
-        System.out.println(MD5Encode("ceshi", "gbk"));
-        System.out.println(MD5Encode("ceshi", ""));
-
-    }
+//    public static void main(String args[]) {
+//        System.out.println(MD5Encode("ceshi", "gbk"));
+//        System.out.println(MD5Encode("ceshi", ""));
+//
+//    }
 
 }

@@ -10,13 +10,21 @@ public interface NetOrdersMapper {
 
     int deleteByExample(NetOrdersExample example);
 
+    int deleteByPrimaryKey(Integer id);
+
     int insert(NetOrders record);
 
     int insertSelective(NetOrders record);
 
     List<NetOrders> selectByExample(NetOrdersExample example);
 
+    NetOrders selectByPrimaryKey(Integer id);
+
     int updateByExampleSelective(@Param("record") NetOrders record, @Param("example") NetOrdersExample example);
 
     int updateByExample(@Param("record") NetOrders record, @Param("example") NetOrdersExample example);
+
+    int updateByPrimaryKeySelective(NetOrders record);
+
+    int updateByPrimaryKey(NetOrders record);
 }

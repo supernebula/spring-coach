@@ -30,11 +30,11 @@ public class NetOrders implements Serializable {
 
     private Date refundTime;
 
-    private Integer payModeType;
+    private String payModeType;
 
     private Date createTime;
 
-    private Date updateTime;
+    private Date udpateTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -142,12 +142,12 @@ public class NetOrders implements Serializable {
         this.refundTime = refundTime;
     }
 
-    public Integer getPayModeType() {
+    public String getPayModeType() {
         return payModeType;
     }
 
-    public void setPayModeType(Integer payModeType) {
-        this.payModeType = payModeType;
+    public void setPayModeType(String payModeType) {
+        this.payModeType = payModeType == null ? null : payModeType.trim();
     }
 
     public Date getCreateTime() {
@@ -158,12 +158,12 @@ public class NetOrders implements Serializable {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUdpateTime() {
+        return udpateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUdpateTime(Date udpateTime) {
+        this.udpateTime = udpateTime;
     }
 
     @Override
@@ -187,7 +187,7 @@ public class NetOrders implements Serializable {
         sb.append(", refundTime=").append(refundTime);
         sb.append(", payModeType=").append(payModeType);
         sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
+        sb.append(", udpateTime=").append(udpateTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

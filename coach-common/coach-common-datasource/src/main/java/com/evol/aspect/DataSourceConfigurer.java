@@ -56,9 +56,9 @@ public class DataSourceConfigurer {
     public DataSource dataSource(){
         DynamicRoutingDataSource dataSource = new DynamicRoutingDataSource();
         Map<Object, Object> dataSourceMap = new HashMap<>();
-        dataSourceMap.put(DataSourceKeyEnum.DATA_SOURCE_KEY_BUSINESS, this.businessDataSource());
-        dataSourceMap.put(DataSourceKeyEnum.DATA_SOURCE_KEY_ORDER, this.orderDataSource());
-        dataSourceMap.put(DataSourceKeyEnum.DATA_SOURCE_KEY_USER, this.userDataSource());
+        dataSourceMap.put(DataSourceKeyEnum.DATA_SOURCE_KEY_BUSINESS.getKey(), this.businessDataSource());
+        dataSourceMap.put(DataSourceKeyEnum.DATA_SOURCE_KEY_ORDER.getKey(), this.orderDataSource());
+        dataSourceMap.put(DataSourceKeyEnum.DATA_SOURCE_KEY_USER.getKey(), this.userDataSource());
         dataSource.setTargetDataSources(dataSourceMap);
         dataSource.setDefaultTargetDataSource(this.businessDataSource());
         return dataSource;
@@ -108,13 +108,13 @@ public class DataSourceConfigurer {
 //        return plugins;
 //    }
 
-    @Bean
-    public SqlSessionFactory sqlSessionFactory() throws Exception {
-        SqlSessionFactoryBean sqlSessionFactoryBean =
-                new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(this.dataSource());
-        return sqlSessionFactoryBean.getObject();
-    }
+//    @Bean
+//    public SqlSessionFactory sqlSessionFactory() throws Exception {
+//        SqlSessionFactoryBean sqlSessionFactoryBean =
+//                new SqlSessionFactoryBean();
+//        sqlSessionFactoryBean.setDataSource(this.dataSource());
+//        return sqlSessionFactoryBean.getObject();
+//    }
 
 //    @Bean
 //    public SqlSessionFactory sqlSessionFactory( DataSource dataSource) throws Exception {

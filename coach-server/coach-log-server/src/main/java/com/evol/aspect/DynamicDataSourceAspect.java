@@ -36,6 +36,7 @@ public class DynamicDataSourceAspect {
 
     @After("buninessCut()")
     public void restoreBuninessDataSource(){
+
         DynamicDataSourceContextHolder.clearDataSourceKey();
     }
 
@@ -56,6 +57,7 @@ public class DynamicDataSourceAspect {
 
     @After("userCut()")
     public void restoreUserDataSource(){
+
         DynamicDataSourceContextHolder.clearDataSourceKey();
     }
 }

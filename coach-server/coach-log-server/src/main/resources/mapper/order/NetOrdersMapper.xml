@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evol.mapper.order.NetOrdersMapper">
   <resultMap id="BaseResultMap" type="com.evol.domain.model.order.NetOrders">
-    <result column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="username" jdbcType="VARCHAR" property="username" />
@@ -15,9 +15,9 @@
     <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
     <result column="refund_order_no" jdbcType="VARCHAR" property="refundOrderNo" />
     <result column="refund_time" jdbcType="TIMESTAMP" property="refundTime" />
-    <result column="pay_mode_type" jdbcType="INTEGER" property="payModeType" />
+    <result column="pay_mode_type" jdbcType="VARCHAR" property="payModeType" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="udpate_time" jdbcType="TIMESTAMP" property="udpateTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -80,7 +80,7 @@
   <sql id="Base_Column_List">
     id, order_no, user_id, username, movice_id, movice_name, paid_amount, amount, status, 
     pay_order_no, pay_time, refund_order_no, refund_time, pay_mode_type, create_time, 
-    update_time
+    udpate_time
   </sql>
   <select id="selectByExample" parameterType="com.evol.domain.model.order.NetOrdersExample" resultMap="BaseResultMap">
     select
@@ -96,6 +96,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from net_orders
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from net_orders
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.evol.domain.model.order.NetOrdersExample">
     delete from net_orders
     <if test="_parameter != null">
@@ -107,13 +117,13 @@
       movice_id, movice_name, paid_amount, 
       amount, status, pay_order_no, 
       pay_time, refund_order_no, refund_time, 
-      pay_mode_type, create_time, update_time
+      pay_mode_type, create_time, udpate_time
       )
     values (#{orderNo,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
       #{moviceId,jdbcType=INTEGER}, #{moviceName,jdbcType=VARCHAR}, #{paidAmount,jdbcType=INTEGER}, 
       #{amount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{payOrderNo,jdbcType=VARCHAR}, 
       #{payTime,jdbcType=TIMESTAMP}, #{refundOrderNo,jdbcType=VARCHAR}, #{refundTime,jdbcType=TIMESTAMP}, 
-      #{payModeType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      #{payModeType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{udpateTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.order.NetOrders" useGeneratedKeys="true">
@@ -161,8 +171,8 @@
       <if test="createTime != null">
         create_time,
       </if>
-      <if test="updateTime != null">
-        update_time,
+      <if test="udpateTime != null">
+        udpate_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -203,13 +213,13 @@
         #{refundTime,jdbcType=TIMESTAMP},
       </if>
       <if test="payModeType != null">
-        #{payModeType,jdbcType=INTEGER},
+        #{payModeType,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="udpateTime != null">
+        #{udpateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -262,13 +272,13 @@
         refund_time = #{record.refundTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.payModeType != null">
-        pay_mode_type = #{record.payModeType,jdbcType=INTEGER},
+        pay_mode_type = #{record.payModeType,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updateTime != null">
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      <if test="record.udpateTime != null">
+        udpate_time = #{record.udpateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -290,11 +300,81 @@
       pay_time = #{record.payTime,jdbcType=TIMESTAMP},
       refund_order_no = #{record.refundOrderNo,jdbcType=VARCHAR},
       refund_time = #{record.refundTime,jdbcType=TIMESTAMP},
-      pay_mode_type = #{record.payModeType,jdbcType=INTEGER},
+      pay_mode_type = #{record.payModeType,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      udpate_time = #{record.udpateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.evol.domain.model.order.NetOrders">
+    update net_orders
+    <set>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="moviceId != null">
+        movice_id = #{moviceId,jdbcType=INTEGER},
+      </if>
+      <if test="moviceName != null">
+        movice_name = #{moviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="paidAmount != null">
+        paid_amount = #{paidAmount,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="payOrderNo != null">
+        pay_order_no = #{payOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundOrderNo != null">
+        refund_order_no = #{refundOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundTime != null">
+        refund_time = #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payModeType != null">
+        pay_mode_type = #{payModeType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udpateTime != null">
+        udpate_time = #{udpateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.evol.domain.model.order.NetOrders">
+    update net_orders
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      movice_id = #{moviceId,jdbcType=INTEGER},
+      movice_name = #{moviceName,jdbcType=VARCHAR},
+      paid_amount = #{paidAmount,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      pay_order_no = #{payOrderNo,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      refund_order_no = #{refundOrderNo,jdbcType=VARCHAR},
+      refund_time = #{refundTime,jdbcType=TIMESTAMP},
+      pay_mode_type = #{payModeType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      udpate_time = #{udpateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

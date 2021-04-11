@@ -945,52 +945,62 @@ public class NetOrdersExample {
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeEqualTo(Integer value) {
+        public Criteria andPayModeTypeEqualTo(String value) {
             addCriterion("pay_mode_type =", value, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeNotEqualTo(Integer value) {
+        public Criteria andPayModeTypeNotEqualTo(String value) {
             addCriterion("pay_mode_type <>", value, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeGreaterThan(Integer value) {
+        public Criteria andPayModeTypeGreaterThan(String value) {
             addCriterion("pay_mode_type >", value, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andPayModeTypeGreaterThanOrEqualTo(String value) {
             addCriterion("pay_mode_type >=", value, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeLessThan(Integer value) {
+        public Criteria andPayModeTypeLessThan(String value) {
             addCriterion("pay_mode_type <", value, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeLessThanOrEqualTo(Integer value) {
+        public Criteria andPayModeTypeLessThanOrEqualTo(String value) {
             addCriterion("pay_mode_type <=", value, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeIn(List<Integer> values) {
+        public Criteria andPayModeTypeLike(String value) {
+            addCriterion("pay_mode_type like", value, "payModeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayModeTypeNotLike(String value) {
+            addCriterion("pay_mode_type not like", value, "payModeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayModeTypeIn(List<String> values) {
             addCriterion("pay_mode_type in", values, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeNotIn(List<Integer> values) {
+        public Criteria andPayModeTypeNotIn(List<String> values) {
             addCriterion("pay_mode_type not in", values, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeBetween(Integer value1, Integer value2) {
+        public Criteria andPayModeTypeBetween(String value1, String value2) {
             addCriterion("pay_mode_type between", value1, value2, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeNotBetween(Integer value1, Integer value2) {
+        public Criteria andPayModeTypeNotBetween(String value1, String value2) {
             addCriterion("pay_mode_type not between", value1, value2, "payModeType");
             return (Criteria) this;
         }
@@ -1055,63 +1065,63 @@ public class NetOrdersExample {
             return (Criteria) this;
         }
 
-        public Criteria andUpdateTimeIsNull() {
-            addCriterion("update_time is null");
+        public Criteria andUdpateTimeIsNull() {
+            addCriterion("udpate_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andUpdateTimeIsNotNull() {
-            addCriterion("update_time is not null");
+        public Criteria andUdpateTimeIsNotNull() {
+            addCriterion("udpate_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUpdateTimeEqualTo(Date value) {
-            addCriterion("update_time =", value, "updateTime");
+        public Criteria andUdpateTimeEqualTo(Date value) {
+            addCriterion("udpate_time =", value, "udpateTime");
             return (Criteria) this;
         }
 
-        public Criteria andUpdateTimeNotEqualTo(Date value) {
-            addCriterion("update_time <>", value, "updateTime");
+        public Criteria andUdpateTimeNotEqualTo(Date value) {
+            addCriterion("udpate_time <>", value, "udpateTime");
             return (Criteria) this;
         }
 
-        public Criteria andUpdateTimeGreaterThan(Date value) {
-            addCriterion("update_time >", value, "updateTime");
+        public Criteria andUdpateTimeGreaterThan(Date value) {
+            addCriterion("udpate_time >", value, "udpateTime");
             return (Criteria) this;
         }
 
-        public Criteria andUpdateTimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("update_time >=", value, "updateTime");
+        public Criteria andUdpateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("udpate_time >=", value, "udpateTime");
             return (Criteria) this;
         }
 
-        public Criteria andUpdateTimeLessThan(Date value) {
-            addCriterion("update_time <", value, "updateTime");
+        public Criteria andUdpateTimeLessThan(Date value) {
+            addCriterion("udpate_time <", value, "udpateTime");
             return (Criteria) this;
         }
 
-        public Criteria andUpdateTimeLessThanOrEqualTo(Date value) {
-            addCriterion("update_time <=", value, "updateTime");
+        public Criteria andUdpateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("udpate_time <=", value, "udpateTime");
             return (Criteria) this;
         }
 
-        public Criteria andUpdateTimeIn(List<Date> values) {
-            addCriterion("update_time in", values, "updateTime");
+        public Criteria andUdpateTimeIn(List<Date> values) {
+            addCriterion("udpate_time in", values, "udpateTime");
             return (Criteria) this;
         }
 
-        public Criteria andUpdateTimeNotIn(List<Date> values) {
-            addCriterion("update_time not in", values, "updateTime");
+        public Criteria andUdpateTimeNotIn(List<Date> values) {
+            addCriterion("udpate_time not in", values, "udpateTime");
             return (Criteria) this;
         }
 
-        public Criteria andUpdateTimeBetween(Date value1, Date value2) {
-            addCriterion("update_time between", value1, value2, "updateTime");
+        public Criteria andUdpateTimeBetween(Date value1, Date value2) {
+            addCriterion("udpate_time between", value1, value2, "udpateTime");
             return (Criteria) this;
         }
 
-        public Criteria andUpdateTimeNotBetween(Date value1, Date value2) {
-            addCriterion("update_time not between", value1, value2, "updateTime");
+        public Criteria andUdpateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("udpate_time not between", value1, value2, "udpateTime");
             return (Criteria) this;
         }
     }

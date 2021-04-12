@@ -7,10 +7,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import springfox.documentation.spring.web.SpringfoxWebMvcConfiguration;
 
 @SpringBootApplication
 @EnableEurekaClient
-@ConditionalOnClass(CoachUserServerApplication.class)
+//@ConditionalOnClass(CoachUserServerApplication.class)
+@ConditionalOnClass(SpringfoxWebMvcConfiguration.class)
 @MapperScan("com.evol.mapper")
 public class CoachUserServerApplication  implements WebMvcConfigurer {
 

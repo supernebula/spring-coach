@@ -5,10 +5,12 @@ import com.evol.domain.dto.UserModifyDto;
 import com.evol.domain.model.User;
 import com.evol.service.UserService;
 import com.evol.web.ApiResponse;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = "用户管理")
 @RequestMapping("/user")
 @RestController
 public class UserController {

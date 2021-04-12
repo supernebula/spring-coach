@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-@Api(tags = "用户列表")
+@Api(tags = "内部接口用户列表测试")
 @RequestMapping("users")
 @RestController
 public class innerUserController {
@@ -23,7 +23,7 @@ public class innerUserController {
     private UserService userService;
 
 
-    @ApiOperation(value = "查询用户列表v",notes = "查询用户列表n")
+    @ApiOperation(value = "查询用户列表",notes = "查询用户列表")
     @GetMapping("list")
     public List<User> list(){
         List<User> list = new ArrayList<User>();
@@ -33,7 +33,7 @@ public class innerUserController {
         return list;
     }
 
-    @ApiOperation(value = "查询用户列表v",notes = "查询用户列表n")
+    @ApiOperation(value = "查询用户列表",notes = "查询用户列表")
     @GetMapping("listTime")
     public List<User> listTime() throws InterruptedException {
         List<User> list = new ArrayList<User>();

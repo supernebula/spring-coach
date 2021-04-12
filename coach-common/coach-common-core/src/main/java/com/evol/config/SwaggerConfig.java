@@ -14,9 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-@EnableWebMvc //必须存在
-@ComponentScan(basePackages = {"com.evol.controller"})
-public class Swagger2Config {
+public class SwaggerConfig {
 
     @Bean
     public Docket createRestApi() {
@@ -32,7 +30,7 @@ public class Swagger2Config {
         return new ApiInfoBuilder()
                 .title("swagger-bootstrap-ui RESTful APIs")
                 .description("swagger-bootstrap-ui")
-                .termsOfServiceUrl("http://localhost:8081/")
+                .termsOfServiceUrl("http://localhost:8999/")
                 .contact("developer@mail.com")
                 .version("1.0")
                 .build();

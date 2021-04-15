@@ -26,6 +26,8 @@
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/coach_user?useSSL=false" userId="root"
                         password="123456">
+            <!--设置为 true 可以获取 tables 信息, 解决生成文件缺少 xxxByPrimaryKey 的问题 -->
+            <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
 <!--        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"-->

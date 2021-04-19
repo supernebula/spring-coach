@@ -94,6 +94,9 @@ alibaba/druid
 
 阿里巴巴官方文档
 
+https://juejin.cn/post/6844903763048677390
+
+
 https://www.cnblogs.com/xiaomaomao/p/14063212.html
 
 https://www.cnblogs.com/qlqwjy/p/13423021.html

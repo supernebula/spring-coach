@@ -22,7 +22,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @ConditionalOnProperty(name = {"spring.datasource.dynamic.enable"}, matchIfMissing = false, havingValue = "true")
-//@MapperScan("com.evol.mapper")
+@MapperScan("com.evol.mapper")
 public class MyBatisConfig implements TransactionManagementConfigurer {
 
 
@@ -47,6 +47,7 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
         factoryBean.setPlugins(new Interceptor[]{page});
 
         return factoryBean.getObject();
+
     }
 
     @Bean

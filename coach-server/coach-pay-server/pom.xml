@@ -123,6 +123,12 @@
             <artifactId>httpclientutil</artifactId>
             <version>1.0.4</version>
         </dependency>
+        <dependency>
+            <groupId>com.evol</groupId>
+            <artifactId>coach-common-core</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
 
         <!--        <dependency>-->

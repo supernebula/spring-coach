@@ -94,6 +94,8 @@ alibaba/druid
 
 阿里巴巴官方文档
 
+https://www.cnblogs.com/xiaomaomao/p/14063212.html
+
 https://www.cnblogs.com/qlqwjy/p/13423021.html
 
 https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter

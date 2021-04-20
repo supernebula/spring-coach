@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "用户余额变动管理")
 @RequestMapping("/userBalanceRecord")
 @RestController
-public class UserBalanceRecordController {
+public class UserBalanceRecordWebController {
 
     @Autowired
     UserBalanceRecordService userBalanceRecordService;

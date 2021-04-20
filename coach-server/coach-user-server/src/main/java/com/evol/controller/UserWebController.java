@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "用户管理")
 @RequestMapping("/user")
 @RestController
-public class UserController {
+public class UserWebController {
 
     @Autowired
     UserService userService;
@@ -45,5 +45,6 @@ public class UserController {
         userService.deleteUserById(userId);
         return ApiResponse.success(userId);
     }
+
 
 }

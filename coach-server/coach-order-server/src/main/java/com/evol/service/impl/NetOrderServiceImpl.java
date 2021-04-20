@@ -1,13 +1,13 @@
 package com.evol.service.impl;
 
 import com.evol.domain.PageBase;
-import com.evol.domain.model.NetOrders;
-import com.evol.domain.model.NetOrdersExample;
+import com.evol.domain.model.NetOrder;
+import com.evol.domain.model.NetOrderExample;
 import com.evol.domain.request.CreateOrderParam;
 import com.evol.domain.request.PayOrderParam;
 import com.evol.domain.response.CreateOrderResult;
 import com.evol.domain.response.PaidHandleOrderResult;
-import com.evol.mapper.NetOrdersMapper;
+import com.evol.mapper.NetOrderMapper;
 import com.evol.service.NetOrderService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -23,7 +23,7 @@ import java.util.List;
 public class NetOrderServiceImpl implements NetOrderService {
 
     @Autowired
-    private NetOrdersMapper netOrdersMapper;
+    private NetOrderMapper netOrdersMapper;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -35,7 +35,7 @@ public class NetOrderServiceImpl implements NetOrderService {
 
     @Override
     public PaidHandleOrderResult paidHandleOrder(PayOrderParam payOrderParam) {
-        NetOrders netOrder = this.getByOrderNo(payOrderParam.getOutTradeNo());
+        NetOrder netOrder = this.getByOrderNo(payOrderParam.getOutTradeNo());
         if(netOrder == null){
             return PaidHandleOrderResult.noOrderRecord(payOrderParam.getOutTradeNo());
         }
@@ -47,24 +47,24 @@ public class NetOrderServiceImpl implements NetOrderService {
     }
 
     @Override
-    public NetOrders getByOrderNo(String orderNo) {
-        NetOrdersExample example = new NetOrdersExample();
+    public NetOrder getByOrderNo(String orderNo) {
+        NetOrderExample example = new NetOrderExample();
         example.createCriteria().andOrderNoEqualTo(orderNo);
-        List<NetOrders> list = netOrdersMapper.selectByExample(example);
+        List<NetOrder> list = netOrdersMapper.selectByExample(example);
         return (list != null && list.size() > 0) ? list.get(0) : null;
     }
 
     @Override
-    public NetOrders getNetOrderById(Integer id) {
+    public NetOrder getNetOrderById(Integer id) {
         return netOrdersMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public PageBase<NetOrders> queryNetOrder(Integer pageNo, Integer pageSize) {
+    public PageBase<NetOrder> queryNetOrder(Integer pageNo, Integer pageSize) {
         Page page =  PageHelper.startPage(pageNo, pageSize);
-        NetOrdersExample example = new NetOrdersExample();
+        NetOrderExample example = new NetOrderExample();
         example.createCriteria();
-        List<NetOrders> movieList = netOrdersMapper.selectByExample(example);
+        List<NetOrder> movieList = netOrdersMapper.selectByExample(example);
         if(CollectionUtils.isEmpty(movieList)){
             return PageBase.create(page.getTotal(), new ArrayList<>());
         }

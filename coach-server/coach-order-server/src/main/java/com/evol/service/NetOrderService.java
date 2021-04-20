@@ -1,7 +1,7 @@
 package com.evol.service;
 
 import com.evol.domain.PageBase;
-import com.evol.domain.model.NetOrders;
+import com.evol.domain.model.NetOrder;
 import com.evol.domain.request.CreateOrderParam;
 import com.evol.domain.request.PayOrderParam;
 import com.evol.domain.response.CreateOrderResult;
@@ -13,10 +13,10 @@ public interface NetOrderService {
 
     PaidHandleOrderResult paidHandleOrder(PayOrderParam payOrderParam);
 
-    NetOrders getByOrderNo(String orderNo);
+    NetOrder getByOrderNo(String orderNo);
 
-    NetOrders getNetOrderById(Integer id);
+    NetOrder getNetOrderById(Integer id);
 
-    PageBase<NetOrders> queryNetOrder(Integer page, Integer pageSize);
+    PageBase<NetOrder> queryNetOrder(Integer page, Integer pageSize);
 
 }

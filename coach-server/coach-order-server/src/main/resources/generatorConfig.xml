@@ -64,7 +64,7 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
-        <table schema="" tableName="net_orders" domainObjectName="NetOrders">
+        <table schema="" tableName="net_order" domainObjectName="NetOrder">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
 

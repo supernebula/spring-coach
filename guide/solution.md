@@ -1,50 +1,50 @@
 
 
-Ä¿±ê£ºÍêÕûBuy ticket
+ç›®æ ‡ï¼šå®Œæ•´Buy ticket
 
-½×¶Î0£º Êý¾Ý¿â
+é˜¶æ®µ0ï¼š æ•°æ®åº“
 
-½×¶Î1£ºÎ¢·þÎñ¡¢»ù±¾ÒµÎñ¡¢ÈÕÖ¾¡¢±¾µØÅäÖÃ¡¢²¿Êð
+é˜¶æ®µ1ï¼šå¾®æœåŠ¡ã€åŸºæœ¬ä¸šåŠ¡ã€æ—¥å¿—ã€æœ¬åœ°é…ç½®ã€éƒ¨ç½²
 
-½×¶Î2£ºACMÅäÖÃ¡¢redis¡¢ÓÃ»§Óà¶î¡¢MQÊÂÎñ
+é˜¶æ®µ2ï¼šACMé…ç½®ã€redisã€ç”¨æˆ·ä½™é¢ã€MQäº‹åŠ¡
 
-½×¶Î3£º ÇÀ¹º£¨¸¶¿î¶¨Ê±¹ýÆÚredis£©¡¢Ä£Äâ»Øµ÷¡¢¶àÊý¾ÝÔ´¡¢·Ö²¼Ê½ÊÂÎñ
+é˜¶æ®µ3ï¼š æŠ¢è´­ï¼ˆä»˜æ¬¾å®šæ—¶è¿‡æœŸredisï¼‰ã€æ¨¡æ‹Ÿå›žè°ƒã€å¤šæ•°æ®æºã€åˆ†å¸ƒå¼äº‹åŠ¡
 
-½×¶Î4: ELK¡¢ÎÄ¼þÉÏ´«¡¢ docker ¡¢k8s
+é˜¶æ®µ4: ELKã€æ–‡ä»¶ä¸Šä¼ ã€ docker ã€k8s
 
-½×¶Î5£º¹ÜÀíµÇÂ¼¡¢ÕûÀí¸÷ÖÖ´úÂë
+é˜¶æ®µ5ï¼šç®¡ç†ç™»å½•ã€æ•´ç†å„ç§ä»£ç 
 
-½×¶Î6£º¶àÏß³Ì
+é˜¶æ®µ6ï¼šå¤šçº¿ç¨‹
 
-½×¶Î7£ºNetty
-
-
+é˜¶æ®µ7ï¼šNetty
 
 
 
 
 
-#
-ÉÌÆ·¹ÜÀí£¨CURD£©
-ÉÌÆ·Õ¹Ê¾£¨£©
-ÏÂµ¥Ö§¸¶£¨£©
-ÇÀ¹º
-ÍË¿î
 
 
 #
-ÊÂÎñ
-·Ö²¼Ê½ÊÂÎñ
-MQ rabbitmq¡¢rocketMQ
+å•†å“ç®¡ç†ï¼ˆCURDï¼‰
+å•†å“å±•ç¤ºï¼ˆï¼‰
+ä¸‹å•æ”¯ä»˜ï¼ˆï¼‰
+æŠ¢è´­
+é€€æ¬¾
+
+
+#
+äº‹åŠ¡
+åˆ†å¸ƒå¼äº‹åŠ¡
+MQ rabbitmqã€rocketMQ
 
 
 
 # basic component
-ACM£¨Nacos£©
+ACMï¼ˆNacosï¼‰
 logback
 ehcache
-¶àÊý¾ÝÔ´
-quraz ¶¨Ê±Æ÷
+å¤šæ•°æ®æº
+quraz å®šæ—¶å™¨
 
 
 # data

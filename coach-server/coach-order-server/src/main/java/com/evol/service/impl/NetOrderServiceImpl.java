@@ -60,10 +60,10 @@ public class NetOrderServiceImpl implements NetOrderService {
     }
 
     @Override
-    public PageBase<NetOrder> queryNetOrder(Integer pageNo, Integer pageSize) {
+    public PageBase<NetOrder> queryNetOrder(Integer userId, Integer pageNo, Integer pageSize) {
         Page page =  PageHelper.startPage(pageNo, pageSize);
         NetOrderExample example = new NetOrderExample();
-        example.createCriteria();
+        example.createCriteria().andUserIdEqualTo(userId);
         List<NetOrder> movieList = netOrdersMapper.selectByExample(example);
         if(CollectionUtils.isEmpty(movieList)){
             return PageBase.create(page.getTotal(), new ArrayList<>());

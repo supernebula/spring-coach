@@ -17,6 +17,6 @@ public interface NetOrderService {
 
     NetOrder getNetOrderById(Integer id);
 
-    PageBase<NetOrder> queryNetOrder(Integer page, Integer pageSize);
+    PageBase<NetOrder> queryNetOrder(Integer userId, Integer page, Integer pageSize);
 
 }

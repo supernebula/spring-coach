@@ -1,6 +1,7 @@
 package com.evol.service.impl;
 
 import com.evol.domain.PageBase;
+import com.evol.domain.dto.MoiveUpsertDto;
 import com.evol.domain.model.Movie;
 import com.evol.domain.model.MovieExample;
 import com.evol.domain.request.MovieQueryRequest;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,6 +21,56 @@ public class MovieServiceImpl implements MovieService {
 
     @Autowired
     private MovieMapper movieMapper;
+
+    @Override
+    public Integer addMovie(MoiveUpsertDto dto) {
+        Movie movie = new Movie();
+        movie.setName(dto.getName());
+        movie.setForeignName(dto.getForeignName());
+        movie.setReleaseDate(dto.getReleaseDate());
+        movie.setMinutes(dto.getMinutes());
+        movie.setDiscountCount(dto.getDiscountCount());
+        movie.setDiscountPrice(dto.getDiscountPrice());
+        movie.setReleaseRegion(dto.getReleaseRegion());
+        movie.setSpaceType(dto.getSpaceType());
+        movie.setCoverUri(dto.getCoverUri());
+        movie.setImages(dto.getImages());
+        movie.setDescription(dto.getDescription());
+        movie.setRatings(dto.getRatings());
+        movie.setLanguage(dto.getLanguage());
+        movie.setCreateTime(new Date());
+
+        return  movieMapper.insert(movie);
+    }
+
+    @Override
+    public Integer modifyMovie(Integer movieId, MoiveUpsertDto dto) {
+        Movie movie = movieMapper.selectByPrimaryKey(movieId);
+        if(movie == null){
+            return null;
+        }
+        movie.setName(dto.getName());
+        movie.setForeignName(dto.getForeignName());
+        movie.setReleaseDate(dto.getReleaseDate());
+        movie.setMinutes(dto.getMinutes());
+        movie.setDiscountCount(dto.getDiscountCount());
+        movie.setDiscountPrice(dto.getDiscountPrice());
+        movie.setReleaseRegion(dto.getReleaseRegion());
+        movie.setSpaceType(dto.getSpaceType());
+        movie.setCoverUri(dto.getCoverUri());
+        movie.setImages(dto.getImages());
+        movie.setDescription(dto.getDescription());
+        movie.setRatings(dto.getRatings());
+        movie.setLanguage(dto.getLanguage());
+        movie.setUpdateTime(new Date());
+
+        return movieMapper.updateByPrimaryKey(movie);
+    }
+
+    @Override
+    public Integer deleteMoive(Integer movieId) {
+        return movieMapper.deleteByPrimaryKey(movieId);
+    }
 
     @Override
     public PageBase<Movie> queryPage(MovieQueryRequest movieQueryRequest) {
@@ -30,5 +82,9 @@ public class MovieServiceImpl implements MovieService {
             return PageBase.create(page.getTotal(), new ArrayList<>());
         }
         return PageBase.create(page.getTotal(),movieList);
+    }
+
+    public Movie getMovie(Integer movieId){
+        return movieMapper.selectByPrimaryKey(movieId);
     }
 }

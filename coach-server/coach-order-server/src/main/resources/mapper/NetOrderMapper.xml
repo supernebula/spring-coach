@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.evol.mapper.NetOrdersMapper">
-  <resultMap id="BaseResultMap" type="com.evol.domain.model.NetOrders">
+<mapper namespace="com.evol.mapper.NetOrderMapper">
+  <resultMap id="BaseResultMap" type="com.evol.domain.model.NetOrder">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
@@ -82,13 +82,13 @@
     pay_order_no, pay_time, refund_order_no, refund_time, pay_mode_type, create_time, 
     udpate_time
   </sql>
-  <select id="selectByExample" parameterType="com.evol.domain.model.NetOrdersExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.evol.domain.model.NetOrderExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from net_orders
+    from net_order
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -99,21 +99,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from net_orders
+    from net_order
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from net_orders
+    delete from net_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.evol.domain.model.NetOrdersExample">
-    delete from net_orders
+  <delete id="deleteByExample" parameterType="com.evol.domain.model.NetOrderExample">
+    delete from net_order
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.NetOrders" useGeneratedKeys="true">
-    insert into net_orders (order_no, user_id, username, 
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.NetOrder" useGeneratedKeys="true">
+    insert into net_order (order_no, user_id, username, 
       movice_id, movice_name, paid_amount, 
       amount, status, pay_order_no, 
       pay_time, refund_order_no, refund_time, 
@@ -126,8 +126,8 @@
       #{payModeType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{udpateTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.NetOrders" useGeneratedKeys="true">
-    insert into net_orders
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.NetOrder" useGeneratedKeys="true">
+    insert into net_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="orderNo != null">
         order_no,
@@ -223,14 +223,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.evol.domain.model.NetOrdersExample" resultType="java.lang.Long">
-    select count(*) from net_orders
+  <select id="countByExample" parameterType="com.evol.domain.model.NetOrderExample" resultType="java.lang.Long">
+    select count(*) from net_order
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update net_orders
+    update net_order
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
@@ -286,7 +286,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update net_orders
+    update net_order
     set id = #{record.id,jdbcType=INTEGER},
       order_no = #{record.orderNo,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=INTEGER},
@@ -307,8 +307,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.evol.domain.model.NetOrders">
-    update net_orders
+  <update id="updateByPrimaryKeySelective" parameterType="com.evol.domain.model.NetOrder">
+    update net_order
     <set>
       <if test="orderNo != null">
         order_no = #{orderNo,jdbcType=VARCHAR},
@@ -358,8 +358,8 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.evol.domain.model.NetOrders">
-    update net_orders
+  <update id="updateByPrimaryKey" parameterType="com.evol.domain.model.NetOrder">
+    update net_order
     set order_no = #{orderNo,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER},
       username = #{username,jdbcType=VARCHAR},

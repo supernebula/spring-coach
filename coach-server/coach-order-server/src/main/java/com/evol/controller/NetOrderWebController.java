@@ -6,12 +6,14 @@ import com.evol.domain.request.CreateOrderParam;
 import com.evol.domain.response.CreateOrderResult;
 import com.evol.service.NetOrderService;
 import com.evol.web.ApiResponse;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api("订单管理")
 @RestController
 @RequestMapping("/netOrder")
 public class NetOrderWebController {
@@ -28,7 +30,7 @@ public class NetOrderWebController {
     @GetMapping("/query")
     public ApiResponse query(Integer userId, Integer pageNo, Integer pageSize){
         //分页查询
-        PageBase<NetOrder> pageResult = netOrderService.queryNetOrder(pageNo, pageSize);
+        PageBase<NetOrder> pageResult = netOrderService.queryNetOrder(userId, pageNo, pageSize);
         return ApiResponse.success(pageResult);
     }
 
@@ -42,6 +44,7 @@ public class NetOrderWebController {
     @ApiOperation(value = "根据ID获取网络订单", response = ApiResponse.class)
     @GetMapping("get")
     public ApiResponse refund(Integer orderId){
-        throw  new UnsupportedOperationException();
+        NetOrder netOrder = netOrderService.getNetOrderById(orderId);
+        return ApiResponse.success(netOrder);
     }
 }

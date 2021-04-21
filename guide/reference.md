@@ -181,4 +181,9 @@ https://www.cnblogs.com/maanshancss/p/6027999.html
 （JDBC 同一个数据链接生成主键并返回，避免再次查询）
 
 
+## 自定义错误
+
+https://www.hangge.com/blog/cache/detail_2503.html
+
+
 

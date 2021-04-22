@@ -11,7 +11,7 @@ public class MoiveUpsertDto {
 
     private String foreignName;
 
-    private Date releaseDate;
+    private String releaseDate;
 
     private Integer minutes;
 

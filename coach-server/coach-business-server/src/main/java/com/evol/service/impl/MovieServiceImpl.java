@@ -12,6 +12,9 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +30,11 @@ public class MovieServiceImpl implements MovieService {
         Movie movie = new Movie();
         movie.setName(dto.getName());
         movie.setForeignName(dto.getForeignName());
-        movie.setReleaseDate(dto.getReleaseDate());
+
+        LocalDate.parse(dto.getReleaseDate());
+        Date releaseDate =
+                Date.from(LocalDate.parse(dto.getReleaseDate()).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        movie.setReleaseDate(releaseDate);
         movie.setMinutes(dto.getMinutes());
         movie.setDiscountCount(dto.getDiscountCount());
         movie.setDiscountPrice(dto.getDiscountPrice());
@@ -51,7 +58,9 @@ public class MovieServiceImpl implements MovieService {
         }
         movie.setName(dto.getName());
         movie.setForeignName(dto.getForeignName());
-        movie.setReleaseDate(dto.getReleaseDate());
+        Date releaseDate =
+                Date.from(LocalDate.parse(dto.getReleaseDate()).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        movie.setReleaseDate(releaseDate);
         movie.setMinutes(dto.getMinutes());
         movie.setDiscountCount(dto.getDiscountCount());
         movie.setDiscountPrice(dto.getDiscountPrice());

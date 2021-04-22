@@ -199,8 +199,6 @@
         <module>coach-common</module>
         <module>coach-common</module>
         <module>test</module>
-        <module>coach-common-data</module>
-        <module>coach-common/coach-common-data</module>
     </modules>
     <packaging>pom</packaging>
 

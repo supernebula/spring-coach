@@ -85,7 +85,7 @@ public class MovieServiceImpl implements MovieService {
     public PageBase<Movie> queryPage(MovieQueryRequest movieQueryRequest) {
         Page page =  PageHelper.startPage(movieQueryRequest.getPageNo(), movieQueryRequest.getPageSize());
         MovieExample movieExample = new MovieExample();
-        movieExample.createCriteria();
+        movieExample.createCriteria().andNameLike("%" + movieQueryRequest.getName() + "%");
         List<Movie> movieList = movieMapper.selectByExample(movieExample);
         if(CollectionUtils.isEmpty(movieList)){
             return PageBase.create(page.getTotal(), new ArrayList<>());

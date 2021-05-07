@@ -19,4 +19,6 @@ public interface NetOrderService {
 
     PageBase<NetOrder> queryNetOrder(Integer userId, Integer page, Integer pageSize);
 
+    PaidHandleOrderResult payByBalance(Integer amount, Integer userId, Integer orderId);
+
 }

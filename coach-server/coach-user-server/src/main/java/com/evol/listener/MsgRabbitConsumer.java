@@ -3,6 +3,7 @@ package com.evol.listener;
 import com.evol.contant.RabbitContants;
 import com.evol.domain.request.UpdateUserBalanceParam;
 import com.evol.service.UserService;
+import com.evol.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -33,7 +34,8 @@ public class MsgRabbitConsumer {
 
         log.info("接受到消息为: "+message);
         try{
-            UpdateUserBalanceParam balanceParam = new UpdateUserBalanceParam();
+            //UpdateUserBalanceParam balanceParam = new UpdateUserBalanceParam();
+            UpdateUserBalanceParam balanceParam = JsonUtil.ParseObject(message, UpdateUserBalanceParam.class);
             userService.updateUserBalance(balanceParam);
             channel.basicAck(tag, false);
         }catch (Exception e){

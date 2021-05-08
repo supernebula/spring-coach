@@ -144,7 +144,7 @@ public class ElasticsearchUtil {
      * @param <T>
      * @return
      */
-    public <T> List<T> search(String indexName, Function<SearchSourceBuilder, SearchSourceBuilder> builder, Class<T> clazz){
+    public <T> List<T> search(String indexName, Class<T> clazz, Function<SearchSourceBuilder, SearchSourceBuilder> builder){
         List<T> list = new ArrayList<>();
         try {
             SearchRequest searchRequest = new SearchRequest(indexName);
@@ -173,9 +173,9 @@ public class ElasticsearchUtil {
      * @param <T>
      * @return
      */
-    public <T> List<T> export(String indexName, Function<SearchSourceBuilder, SearchSourceBuilder> builder,
+    public <T> List<T> export(String indexName,
                               Class<T> clazz,
-                              Integer maxScrollNumber){
+                              Integer maxScrollNumber, Function<SearchSourceBuilder, SearchSourceBuilder> builder){
         final Scroll scroll = new Scroll(TimeValue.timeValueMinutes(1L));
         SearchRequest searchRequest = new SearchRequest(indexName);
         searchRequest.scroll(scroll);

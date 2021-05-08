@@ -16,6 +16,7 @@
         <module>coach-common-redis</module>
         <module>coach-common-protobuf</module>
         <module>coach-common-datasource</module>
+        <module>coach-common-es</module>
     </modules>
 
 

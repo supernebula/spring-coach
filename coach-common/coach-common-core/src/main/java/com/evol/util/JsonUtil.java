@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JsonUtil {
 
-    public static String ParseString(Object obj) throws JsonProcessingException {
+    public static String ParseString(Object obj) {
 
         String jsonStr = null;
 

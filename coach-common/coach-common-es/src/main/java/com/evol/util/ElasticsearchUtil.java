@@ -178,8 +178,10 @@ public class ElasticsearchUtil {
                               Integer maxScrollNumber, Function<SearchSourceBuilder, SearchSourceBuilder> builder){
         final Scroll scroll = new Scroll(TimeValue.timeValueMinutes(1L));
         SearchRequest searchRequest = new SearchRequest(indexName);
+
         searchRequest.scroll(scroll);
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+        sourceBuilder.size(1000); //控制一次检索多少个结果
         sourceBuilder = builder.apply(sourceBuilder);
         searchRequest.source(sourceBuilder);
 

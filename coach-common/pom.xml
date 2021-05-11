@@ -17,6 +17,7 @@
         <module>coach-common-protobuf</module>
         <module>coach-common-datasource</module>
         <module>coach-common-es</module>
+        <module>coach-common-util</module>
     </modules>
 
 

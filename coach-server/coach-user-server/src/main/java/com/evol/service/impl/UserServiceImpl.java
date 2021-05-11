@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
         userBalanceRecord.setHistoryBalanceMoney(user.getBalance());
         userBalanceRecord.setCurrentBalanceMoney(user.getBalance() + updateParam.getChangeMoney());
         userBalanceRecord.setChangeMoney(updateParam.getChangeMoney());
-        userBalanceRecord.setMoneyInOutType(updateParam.getMoneyInOutType().getCode());
+        userBalanceRecord.setMoneyInOutType(updateParam.getMoneyInOutType());
         userBalanceRecord.setUserTransRecordId(updateParam.getTradeId());
         userBalanceRecord.setRemark("");
         userBalanceRecord.setCreateTime(new Date());

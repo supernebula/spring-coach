@@ -1,7 +1,6 @@
 package com.evol.util;
 
 import com.evol.model.TestDto;
-import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;

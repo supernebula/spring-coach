@@ -20,13 +20,13 @@ public class ElasticsearchConfig {
         RequestOptions.Builder builder = RequestOptions.DEFAULT.toBuilder();
         COMMON_OPTIONS = builder.build();
     }
-    @Bean("restHighLevelClient1")
-    public RestHighLevelClient restHighLevelClient(){
-        RestHighLevelClient Client = new RestHighLevelClient(
-                RestClient.builder(new HttpHost("192.168.0.180",9200,"http"))
-        );
-        return Client;
-    }
+//    @Bean("restHighLevelClient1")
+//    public RestHighLevelClient restHighLevelClient(){
+//        RestHighLevelClient Client = new RestHighLevelClient(
+//                RestClient.builder(new HttpHost("192.168.0.180",9200,"http"))
+//        );
+//        return Client;
+//    }
 
     @Value("${elasticsearch.host}")
     private String host;
@@ -49,7 +49,7 @@ public class ElasticsearchConfig {
     @Value("${elasticsearch.password}")
     private String password;
 
-    @Bean(destroyMethod = "close", name = "client")
+    @Bean(destroyMethod = "close", name = "restHighLevelClient")
     public RestHighLevelClient initRestClient() {
 
         final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();

@@ -3,6 +3,7 @@ package com.evol.util;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.DocWriteResponse;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
@@ -10,6 +11,7 @@ import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.*;
+import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
@@ -22,16 +24,22 @@ import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+/**
+ * @author admin
+ */
 @Slf4j
+@Component
 public class ElasticsearchUtil {
 
-    @Qualifier(value = "restHighLevelClient1")
+    @Qualifier(value = "restHighLevelClient")
     @Autowired
     RestHighLevelClient client;
 
@@ -56,13 +64,33 @@ public class ElasticsearchUtil {
     }
 
     /**
+     * 删除索引
+     * @param indexName
+     * @return
+     */
+    public boolean deleteIndex(String indexName) {
+        if(StringUtils.isEmpty(indexName)){return false;}
+        // 1、创建索引请求
+        DeleteIndexRequest request = new DeleteIndexRequest(indexName);
+        // 2、客户端client执行请求 IndicesClient对象,请求后获得响应
+        try {
+            AcknowledgedResponse acknowledgedResponse =
+                    client.indices().delete(request, RequestOptions.DEFAULT);
+            return acknowledgedResponse.isAcknowledged();
+        } catch (IOException ex) {
+            log.error("删除索引失败:" + indexName, ex);
+            return false;
+        }
+    }
+
+    /**
      * 插入文档
      * @param indexName
      * @param item
      * @param <T>
      * @return
      */
-    public <T> boolean insertIndex(String indexName, T item){
+    public <T> boolean insertDoc(String indexName, T item){
         if(StringUtils.isEmpty(indexName)){return false;}
         if(item == null){return false;}
         try{
@@ -80,7 +108,7 @@ public class ElasticsearchUtil {
             }
             return false;
         } catch (IOException ex) {
-            log.error("插入索引失败:" + indexName, ex);
+            log.error("插入文档失败:" + indexName, ex);
             return false;
         }
     }
@@ -93,14 +121,14 @@ public class ElasticsearchUtil {
      * @param <T>
      * @return
      */
-    public <T> boolean batchInsert(String indexName, List<T> items, Function<T, String> idFunc){
+    public <T> boolean batchInsertDoc(String indexName, List<T> items, Function<T, String> idFunc){
         if(StringUtils.isEmpty(indexName)){return false;}
         if(items == null || items.size() == 0){return false;}
         BulkRequest bulkRequest = new BulkRequest();
 
         items.forEach(item -> {
             String json = JsonUtil.ParseString(item);
-            IndexRequest indexRequest = new IndexRequest("").id(idFunc.apply(item)).source(json,
+            IndexRequest indexRequest = new IndexRequest(indexName).id(idFunc.apply(item)).source(json,
                     XContentType.JSON);
             bulkRequest.add(indexRequest);
         });
@@ -111,7 +139,7 @@ public class ElasticsearchUtil {
                 return false;
             }
         } catch (IOException ex) {
-            log.error("批量插入失败", ex);
+            log.error("批量插入文档失败", ex);
         }
         return true;
     }
@@ -122,7 +150,7 @@ public class ElasticsearchUtil {
      * @param id
      * @return
      */
-    public boolean deleteIndex(String indexName, String id){
+    public boolean deleteDoc(String indexName, String id){
         if(StringUtils.isEmpty(indexName) || StringUtils.isEmpty(id)){return false;}
         DeleteRequest deleteRequest = new DeleteRequest(indexName, id);
         try {
@@ -131,7 +159,7 @@ public class ElasticsearchUtil {
                 return true;
             }
         } catch (IOException ex) {
-            log.error("删除失败，index:" + indexName + ",id:" + id, ex);
+            log.error("删除文档失败，index:" + indexName + ",id:" + id, ex);
         }
         return false;
     }
@@ -150,6 +178,7 @@ public class ElasticsearchUtil {
             SearchRequest searchRequest = new SearchRequest(indexName);
             SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
             sourceBuilder = builder.apply(sourceBuilder);
+            searchRequest.source(sourceBuilder);
             SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
             SearchHits hits = response.getHits();
             for (SearchHit hit : hits) {
@@ -159,7 +188,7 @@ public class ElasticsearchUtil {
             }
             return list;
         } catch (IOException ex) {
-            log.error("查询失败", ex);
+            log.error("查询文档失败", ex);
         }
         return list;
     }
@@ -181,8 +210,11 @@ public class ElasticsearchUtil {
 
         searchRequest.scroll(scroll);
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-        sourceBuilder.size(1000); //控制一次检索多少个结果
+
         sourceBuilder = builder.apply(sourceBuilder);
+        sourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
+        sourceBuilder.from(0);
+        sourceBuilder.size(9000);
         searchRequest.source(sourceBuilder);
 
         String scrollId = null;

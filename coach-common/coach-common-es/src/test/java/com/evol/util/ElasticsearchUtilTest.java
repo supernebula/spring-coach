@@ -1,5 +1,6 @@
 package com.evol.util;
 
+import com.evol.model.TestDto;
 import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -23,74 +25,79 @@ public class ElasticsearchUtilTest {
     @Autowired
     private ElasticsearchUtil elasticsearchUtil;
 
+    private final String indexName = "test_index";
+
     @Test
     public void createIndexTest(){
-        String index = "test_index_1";
-        boolean result = elasticsearchUtil.createIndex(index);
+        boolean result = elasticsearchUtil.createIndex(indexName);
+        assert(result);
     }
-
-    @Test
-    public void insertIndexTest(){
-        String index = "test_index_1";
-        TestDto dto = new TestDto();
-        dto.setId(1);
-        dto.setName("testname1");
-        boolean result = elasticsearchUtil.insertIndex(index, dto);
-    }
-
 
     @Test
     public void deleteIndexTest(){
-        String index = "test_index_1";
-        boolean result = elasticsearchUtil.deleteIndex(index, "1");
+        boolean result = elasticsearchUtil.deleteIndex(indexName);
+        assert(result);
+    }
+
+    @Test
+    public void insertDocTest(){
+        TestDto dto = new TestDto();
+        dto.setId(1);
+        dto.setName("testname1");
+        dto.setRemark("remark1");
+        dto.setCreateTime(new Date());
+        boolean result = elasticsearchUtil.insertDoc(indexName, dto);
     }
 
 
     @Test
-    public void batchInsertTest(){
-        String index = "test_index_1";
+    public void deleteDocTest(){
+        boolean result = elasticsearchUtil.deleteDoc(indexName, "11");
+    }
+
+
+    @Test
+    public void batchInsertDocTest(){
         List<TestDto> list = new ArrayList<>();
         TestDto dto1 = new TestDto();
         TestDto dto2 = new TestDto();
         dto1.setId(11);
         dto1.setName("testname11");
+        dto1.setRemark("remark11");
+        dto1.setCreateTime(new Date());
         dto2.setId(12);
         dto2.setName("testname12");
+        dto2.setRemark("remark12");
+        dto2.setCreateTime(new Date());
 
         list.add(dto1);
         list.add(dto2);
 
-        boolean result = elasticsearchUtil.batchInsert(index, list, (e) -> e.getId().toString());
+        boolean result = elasticsearchUtil.batchInsertDoc(indexName, list, (e) -> e.getId().toString());
     }
 
 
     @Test
-    public void searchIndexTest(){
-        String index = "test_index_1";
-        String name = null;
+    public void searchDocTest(){
+        String name = "testname11";
         String outId = null;
-        Integer from = 1;
+        Integer from = 0;
         Integer size = 100;
-        List<TestDto> result = elasticsearchUtil.search(index, TestDto.class, (sourceBuilder) -> {
+        List<TestDto> result = elasticsearchUtil.search(indexName, TestDto.class, (sourceBuilder) -> {
             //精确查询
             if(StringUtils.isNotEmpty(name)){
-                TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(name, name);//精准查询
+                TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("name", name);//精准查询
                 sourceBuilder.query(termQueryBuilder);
             }
 
             if(outId != null){
-                TermQueryBuilder termQueryBuilder2 = QueryBuilders.termQuery(outId, outId);//精准查询
+                TermQueryBuilder termQueryBuilder2 = QueryBuilders.termQuery("outId", outId);//精准查询
                 sourceBuilder.query(termQueryBuilder2);
             }
-
-
 
             FieldSortBuilder fieldSortBuilder = SortBuilders.fieldSort("createTime");//按照年龄排序
             fieldSortBuilder.sortMode(SortMode.MIN);//从小到大排序
 
-
-            //sourceBuilder.query(rangeQueryBuilder).query(termQueryBuilder).query(termQueryBuilder2).sort
-            // (fieldSortBuilder);//多条件查询
             sourceBuilder.sort(fieldSortBuilder);//多条件查询
             sourceBuilder.from(from);
             sourceBuilder.size(size);
@@ -100,47 +107,34 @@ public class ElasticsearchUtilTest {
     }
 
     @Test
-    public void exportTest(){
-        String index = "test_index_1";
-        String name = null;
+    public void exportDocTest(){
+        String name = "testname11";
         String outId = null;
         Integer from = 1;
-        Integer size = 100;
-        List<TestDto> result = elasticsearchUtil.export(index, TestDto.class, 200, (sourceBuilder) -> {
+        Integer size = 1000;
+        List<TestDto> result = elasticsearchUtil.export(indexName, TestDto.class, 200, (sourceBuilder) -> {
+
+//
             //精确查询
             if(StringUtils.isNotEmpty(name)){
-                TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(name, name);//精准查询
+                TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("name", name);//精准查询
                 sourceBuilder.query(termQueryBuilder);
             }
 
             if(outId != null){
-                TermQueryBuilder termQueryBuilder2 = QueryBuilders.termQuery(outId, outId);//精准查询
+                TermQueryBuilder termQueryBuilder2 = QueryBuilders.termQuery("outId", outId);//精准查询
                 sourceBuilder.query(termQueryBuilder2);
             }
-
-
 
             FieldSortBuilder fieldSortBuilder = SortBuilders.fieldSort("createTime");//按照年龄排序
             fieldSortBuilder.sortMode(SortMode.MIN);//从小到大排序
 
-
-            //sourceBuilder.query(rangeQueryBuilder).query(termQueryBuilder).query(termQueryBuilder2).sort
-            // (fieldSortBuilder);//多条件查询
             sourceBuilder.sort(fieldSortBuilder);//多条件查询
-            sourceBuilder.from(from);
-            sourceBuilder.size(size);
+
             return sourceBuilder;
+
+
         });
-
-    }
-
-
-    @Data
-    public class TestDto{
-
-        private Integer id;
-
-        private String name;
 
     }
 

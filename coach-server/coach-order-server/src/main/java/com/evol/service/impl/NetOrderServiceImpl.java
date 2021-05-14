@@ -61,7 +61,7 @@ public class NetOrderServiceImpl implements NetOrderService {
         netOrder.setPayTime(new Date());
         netOrdersMapper.updateByPrimaryKeySelective(netOrder);
         //余额支付
-        this.payByUserBalance(netOrder.getUserId(), netOrder.getAmount());
+        this.updateUserBalance(netOrder.getUserId(), netOrder.getAmount(), netOrder.getOrderNo());
         return PaidHandleOrderResult.success(netOrder.getOrderNo());
     }
 
@@ -77,7 +77,22 @@ public class NetOrderServiceImpl implements NetOrderService {
 
     @Override
     public NetOrder getNetOrderById(Integer id) {
-        return netOrdersMapper.selectByPrimaryKey(id);
+        NetOrder order = new NetOrder();
+        order.setId(1);
+        order.setPayOrderNo("PY1111111");
+        order.setPayTime(new Date());
+        order.setAmount(100);
+        order.setCreateTime(new Date());
+        order.setMoviceId(1);
+        order.setMoviceName("movice name1");
+        order.setOrderNo("OR111111");
+        order.setPaidAmount(100);
+        order.setPayModeType("1");
+        order.setStatus(1);
+        order.setUserId(1);
+        order.setUsername("user1");
+        return order;
+        //return netOrdersMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -94,12 +109,12 @@ public class NetOrderServiceImpl implements NetOrderService {
 
 
 
-    public void payByUserBalance(Integer userId, Integer money){
+    public void updateUserBalance(Integer userId, Integer money, String orderNo){
         UpdateUserBalanceParam param = new UpdateUserBalanceParam();
         param.setUserId(userId);
         param.setChangeMoney(money);
         param.setMoneyInOutType(MoneyInOutTypeEnum.CONSUME.getCode());
+        param.setTradeNo(orderNo);
         rabbitTemplate.convertAndSend(RabbitContants.USER_BALANCE_EXCHANGE, RabbitContants.MSG_ROUTING_KEY, "message1");
-
     }
 }

@@ -10,9 +10,9 @@ public class UpdateUserBalanceParam {
 
     private int userId;
 
-    private Integer tradeId;
-
     private Integer MoneyInOutType;
+
+    private String tradeNo;
 
 }
 

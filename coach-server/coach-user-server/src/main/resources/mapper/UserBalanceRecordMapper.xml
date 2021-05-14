@@ -8,7 +8,7 @@
     <result column="current_balance_money" jdbcType="INTEGER" property="currentBalanceMoney" />
     <result column="change_money" jdbcType="INTEGER" property="changeMoney" />
     <result column="money_in_out_type" jdbcType="INTEGER" property="moneyInOutType" />
-    <result column="user_trans_record_id" jdbcType="INTEGER" property="userTransRecordId" />
+    <result column="user_trade_no" jdbcType="VARCHAR" property="userTradeNo" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
@@ -72,7 +72,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, user_id, history_balance_money, current_balance_money, change_money, money_in_out_type, 
-    user_trans_record_id, remark, create_time
+    user_trade_no, remark, create_time
   </sql>
   <select id="selectByExample" parameterType="com.evol.domain.model.UserBalanceRecordExample" resultMap="BaseResultMap">
     select
@@ -106,10 +106,10 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.UserBalanceRecord" useGeneratedKeys="true">
     insert into user_balance_record (user_id, history_balance_money, current_balance_money, 
-      change_money, money_in_out_type, user_trans_record_id, 
+      change_money, money_in_out_type, user_trade_no, 
       remark, create_time)
     values (#{userId,jdbcType=INTEGER}, #{historyBalanceMoney,jdbcType=INTEGER}, #{currentBalanceMoney,jdbcType=INTEGER}, 
-      #{changeMoney,jdbcType=INTEGER}, #{moneyInOutType,jdbcType=INTEGER}, #{userTransRecordId,jdbcType=INTEGER}, 
+      #{changeMoney,jdbcType=INTEGER}, #{moneyInOutType,jdbcType=INTEGER}, #{userTradeNo,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.UserBalanceRecord" useGeneratedKeys="true">
@@ -130,8 +130,8 @@
       <if test="moneyInOutType != null">
         money_in_out_type,
       </if>
-      <if test="userTransRecordId != null">
-        user_trans_record_id,
+      <if test="userTradeNo != null">
+        user_trade_no,
       </if>
       <if test="remark != null">
         remark,
@@ -156,8 +156,8 @@
       <if test="moneyInOutType != null">
         #{moneyInOutType,jdbcType=INTEGER},
       </if>
-      <if test="userTransRecordId != null">
-        #{userTransRecordId,jdbcType=INTEGER},
+      <if test="userTradeNo != null">
+        #{userTradeNo,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
@@ -194,8 +194,8 @@
       <if test="record.moneyInOutType != null">
         money_in_out_type = #{record.moneyInOutType,jdbcType=INTEGER},
       </if>
-      <if test="record.userTransRecordId != null">
-        user_trans_record_id = #{record.userTransRecordId,jdbcType=INTEGER},
+      <if test="record.userTradeNo != null">
+        user_trade_no = #{record.userTradeNo,jdbcType=VARCHAR},
       </if>
       <if test="record.remark != null">
         remark = #{record.remark,jdbcType=VARCHAR},
@@ -216,7 +216,7 @@
       current_balance_money = #{record.currentBalanceMoney,jdbcType=INTEGER},
       change_money = #{record.changeMoney,jdbcType=INTEGER},
       money_in_out_type = #{record.moneyInOutType,jdbcType=INTEGER},
-      user_trans_record_id = #{record.userTransRecordId,jdbcType=INTEGER},
+      user_trade_no = #{record.userTradeNo,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -241,8 +241,8 @@
       <if test="moneyInOutType != null">
         money_in_out_type = #{moneyInOutType,jdbcType=INTEGER},
       </if>
-      <if test="userTransRecordId != null">
-        user_trans_record_id = #{userTransRecordId,jdbcType=INTEGER},
+      <if test="userTradeNo != null">
+        user_trade_no = #{userTradeNo,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
@@ -260,7 +260,7 @@
       current_balance_money = #{currentBalanceMoney,jdbcType=INTEGER},
       change_money = #{changeMoney,jdbcType=INTEGER},
       money_in_out_type = #{moneyInOutType,jdbcType=INTEGER},
-      user_trans_record_id = #{userTransRecordId,jdbcType=INTEGER},
+      user_trade_no = #{userTradeNo,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

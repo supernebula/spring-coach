@@ -7,22 +7,22 @@ public class UpdateUserBalanceResult {
 
     private boolean success;
 
-    private Integer tradeId;
+    private String tradeNo;
 
     private String message;
 
-    public static UpdateUserBalanceResult falseResult(Integer tradeId, String message){
+    public static UpdateUserBalanceResult falseResult(String tradeNo, String message){
         UpdateUserBalanceResult result = new UpdateUserBalanceResult();
         result.setSuccess(false);
-        result.setTradeId(tradeId);
+        result.setTradeNo(tradeNo);
         result.setMessage(message);
         return result;
     }
 
-    public static UpdateUserBalanceResult trueResult(Integer tradeId, String message){
+    public static UpdateUserBalanceResult trueResult(String tradeNo, String message){
         UpdateUserBalanceResult result = new UpdateUserBalanceResult();
         result.setSuccess(true);
-        result.setTradeId(tradeId);
+        result.setTradeNo(tradeNo);
         result.setMessage(message);
         return result;
     }

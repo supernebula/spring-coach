@@ -30,9 +30,10 @@
 
         <dependency>
             <groupId>com.evol</groupId>
-            <artifactId>coach-common-datasource</artifactId>
+            <artifactId>coach-common-data</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
+
 
         <dependency>
             <groupId>com.evol</groupId>

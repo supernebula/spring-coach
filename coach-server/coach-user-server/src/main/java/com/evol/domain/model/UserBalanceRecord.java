@@ -16,7 +16,7 @@ public class UserBalanceRecord implements Serializable {
 
     private Integer moneyInOutType;
 
-    private Integer userTransRecordId;
+    private String userTradeNo;
 
     private String remark;
 
@@ -72,12 +72,12 @@ public class UserBalanceRecord implements Serializable {
         this.moneyInOutType = moneyInOutType;
     }
 
-    public Integer getUserTransRecordId() {
-        return userTransRecordId;
+    public String getUserTradeNo() {
+        return userTradeNo;
     }
 
-    public void setUserTransRecordId(Integer userTransRecordId) {
-        this.userTransRecordId = userTransRecordId;
+    public void setUserTradeNo(String userTradeNo) {
+        this.userTradeNo = userTradeNo == null ? null : userTradeNo.trim();
     }
 
     public String getRemark() {
@@ -108,7 +108,7 @@ public class UserBalanceRecord implements Serializable {
         sb.append(", currentBalanceMoney=").append(currentBalanceMoney);
         sb.append(", changeMoney=").append(changeMoney);
         sb.append(", moneyInOutType=").append(moneyInOutType);
-        sb.append(", userTransRecordId=").append(userTransRecordId);
+        sb.append(", userTradeNo=").append(userTradeNo);
         sb.append(", remark=").append(remark);
         sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);

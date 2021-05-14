@@ -465,63 +465,73 @@ public class UserBalanceRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andUserTransRecordIdIsNull() {
-            addCriterion("user_trans_record_id is null");
+        public Criteria andUserTradeNoIsNull() {
+            addCriterion("user_trade_no is null");
             return (Criteria) this;
         }
 
-        public Criteria andUserTransRecordIdIsNotNull() {
-            addCriterion("user_trans_record_id is not null");
+        public Criteria andUserTradeNoIsNotNull() {
+            addCriterion("user_trade_no is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUserTransRecordIdEqualTo(Integer value) {
-            addCriterion("user_trans_record_id =", value, "userTransRecordId");
+        public Criteria andUserTradeNoEqualTo(String value) {
+            addCriterion("user_trade_no =", value, "userTradeNo");
             return (Criteria) this;
         }
 
-        public Criteria andUserTransRecordIdNotEqualTo(Integer value) {
-            addCriterion("user_trans_record_id <>", value, "userTransRecordId");
+        public Criteria andUserTradeNoNotEqualTo(String value) {
+            addCriterion("user_trade_no <>", value, "userTradeNo");
             return (Criteria) this;
         }
 
-        public Criteria andUserTransRecordIdGreaterThan(Integer value) {
-            addCriterion("user_trans_record_id >", value, "userTransRecordId");
+        public Criteria andUserTradeNoGreaterThan(String value) {
+            addCriterion("user_trade_no >", value, "userTradeNo");
             return (Criteria) this;
         }
 
-        public Criteria andUserTransRecordIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("user_trans_record_id >=", value, "userTransRecordId");
+        public Criteria andUserTradeNoGreaterThanOrEqualTo(String value) {
+            addCriterion("user_trade_no >=", value, "userTradeNo");
             return (Criteria) this;
         }
 
-        public Criteria andUserTransRecordIdLessThan(Integer value) {
-            addCriterion("user_trans_record_id <", value, "userTransRecordId");
+        public Criteria andUserTradeNoLessThan(String value) {
+            addCriterion("user_trade_no <", value, "userTradeNo");
             return (Criteria) this;
         }
 
-        public Criteria andUserTransRecordIdLessThanOrEqualTo(Integer value) {
-            addCriterion("user_trans_record_id <=", value, "userTransRecordId");
+        public Criteria andUserTradeNoLessThanOrEqualTo(String value) {
+            addCriterion("user_trade_no <=", value, "userTradeNo");
             return (Criteria) this;
         }
 
-        public Criteria andUserTransRecordIdIn(List<Integer> values) {
-            addCriterion("user_trans_record_id in", values, "userTransRecordId");
+        public Criteria andUserTradeNoLike(String value) {
+            addCriterion("user_trade_no like", value, "userTradeNo");
             return (Criteria) this;
         }
 
-        public Criteria andUserTransRecordIdNotIn(List<Integer> values) {
-            addCriterion("user_trans_record_id not in", values, "userTransRecordId");
+        public Criteria andUserTradeNoNotLike(String value) {
+            addCriterion("user_trade_no not like", value, "userTradeNo");
             return (Criteria) this;
         }
 
-        public Criteria andUserTransRecordIdBetween(Integer value1, Integer value2) {
-            addCriterion("user_trans_record_id between", value1, value2, "userTransRecordId");
+        public Criteria andUserTradeNoIn(List<String> values) {
+            addCriterion("user_trade_no in", values, "userTradeNo");
             return (Criteria) this;
         }
 
-        public Criteria andUserTransRecordIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("user_trans_record_id not between", value1, value2, "userTransRecordId");
+        public Criteria andUserTradeNoNotIn(List<String> values) {
+            addCriterion("user_trade_no not in", values, "userTradeNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserTradeNoBetween(String value1, String value2) {
+            addCriterion("user_trade_no between", value1, value2, "userTradeNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserTradeNoNotBetween(String value1, String value2) {
+            addCriterion("user_trade_no not between", value1, value2, "userTradeNo");
             return (Criteria) this;
         }
 

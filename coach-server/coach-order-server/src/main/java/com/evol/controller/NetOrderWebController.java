@@ -41,8 +41,8 @@ public class NetOrderWebController {
         return ApiResponse.success(item);
     }
 
-    @ApiOperation(value = "根据ID获取网络订单", response = ApiResponse.class)
-    @GetMapping("get")
+    @ApiOperation(value = "退款", response = ApiResponse.class)
+    @GetMapping("refund")
     public ApiResponse refund(Integer orderId){
         NetOrder netOrder = netOrderService.getNetOrderById(orderId);
         return ApiResponse.success(netOrder);

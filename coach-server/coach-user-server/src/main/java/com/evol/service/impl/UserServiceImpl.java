@@ -49,11 +49,11 @@ public class UserServiceImpl implements UserService {
     public synchronized UpdateUserBalanceResult updateUserBalance(UpdateUserBalanceParam updateParam) {
         User user = userMapper.selectByPrimaryKey(updateParam.getUserId());
         if(user == null){
-            return UpdateUserBalanceResult.falseResult(updateParam.getTradeId(), "找不到指定的用户记录");
+            return UpdateUserBalanceResult.falseResult(updateParam.getTradeNo(), "找不到指定的用户记录");
         }
         Integer count = userCustomMapper.updateUserBalance(updateParam.getChangeMoney(), updateParam.getUserId());
         if(count < 0){
-            return UpdateUserBalanceResult.falseResult(updateParam.getTradeId(), "更新用户约失败");
+            return UpdateUserBalanceResult.falseResult(updateParam.getTradeNo(), "更新用户约失败");
         }
 
 
@@ -63,13 +63,13 @@ public class UserServiceImpl implements UserService {
         userBalanceRecord.setCurrentBalanceMoney(user.getBalance() + updateParam.getChangeMoney());
         userBalanceRecord.setChangeMoney(updateParam.getChangeMoney());
         userBalanceRecord.setMoneyInOutType(updateParam.getMoneyInOutType());
-        userBalanceRecord.setUserTransRecordId(updateParam.getTradeId());
+        userBalanceRecord.setUserTradeNo(updateParam.getTradeNo());
         userBalanceRecord.setRemark("");
         userBalanceRecord.setCreateTime(new Date());
         //更多赋值语句
         userBalanceRecordMapper.insert(userBalanceRecord);
 
-        return UpdateUserBalanceResult.trueResult(updateParam.getTradeId(), "更新成功");
+        return UpdateUserBalanceResult.trueResult(updateParam.getTradeNo(), "更新成功");
     }
 
     @Override

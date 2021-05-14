@@ -188,6 +188,12 @@ https://www.hangge.com/blog/cache/detail_2503.html
 
 https://www.cnblogs.com/wupeixuan/p/13450815.html
 
+https://mp.weixin.qq.com/s/0h4qzSvhkKrLgLQh59dk7Q
+
+https://www.tizi365.com/archives/947.html
+
+https://es.quanke.name/aggregations/bucket-aggregations.html
+
 
 
 ## Springboot

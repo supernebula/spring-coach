@@ -18,17 +18,30 @@ import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.Scroll;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.bucket.filter.Filter;
+import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.filter.Filters;
+import org.elasticsearch.search.aggregations.bucket.filter.FiltersAggregator;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import sun.rmi.runtime.Log;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -261,6 +274,81 @@ public class ElasticsearchUtil {
             list.add(vo);
         }
         return list;
+    }
+
+    /**
+     * 聚合统计单个值
+     * @param indexName
+     * @param builderFunc
+     * @param queryBuilder
+     * @return
+     */
+    public Long aggregation(String indexName
+            , Function<SearchSourceBuilder, SearchSourceBuilder> builderFunc
+            , QueryBuilder queryBuilder){
+        try {
+
+            FilterAggregationBuilder filterAggBuilder = AggregationBuilders.filter("filterName1", queryBuilder);
+
+//            FilterAggregationBuilder filterAggBuilder = AggregationBuilders.filter("weixins", QueryBuilders.termQuery(
+//                    "payType", 2));
+
+            SearchRequest searchRequest = new SearchRequest(indexName);
+            SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+            sourceBuilder = builderFunc.apply(sourceBuilder);
+            sourceBuilder.aggregation(filterAggBuilder);
+            sourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
+            searchRequest.source(sourceBuilder);
+            SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
+            Aggregations aggregations = response.getAggregations();
+            Filter agg = aggregations.get("filterName1");
+            Long count = agg.getDocCount();
+            long wexinCount = agg.getDocCount();
+            return count;
+        } catch (IOException ex) {
+            log.error("查询文档失败", ex);
+        }
+        return null;
+    }
+
+    /**
+     * 多值聚合
+     * @param indexName
+     * @param builderFunc
+     * @param aggBuilder
+     * @return
+     */
+    public Map<String, Long> multiAggregation(String indexName
+            , Function<SearchSourceBuilder, SearchSourceBuilder> builderFunc
+            , AggregationBuilder aggBuilder){
+        try {
+
+//            AggregationBuilder aggBuilder = AggregationBuilders.filters("agg",
+//                    new FiltersAggregator.KeyedFilter("alipay", QueryBuilders.termQuery("payType", 1)),
+//                    new FiltersAggregator.KeyedFilter("weixin", QueryBuilders.termQuery("payType", 2)),
+//                    new FiltersAggregator.KeyedFilter("balance", QueryBuilders.termQuery("payType", 3)),
+//                    new FiltersAggregator.KeyedFilter("points", QueryBuilders.termQuery("payType", 8)));
+
+            SearchRequest searchRequest = new SearchRequest(indexName);
+            SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+            sourceBuilder = builderFunc.apply(sourceBuilder);
+            sourceBuilder.aggregation(aggBuilder);
+            sourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
+            searchRequest.source(sourceBuilder);
+            SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
+            Filters  filters = response.getAggregations().get("agg");
+            // For each entry
+            Map<String,Long> countResult = new HashMap<>();
+            for (Filters.Bucket entry : filters.getBuckets()) {
+                String key = entry.getKeyAsString();            // bucket key
+                long docCount = entry.getDocCount();            // Doc count
+                countResult.put(key, docCount);
+            }
+            return countResult;
+        } catch (IOException ex) {
+            log.error("查询文档失败", ex);
+        }
+        return null;
     }
 
 }

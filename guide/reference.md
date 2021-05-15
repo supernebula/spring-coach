@@ -179,6 +179,17 @@ https://www.cnblogs.com/maanshancss/p/6027999.html
 
 （JDBC 同一个数据链接生成主键并返回，避免再次查询）
 
+集成github.papehelper
+https://www.cnblogs.com/qlqwjy/p/8552078.html
+
+
+pagehelper 分页不生效,总页数总是第一页解决方案
+https://zyc88.blog.csdn.net/article/details/110002808
+
+https://blog.csdn.net/wangpeng322/article/details/81330327
+
+https://segmentfault.com/a/1190000021190378
+
 ### 事务
 https://blog.csdn.net/u010963948/article/details/79208328
 

@@ -97,7 +97,8 @@ public class NetOrderServiceImpl implements NetOrderService {
 
     @Override
     public PageBase<NetOrder> queryNetOrder(Integer userId, Integer pageNo, Integer pageSize) {
-        Page page =  PageHelper.startPage(pageNo, pageSize);
+        Page<Object> page = PageHelper.startPage(pageNo, pageSize,"id asc");
+        //PageHelper.startPage(pageNo, pageSize,"id asc");
         NetOrderExample example = new NetOrderExample();
         example.createCriteria().andUserIdEqualTo(userId);
         List<NetOrder> movieList = netOrdersMapper.selectByExample(example);

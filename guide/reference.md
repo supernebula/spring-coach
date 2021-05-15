@@ -179,6 +179,9 @@ https://www.cnblogs.com/maanshancss/p/6027999.html
 
 （JDBC 同一个数据链接生成主键并返回，避免再次查询）
 
+### 事务
+https://blog.csdn.net/u010963948/article/details/79208328
+
 
 ## 自定义错误
 

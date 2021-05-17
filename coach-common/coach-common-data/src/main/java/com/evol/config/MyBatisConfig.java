@@ -64,6 +64,7 @@ public class MyBatisConfig { //implements TransactionManagementConfigurer {
         // 设置mybatis的主配置文件
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource mybatisConfigXml = resolver.getResource("classpath*:mapper/*.xml");
+        //Resource mybatisConfigXml = resolver.getResource("classpath:mapper/*.xml");
         sqlSessionFactoryBean.setConfigLocation(mybatisConfigXml);
         // 设置别名包
         sqlSessionFactoryBean.setTypeAliasesPackage("com.evol.domain.model");

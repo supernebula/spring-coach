@@ -8,6 +8,7 @@ import com.evol.domain.model.User;
 import com.evol.domain.model.UserBalanceRecord;
 import com.evol.domain.request.UpdateUserBalanceParam;
 import com.evol.enums.Gender;
+import com.evol.enums.MoneyInOutTypeEnum;
 import com.evol.mapper.UserBalanceRecordMapper;
 import com.evol.mapper.UserMapper;
 import com.evol.mapper.custom.UserCustomMapper;
@@ -17,8 +18,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.UUID;
 
@@ -31,6 +30,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserBalanceRecordMapper userBalanceRecordMapper;
 
+    @Autowired
     private UserCustomMapper userCustomMapper;
 
     @Override
@@ -51,6 +51,15 @@ public class UserServiceImpl implements UserService {
         if(user == null){
             return UpdateUserBalanceResult.falseResult(updateParam.getTradeNo(), "找不到指定的用户记录");
         }
+
+        if(MoneyInOutTypeEnum.RECHARGE.getCode().equals(updateParam.getMoneyInOutType())
+        || MoneyInOutTypeEnum.REFUND.getCode().equals(updateParam.getMoneyInOutType())){
+            updateParam.setChangeMoney(Math.abs(updateParam.getChangeMoney()));
+        }
+        if(MoneyInOutTypeEnum.CONSUME.getCode().equals(updateParam.getMoneyInOutType())){
+            updateParam.setChangeMoney(-Math.abs(updateParam.getChangeMoney()));
+        }
+
         Integer count = userCustomMapper.updateUserBalance(updateParam.getChangeMoney(), updateParam.getUserId());
         if(count < 0){
             return UpdateUserBalanceResult.falseResult(updateParam.getTradeNo(), "更新用户约失败");

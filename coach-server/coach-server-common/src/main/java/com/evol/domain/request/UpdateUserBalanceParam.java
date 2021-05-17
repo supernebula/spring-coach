@@ -15,6 +15,9 @@ UpdateUserBalanceParam implements Serializable {
 
     private int userId;
 
+    /**
+     * @see {com.evol.domain.MoneyInOutType}
+     */
     private Integer MoneyInOutType;
 
     private String tradeNo;

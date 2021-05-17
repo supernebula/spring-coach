@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.evol.mapper.UserCustomMapper">
+<mapper namespace="com.evol.mapper.custom.UserCustomMapper">
 
     <update id="updateUserBalance" parameterType="map">
         UPDATE `user` SET balance = balance + #{changeMoney} WHERE id = #{userId}

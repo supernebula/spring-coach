@@ -1,6 +1,6 @@
 package com.evol.domain.dto;
 
-import com.evol.domain.UserBalanceChangeType;
+import com.evol.enums.MoneyInOutTypeEnum;
 import lombok.Data;
 
 @Data
@@ -13,6 +13,6 @@ public class UserBalanceChangeDTO {
      */
     public Integer money;
 
-    public UserBalanceChangeType changeType;
+    public MoneyInOutTypeEnum changeType;
 
 }

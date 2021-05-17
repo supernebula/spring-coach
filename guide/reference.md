@@ -190,6 +190,10 @@ https://blog.csdn.net/wangpeng322/article/details/81330327
 
 https://segmentfault.com/a/1190000021190378
 
+classpath:和classpath*:  Invalid bound statement (not found)
+
+https://www.cnblogs.com/thomas12112406/p/6545957.html
+
 ### 事务
 https://blog.csdn.net/u010963948/article/details/79208328
 

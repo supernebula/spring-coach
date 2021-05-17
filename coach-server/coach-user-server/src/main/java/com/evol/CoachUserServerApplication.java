@@ -11,7 +11,8 @@ import springfox.documentation.spring.web.SpringfoxWebMvcConfiguration;
 
 @SpringBootApplication
 @EnableEurekaClient
-@ConditionalOnClass(CoachUserServerApplication.class)
+//@ConditionalOnClass(CoachUserServerApplication.class)
+@ConditionalOnClass(SpringfoxWebMvcConfiguration.class)
 @MapperScan("com.evol.mapper")
 public class CoachUserServerApplication  implements WebMvcConfigurer {
 

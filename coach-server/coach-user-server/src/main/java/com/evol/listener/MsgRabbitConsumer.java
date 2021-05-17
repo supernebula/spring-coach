@@ -36,7 +36,7 @@ public class MsgRabbitConsumer {
         try{
             UpdateUserBalanceParam balanceParam = JsonUtil.ParseObject(message, UpdateUserBalanceParam.class);
             userService.updateUserBalance(balanceParam);
-            channel.basicAck(tag, false);
+            channel.basicAck(tag, true);
         }catch (Exception e){
             log.error("接受消息出错");
             e.printStackTrace();

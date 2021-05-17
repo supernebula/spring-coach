@@ -81,6 +81,10 @@
                domainObjectName="UserBalanceRecord">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
+        <table schema="" tableName="user"
+               domainObjectName="User">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
 
     </context>
 </generatorConfiguration>

@@ -1,5 +1,6 @@
 package com.evol.service.impl;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.evol.domain.PageBase;
 import com.evol.domain.model.NetOrder;
 import com.evol.domain.model.NetOrderExample;
@@ -11,8 +12,10 @@ import com.evol.domain.response.PaidHandleOrderResult;
 import com.evol.enums.MoneyInOutTypeEnum;
 import com.evol.mapper.NetOrderMapper;
 import com.evol.service.NetOrderService;
+import com.evol.util.JsonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.rabbitmq.tools.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -116,6 +119,7 @@ public class NetOrderServiceImpl implements NetOrderService {
         param.setChangeMoney(money);
         param.setMoneyInOutType(MoneyInOutTypeEnum.CONSUME.getCode());
         param.setTradeNo(orderNo);
-        rabbitTemplate.convertAndSend(RabbitContants.USER_BALANCE_EXCHANGE, RabbitContants.MSG_ROUTING_KEY, "message1");
+        String jsonStr = JsonUtil.ParseString(param);
+        rabbitTemplate.convertAndSend(RabbitContants.USER_BALANCE_EXCHANGE, RabbitContants.USER_BALANCE_ROUTING_KEY, jsonStr);
     }
 }

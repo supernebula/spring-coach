@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.spring.web.SpringfoxWebMvcConfiguration;
 
-
 @SpringBootApplication
 @EnableEurekaClient
 //@ConditionalOnClass(CoachOrderServerApplication.class)

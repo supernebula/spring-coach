@@ -16,5 +16,6 @@
         <module>coach-user-server</module>
         <module>coach-server-common</module>
         <module>coach-log-server</module>
+        <module>coach-mock-server</module>
     </modules>
 </project>

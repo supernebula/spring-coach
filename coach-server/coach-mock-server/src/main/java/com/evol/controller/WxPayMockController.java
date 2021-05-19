@@ -4,7 +4,10 @@ import com.evol.domain.request.wxpay.CloseOrderParams;
 import com.evol.domain.request.wxpay.OrderQueryParams;
 import com.evol.domain.request.wxpay.RefundParams;
 import com.evol.domain.request.wxpay.UnifiedOrderParams;
+import com.evol.util.HttpUtil;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,16 +24,17 @@ public class WxPayMockController {
      * https://api.mch.weixin.qq.com/pay/unifiedorder
      * @return
      */
-    @PostMapping("/mock/unifiedorder")
-    public String unifiedOrder(UnifiedOrderParams param){
+    @PostMapping(path = "unifiedorder", consumes = {MediaType.APPLICATION_XML_VALUE},
+            produces = MediaType.APPLICATION_XML_VALUE)
+    public String unifiedOrder(@RequestBody UnifiedOrderParams param){
 
         // region result
         String result = "<xml>\n" +
                 "   <return_code><![CDATA[SUCCESS]]></return_code>\n" +
                 "   <return_msg><![CDATA[OK]]></return_msg>\n" +
-                "   <appid><![CDATA[wx2421b1c4370ec43b]]></appid>\n" +
-                "   <mch_id><![CDATA[10000100]]></mch_id>\n" +
-                "   <nonce_str><![CDATA[IITRi8Iabbblz1Jc]]></nonce_str>\n" +
+                "   <appid><![CDATA[" + param.getAppid() + "]]></appid>\n" +
+                "   <mch_id><![CDATA[" + param.getMch_id() + "]]></mch_id>\n" +
+                "   <nonce_str><![CDATA["+ param.getNonce_str() +"]]></nonce_str>\n" +
                 "   <sign><![CDATA[7921E432F65EB8ED0CE9755F0E86D72F]]></sign>\n" +
                 "   <result_code><![CDATA[SUCCESS]]></result_code>\n" +
                 "   <prepay_id><![CDATA[wx201411101639507cbf6ffd8b0779950874]]></prepay_id>\n" +
@@ -38,6 +42,10 @@ public class WxPayMockController {
                 "   <mweb_url><![CDATA[https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx2016121516420242444321ca0631331346&package=1405458241]]></mweb_url>\n" +
                 "</xml>";
         // endregion
+
+        //启个线程10秒模拟回调
+        //payResultNotify(param.getNotify_url());
+        payResultNotify("http://www.baidu.com");
         return result;
     }
 
@@ -46,17 +54,18 @@ public class WxPayMockController {
      * https://api.mch.weixin.qq.com/pay/orderquery
      * @return
      */
-    @PostMapping("/mock/orderquery")
-    public String orderQuery(OrderQueryParams params){
+    @PostMapping(path = "orderquery", consumes = {MediaType.APPLICATION_XML_VALUE},
+            produces = MediaType.APPLICATION_XML_VALUE)
+    public String orderQuery(@RequestBody OrderQueryParams param){
 
         // region result
         String result = "<xml>\n" +
                 "   <return_code><![CDATA[SUCCESS]]></return_code>\n" +
                 "   <return_msg><![CDATA[OK]]></return_msg>\n" +
-                "   <appid><![CDATA[wx2421b1c4370ec43b]]></appid>\n" +
-                "   <mch_id><![CDATA[10000100]]></mch_id>\n" +
-                "   <device_info><![CDATA[1000]]></device_info>\n" +
-                "   <nonce_str><![CDATA[TN55wO9Pba5yENl8]]></nonce_str>\n" +
+                "   <appid><![CDATA[" + param.getAppid() + "]]></appid>\n" +
+                "   <mch_id><![CDATA[" + param.getMch_id() + "]]></mch_id>\n" +
+                "   <device_info><![CDATA[WEB]]></device_info>\n" +
+                "   <nonce_str><![CDATA["+ param.getNonce_str() +"]]></nonce_str>\n" +
                 "   <sign><![CDATA[BDF0099C15FF7BC6B1585FBB110AB635]]></sign>\n" +
                 "   <result_code><![CDATA[SUCCESS]]></result_code>\n" +
                 "   <openid><![CDATA[oUpF8uN95-Ptaags6E_roPHg7AG0]]></openid>\n" +
@@ -65,10 +74,10 @@ public class WxPayMockController {
                 "   <bank_type><![CDATA[CCB_DEBIT]]></bank_type>\n" +
                 "   <total_fee>1</total_fee>\n" +
                 "   <fee_type><![CDATA[CNY]]></fee_type>\n" +
-                "   <transaction_id><![CDATA[1008450740201411110005820873]]></transaction_id>\n" +
-                "   <out_trade_no><![CDATA[1415757673]]></out_trade_no>\n" +
+                "   <transaction_id><![CDATA[" + param.getTransaction_id() + "]]></transaction_id>\n" +
+                "   <out_trade_no><![CDATA[" + param.getOut_trade_no() + "]]></out_trade_no>\n" +
                 "   <attach><![CDATA[订单额外描述]]></attach>\n" +
-                "   <time_end><![CDATA[20141111170043]]></time_end>\n" +
+                "   <time_end><![CDATA[20201111170043]]></time_end>\n" +
                 "   <trade_state><![CDATA[SUCCESS]]></trade_state>\n" +
                 "</xml>";
         // endregion
@@ -80,16 +89,17 @@ public class WxPayMockController {
      * https://api.mch.weixin.qq.com/pay/closeorder
      * @return
      */
-    @PostMapping("/mock/closeorder")
-    public String closeOrder(CloseOrderParams param){
+    @PostMapping(path = "closeorder", consumes = {MediaType.APPLICATION_XML_VALUE},
+            produces = MediaType.APPLICATION_XML_VALUE)
+    public String closeOrder(@RequestBody CloseOrderParams param){
 
         // region result
         String result = "<xml>\n" +
                 "   <return_code><![CDATA[SUCCESS]]></return_code>\n" +
                 "   <return_msg><![CDATA[OK]]></return_msg>\n" +
-                "   <appid><![CDATA[wx2421b1c4370ec43b]]></appid>\n" +
-                "   <mch_id><![CDATA[10000100]]></mch_id>\n" +
-                "   <nonce_str><![CDATA[BFK89FC6rxKCOjLX]]></nonce_str>\n" +
+                "   <appid><![CDATA[" + param.getAppid() + "]]></appid>\n" +
+                "   <mch_id><![CDATA[" + param.getMch_id() +  "]]></mch_id>\n" +
+                "   <nonce_str><![CDATA[" + param.getNonce_str() + "]]></nonce_str>\n" +
                 "   <sign><![CDATA[72B321D92A7BFA0B2509F3D13C7B1631]]></sign>\n" +
                 "   <result_code><![CDATA[SUCCESS]]></result_code>\n" +
                 "   <result_msg><![CDATA[OK]]></result_msg>\n" +
@@ -103,25 +113,32 @@ public class WxPayMockController {
      * https://api.mch.weixin.qq.com/pay/refund
      * @return
      */
-    @PostMapping("/mock/refund")
-    public String refund(RefundParams params){
+    @PostMapping(path = "refund", consumes = {MediaType.APPLICATION_XML_VALUE},
+            produces = MediaType.APPLICATION_XML_VALUE)
+    public String refund(@RequestBody RefundParams param){
 
         // region result
         String result = "<xml>\n" +
                 "   <return_code><![CDATA[SUCCESS]]></return_code>\n" +
                 "   <return_msg><![CDATA[OK]]></return_msg>\n" +
-                "   <appid><![CDATA[wx2421b1c4370ec43b]]></appid>\n" +
-                "   <mch_id><![CDATA[10000100]]></mch_id>\n" +
-                "   <nonce_str><![CDATA[NfsMFbUFpdbEhPXP]]></nonce_str>\n" +
+                "   <appid><![CDATA[" + param.getAppid() + "]]></appid>\n" +
+                "   <mch_id><![CDATA[" + param.getMch_id() + "]]></mch_id>\n" +
+                "   <nonce_str><![CDATA[" + param.getNonce_str() + "]]></nonce_str>\n" +
                 "   <sign><![CDATA[B7274EB9F8925EB93100DD2085FA56C0]]></sign>\n" +
                 "   <result_code><![CDATA[SUCCESS]]></result_code>\n" +
-                "   <transaction_id><![CDATA[1008450740201411110005820873]]></transaction_id>\n" +
-                "   <out_trade_no><![CDATA[1415757673]]></out_trade_no>\n" +
-                "   <out_refund_no><![CDATA[1415701182]]></out_refund_no>\n" +
+                "   <transaction_id><![CDATA[" + param.getTransaction_id() + "]]></transaction_id>\n" +
+                "   <out_trade_no><![CDATA[" + param.getOut_trade_no() + "]]></out_trade_no>\n" +
+                "   <out_refund_no><![CDATA[" + param.getOut_refund_no() + "]]></out_refund_no>\n" +
                 "   <refund_id><![CDATA[2008450740201411110000174436]]></refund_id>\n" +
-                "   <refund_fee>1</refund_fee>\n" +
+                "   <refund_fee>" + param.getRefund_fee() + "</refund_fee>\n" +
                 "</xml>";
         // endregion
+
+
+
+        //新启动线程，10秒后回调支付结果通过
+        //refundResultNotify(param.getNotify_url(););
+
         return result;
     }
 
@@ -130,16 +147,17 @@ public class WxPayMockController {
      * https://api.mch.weixin.qq.com/pay/refundquery
      * @return
      */
-    @PostMapping("/mock/refundquery")
-    public String refundQuery(RefundParams params){
+    @PostMapping(path = "refundquery", consumes = {MediaType.APPLICATION_XML_VALUE},
+            produces = MediaType.APPLICATION_XML_VALUE)
+    public String refundQuery(@RequestBody RefundParams param){
 
         // region result
         String result = "<xml>\n" +
-                "   <appid><![CDATA[wx2421b1c4370ec43b]]></appid>\n" +
-                "   <mch_id><![CDATA[10000100]]></mch_id>\n" +
-                "   <nonce_str><![CDATA[TeqClE3i0mvn3DrK]]></nonce_str>\n" +
-                "   <out_refund_no_0><![CDATA[1415701182]]></out_refund_no_0>\n" +
-                "   <out_trade_no><![CDATA[1415757673]]></out_trade_no>\n" +
+                "   <appid><![CDATA[" + param.getAppid() + "]]></appid>\n" +
+                "   <mch_id><![CDATA[" + param.getMch_id() + "]]></mch_id>\n" +
+                "   <nonce_str><![CDATA[" + param.getNonce_str() + "]]></nonce_str>\n" +
+                "   <out_refund_no_0><![CDATA[" + param.getOut_refund_no() + "]]></out_refund_no_0>\n" +
+                "   <out_trade_no><![CDATA[" + param.getOut_trade_no() + "]]></out_trade_no>\n" +
                 "   <refund_count>1</refund_count>\n" +
                 "   <refund_fee_0>1</refund_fee_0>\n" +
                 "   <refund_id_0><![CDATA[2008450740201411110000174436]]></refund_id_0>\n" +
@@ -157,12 +175,12 @@ public class WxPayMockController {
     /**
      * 支付结果通知
      */
-    public void payResultNotify(){
+    public void payResultNotify(String notifyUrl){
 
         //请求order server
         // region result
 
-        String  result = "<xml>\n" +
+        String  resultXml = "<xml>\n" +
                 "  <appid><![CDATA[wx2421b1c4370ec43b]]></appid>\n" +
                 "  <attach><![CDATA[支付测试]]></attach>\n" +
                 "  <bank_type><![CDATA[CFT]]></bank_type>\n" +
@@ -187,18 +205,20 @@ public class WxPayMockController {
 
         // endregion
 
+        HttpUtil.asyncPostXml(notifyUrl, resultXml);
+
 
     }
 
     /**
      * 退款结果通知
      */
-    public void refundResultNotify(){
+    public void refundResultNotify(String notifyUrl){
         //请求order server
 
         // region result
 
-        String  result = "<root>\n" +
+        String  resultXml = "<root>\n" +
                 "<out_refund_no><![CDATA[131811191610442717309]]></out_refund_no>\n" +
                 "<out_trade_no><![CDATA[71106718111915575302817]]></out_trade_no>\n" +
                 "<refund_account><![CDATA[REFUND_SOURCE_RECHARGE_FUNDS]]></refund_account>\n" +
@@ -215,6 +235,8 @@ public class WxPayMockController {
                 "</root>";
 
         // endregion
+
+        HttpUtil.asyncPostXml(notifyUrl, resultXml);
 
     }
 

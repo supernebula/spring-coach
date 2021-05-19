@@ -2,6 +2,7 @@ package com.evol.domain.request.wxpay;
 
 import java.io.Serializable;
 import com.evol.domain.model.annotation.NotRequire;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 /**
  * 统一下单请求参数
@@ -9,6 +10,8 @@ import com.evol.domain.model.annotation.NotRequire;
  * @date  2017年6月27日
  * 
  */
+
+@JacksonXmlRootElement(localName = "xml")
 public class UnifiedOrderParams extends AbstractPayParams implements Serializable {
 	/**
 	 * 

@@ -1,5 +1,6 @@
 package com.evol.utils;
 
+
 import com.thoughtworks.xstream.XStream;
 
 import java.io.*;
@@ -7,7 +8,13 @@ import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.util.Map;
 
+/**
+ * User: rizenguo
+ * Date: 2014/10/23
+ * Time: 14:59
+ */
 public class Util {
+
     //打log用
     //private static Log logger = new Log(log)
 
@@ -26,8 +33,6 @@ public class Util {
             Util.log(f.getName() + " -> " + f.get(o));
         }
     }
-
-
 
     public static byte[] readInput(InputStream in) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();

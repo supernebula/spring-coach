@@ -86,6 +86,21 @@
             <version>2.0.0</version>
         </dependency>
 
+
+        <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.14.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.arronlong/httpclientutil -->
+        <dependency>
+            <groupId>com.arronlong</groupId>
+            <artifactId>httpclientutil</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+
 <!--        <dependency>-->
 <!--            <groupId>com.baomidou</groupId>-->
 <!--            <artifactId>mybatis-plus-boot-starter</artifactId>-->
@@ -174,6 +189,12 @@
             <groupId>com.evol</groupId>
             <artifactId>coach-common-util</artifactId>
             <version>0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.evol</groupId>
+            <artifactId>coach-base-client</artifactId>
+            <version>1.0</version>
             <scope>compile</scope>
         </dependency>
 

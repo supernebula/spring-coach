@@ -1,6 +1,6 @@
 package com.evol.controller;
 
-
+import com.arronlong.httpclientutil.HttpClientUtil;
 import com.arronlong.httpclientutil.common.HttpConfig;
 import com.arronlong.httpclientutil.common.HttpHeader;
 import com.arronlong.httpclientutil.common.Utils;
@@ -15,7 +15,7 @@ import com.evol.domain.response.UnifiedOrderResult;
 import com.evol.service.WechatPayService;
 import com.evol.util.*;
 import com.evol.utils.*;
-import com.sun.deploy.net.HttpUtils;
+//import com.sun.deploy.net.HttpUtils;
 import com.sun.jndi.toolkit.url.UrlUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

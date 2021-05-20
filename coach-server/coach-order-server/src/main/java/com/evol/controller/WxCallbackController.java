@@ -34,7 +34,7 @@ public class WxCallbackController {
 
         String retStr = new String(Util.readInput(request.getInputStream()), "utf-8");
         logger.info("retStr:\n" + retStr);
-        Map<String, String> treeMap = XMLParser.getSortMapFromXML(retStr);
+        Map<String, Object> treeMap = XMLParser.getMapFromXML(retStr);
 
         // 支付响应是否成功
         if (!"SUCCESS".equals((String) treeMap.get("result_code"))) {
@@ -69,7 +69,7 @@ public class WxCallbackController {
         payOrderParam.setTotalFee((String) treeMap.get("total_fee"));
 
         try {
-            Date date = DateUtils.parseDate(treeMap.get("time_end"), new String[]{"yyyyMMddHHmmss"});
+            Date date = DateUtils.parseDate((String) treeMap.get("time_end"), new String[]{"yyyyMMddHHmmss"});
             payOrderParam.setTimeEnd(date);
         }catch (ParseException paEx){
             log.error(paEx.getMessage());
@@ -86,8 +86,14 @@ public class WxCallbackController {
                 + "<return_msg><![CDATA[" + result.getMessage() + "]]></return_msg>" + "</xml> ";
     }
 
-    private boolean wxResponseReSignOk(Map<String, String> sortMap){
+
+    private boolean wxResponseReSignOk(Map<String, Object> sortMap){
         //重新签名逻辑
         return true;
     }
+//
+//    private boolean wxResponseReSignOk(Map<String, String> sortMap){
+//        //重新签名逻辑
+//        return true;
+//    }
 }

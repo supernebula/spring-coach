@@ -68,7 +68,7 @@ public class XmlUtil {
      * <Event><![CDATA[CLICK]]></Event>
      * <EventKey><![CDATA[EVENTKEY]]></EventKey> </xml>
      *
-     * @param request
+     * @param inputStream
      * @return
      * @throws Exception
      */
@@ -95,7 +95,7 @@ public class XmlUtil {
     /**
      * 使用dom4将xml文件中的数据转换成SortedMap<Object,Object>
      *
-     * @param xmlString
+     * @param xml
      *            xml格式的字符串
      * @throws ParserConfigurationException
      * @throws IOException
@@ -126,7 +126,7 @@ public class XmlUtil {
     /**
      * 使用dom4将xml文件中的数据转换成SortedMap<Object,Object>
      *
-     * @param xmlString
+     * @param xml
      *            xml格式的字符串
      * @throws ParserConfigurationException
      * @throws IOException
@@ -157,7 +157,7 @@ public class XmlUtil {
     /**
      * 使用dom4将xml文件中的数据转换成Map<Object,Object>
      *
-     * @param xmlString
+     * @param xml
      *            xml格式的字符串
      * @throws ParserConfigurationException
      * @throws IOException
@@ -215,7 +215,7 @@ public class XmlUtil {
      *
      * @param xml
      *            待转换的xml格式的数据
-     * @param toClass
+     * @param t
      *            待转换为的java对象
      * @return
      */

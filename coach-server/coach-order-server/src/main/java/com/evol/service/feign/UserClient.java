@@ -1,6 +1,5 @@
 package com.evol.service.feign;
 
-import com.evol.base.client.User;
 import com.evol.base.client.UserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;

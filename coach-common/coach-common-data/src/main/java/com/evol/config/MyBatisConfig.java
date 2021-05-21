@@ -4,8 +4,6 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInterceptor;
 import lombok.extern.slf4j.Slf4j;

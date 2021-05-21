@@ -1,8 +1,7 @@
 package com.evol.utils;
 
 import com.evol.config.SystemConfig;
-import com.evol.model.result.ResultState;
-import com.google.gson.Gson;
+import com.evol.domain.result.ResultState;
 import org.apache.commons.lang.StringUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 
@@ -161,7 +160,6 @@ public class HttpReqUtil {
     /**
      * 将输入流转换为字符串(通过byte数组)
      * @param input  输入流
-     * @param charset
      * @return
      */
     public static String inputStreamToStrFromByte(InputStream input) {
@@ -367,7 +365,7 @@ public class HttpReqUtil {
     /**
      * 将字符流转换为图片文件
      *
-     * @param input 字符流
+     * @param inputStream 字符流
      * @param savePath  图片需要保存的路径
      * @param 类型 jpg/png等
      * @return
@@ -447,7 +445,7 @@ public class HttpReqUtil {
     /**
      * 将输入流转换为字符串
      *
-     * @param is 待转换为字符串的输入流
+     * @param inputStream 待转换为字符串的输入流
      * @return 由输入流转换String的字符串
      * @throws IOException
      */
@@ -484,13 +482,13 @@ public class HttpReqUtil {
      * @return
      */
     public static boolean checkState(String result){
-        ResultState state = null;
-        Gson gson = new Gson();
-        state = gson.fromJson(result, ResultState.class);
-        gson = null;
-        if(state.getErrcode()==0){
-            return Boolean.TRUE;
-        }
+//        ResultState state = null;
+//        Gson gson = new Gson();
+//        state = gson.fromJson(result, ResultState.class);
+//        gson = null;
+//        if(state.getErrcode()==0){
+//            return Boolean.TRUE;
+//        }
         return Boolean.FALSE;
     }
 

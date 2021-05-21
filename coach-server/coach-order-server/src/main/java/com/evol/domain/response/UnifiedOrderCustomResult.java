@@ -1,6 +1,6 @@
 package com.evol.domain.response;
 
-import com.evol.model.annotation.NotRequire;
+import com.evol.domain.model.annotation.NotRequire;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 

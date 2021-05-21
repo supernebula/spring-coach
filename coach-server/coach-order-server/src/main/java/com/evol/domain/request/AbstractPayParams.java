@@ -1,6 +1,6 @@
 package com.evol.domain.request;
 
-import com.evol.model.annotation.NotRequire;
+import com.evol.domain.model.annotation.NotRequire;
 import lombok.Data;
 
 @Data

@@ -13,27 +13,18 @@ import com.evol.domain.response.JsPayResult;
 import com.evol.domain.response.UnifiedOrderCustomResult;
 import com.evol.domain.response.UnifiedOrderResult;
 import com.evol.service.WechatPayService;
-import com.evol.util.*;
 import com.evol.utils.*;
-//import com.sun.deploy.net.HttpUtils;
-import com.sun.jndi.toolkit.url.UrlUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
-import org.apache.http.HttpRequest;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.HttpClientUtils;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.tomcat.util.json.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.xml.sax.SAXException;
-import sun.net.util.URLUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,7 +35,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 @Controller

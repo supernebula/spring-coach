@@ -19,11 +19,11 @@ public class OrderTask {
 
     }
 
-    //从 0秒开始,每20秒执行一次
-    @Scheduled(cron = "0/20 0 /1 * * ? ")
-    public void closeNewOrder2(){
+    //从 0秒开始,每10秒执行一次
+    @Scheduled(cron = "0/10 * * * * ?")
+    public void closeNewOrderAbc(){
 
-        log.debug("closeNewOrder2从 0秒开始,每20秒执行一次");
+        log.debug("closeNewOrder2从 0秒开始,每10秒执行一次");
 
     }
 

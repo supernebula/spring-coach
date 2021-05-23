@@ -24,6 +24,38 @@ public class WxPayMockController {
      * https://api.mch.weixin.qq.com/pay/unifiedorder
      * @return
      */
+
+    @PostMapping(path = "unifiedorderTest")
+    public String unifiedOrderTest(){
+
+        // region result
+        String result = "<xml>\n" +
+                "   <return_code><![CDATA[SUCCESS]]></return_code>\n" +
+                "   <return_msg><![CDATA[OK]]></return_msg>\n" +
+                "   <appid><![CDATA{testappid]]></appid>\n" +
+                "   <mch_id><![CDATA[testmchid]]></mch_id>\n" +
+                "   <nonce_str><![CDATA[testnoncestr]]></nonce_str>\n" +
+                "   <sign><![CDATA[7921E432F65EB8ED0CE9755F0E86D72F]]></sign>\n" +
+                "   <result_code><![CDATA[SUCCESS]]></result_code>\n" +
+                "   <prepay_id><![CDATA[wx201411101639507cbf6ffd8b0779950874]]></prepay_id>\n" +
+                "   <trade_type><![CDATA[MWEB]]></trade_type>\n" +
+                "   <mweb_url><![CDATA[https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx2016121516420242444321ca0631331346&package=1405458241]]></mweb_url>\n" +
+                "</xml>";
+        // endregion
+
+        //启个线程10秒模拟回调
+        //payResultNotify(param.getNotify_url());
+        //payResultNotify("http://www.baidu.com");
+        return result;
+    }
+
+
+    /**
+     * 模拟统一下单
+     * https://api.mch.weixin.qq.com/pay/unifiedorder
+     * @return
+     */
+
     @PostMapping(path = "unifiedorder", consumes = {MediaType.APPLICATION_XML_VALUE},
             produces = MediaType.APPLICATION_XML_VALUE)
     public String unifiedOrder(@RequestBody UnifiedOrderParams param){
@@ -44,8 +76,8 @@ public class WxPayMockController {
         // endregion
 
         //启个线程10秒模拟回调
-        //payResultNotify(param.getNotify_url());
-        payResultNotify("http://www.baidu.com");
+        payResultNotify(param.getNotify_url());
+        //payResultNotify("http://www.baidu.com");
         return result;
     }
 

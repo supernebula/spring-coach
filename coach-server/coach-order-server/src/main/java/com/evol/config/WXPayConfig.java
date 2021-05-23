@@ -41,11 +41,30 @@ public  class WXPayConfig {
      */
     private String mchId = "41";
 
-    private String notifyUrl = "http://h5test.dd.com/wx/callback";
+    //"http://h5test.dd.com/wx/callback";
+    private String notifyUrl = "http://127.0.0.1:8084/wx/callback";
 
     private String authCodeUrl = "http://h5test.dd.com/wx/getCode";
 
-    private String unifiedOrderUrl =  "https://api.mch.weixin.qq.com/pay/unifiedorder";
+    //统一下单接口地址
+    //https://api.mch.weixin.qq.com/pay/unifiedorder
+    private String unifiedOrderUrl =  "http://127.0.0.1:9000/mock/pay/unifiedorder";
+
+    //查询订单
+    //https://api.mch.weixin.qq.com/pay/orderquery
+    private String orderQueryUrl =  "http://127.0.0.1:9000/mock/pay/orderquery";
+
+    //关闭订单
+    //https://api.mch.weixin.qq.com/pay/closeorder
+    private String closeOrderUrl =  "http://127.0.0.1:9000/mock/pay/closeorder";
+
+    //申请退款
+    //https://api.mch.weixin.qq.com/pay/refund
+    private String refundUrl =  "http://127.0.0.1:9000/mock/pay/refund";
+
+    //查询退款
+    //https://api.mch.weixin.qq.com/pay/refundquery
+    private String refundQueryUrl =  "http://127.0.0.1:9000/mock/pay/refundquery";
 
 
 

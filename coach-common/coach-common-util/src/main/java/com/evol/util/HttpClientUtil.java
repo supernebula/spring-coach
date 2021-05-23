@@ -1,4 +1,5 @@
 package com.evol.util;
+
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -6,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -148,6 +150,7 @@ public class HttpClientUtil {
         return resultString;
     }
 
+
     public static String doPostXml(String url, String xml,String token_header) throws Exception {
         // 创建Httpclient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -157,14 +160,22 @@ public class HttpClientUtil {
             // 创建Http Post请求
             HttpPost httpPost = new HttpPost(url);
             // 创建请求内容
-            httpPost.setHeader("HTTP Method","POST");
-            httpPost.setHeader("Connection","Keep-Alive");
-            httpPost.setHeader("Content-Type","application/xml;charset=utf-8");
-            httpPost.setHeader("x-authentication-token",token_header);
+            //httpPost.setHeader("HTTP Method","POST");
+//            httpPost.setHeader("Connection","Keep-Alive");
+//            httpPost.setHeader("Content-Type","application/xml; charset=utf-8");
+
+            //httpPost.setHeader("HTTP Method","POST");
+            //httpPost.setHeader("Connection","Keep-Alive");
+            httpPost.setHeader("Content-Type","application/xml; charset=UTF-8");
+
+            if(!StringUtils.isBlank(token_header)){
+                httpPost.setHeader("x-authentication-token",token_header);
+            }
+
 
             StringEntity entity = new StringEntity(xml);
 
-            entity.setContentType("application/xml;charset=utf-8");
+            //entity.setContentType("text/xml;;charset=utf-8");
             httpPost.setEntity(entity);
 
             // 执行http请求

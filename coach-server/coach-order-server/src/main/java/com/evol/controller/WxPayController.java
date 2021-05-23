@@ -7,11 +7,13 @@ import com.arronlong.httpclientutil.common.Utils;
 import com.arronlong.httpclientutil.exception.HttpProcessException;
 import com.evol.config.SystemConfig;
 import com.evol.config.WXPayConfig;
+import com.evol.domain.model.NetOrder;
 import com.evol.domain.request.UnifiedOrderCustomParams;
 import com.evol.domain.request.wxpay.UnifiedOrderParams;
 import com.evol.domain.response.JsPayResult;
 import com.evol.domain.response.UnifiedOrderCustomResult;
 import com.evol.domain.response.UnifiedOrderResult;
+import com.evol.service.NetOrderService;
 import com.evol.service.WechatPayService;
 import com.evol.utils.*;
 import okhttp3.OkHttpClient;
@@ -23,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.xml.sax.SAXException;
 
@@ -48,6 +51,9 @@ public class WxPayController {
 
     @Autowired
     private WechatPayService wechatPayService;
+
+    @Autowired
+    private NetOrderService netOrderService;
 
 
     @GetMapping("index")
@@ -157,11 +163,14 @@ public class WxPayController {
         // 统一下单 请求的Xml(正常的xml格式)
         String unifiedXmL = wechatPayService.abstractPayToXml(unifiedOrderParams);////签名并入service
         // 返回<![CDATA[SUCCESS]]>格式的XML
+//        String unifiedOrderResultXmL =
+//                HttpReqUtil.HttpsDefaultExecute(HttpReqUtil.POST_METHOD, wXPayConfig.getUnifiedOrderUrl(),
+//                        null, unifiedXmL);
         String unifiedOrderResultXmL =
-                HttpReqUtil.HttpsDefaultExecute(HttpReqUtil.POST_METHOD, wXPayConfig.getUnifiedOrderUrl(),
-                        null, unifiedXmL);
-        // 进行签名校验
-        if (SignatureUtil.checkIsSignValidFromWeiXin(unifiedOrderResultXmL)) {
+                com.evol.util.HttpClientUtil.doPostXml( wXPayConfig.getUnifiedOrderUrl(), unifiedXmL, null);
+        // 进行签名校验（先不验证签名）
+        // if (SignatureUtil.checkIsSignValidFromWeiXin(unifiedOrderResultXmL) || true)
+        if (true) {
             String timeStamp = PayUtil.createTimeStamp();
             //统一下单响应
             UnifiedOrderResult unifiedOrderResult = XmlUtil.getObjectFromXML(unifiedOrderResultXmL, UnifiedOrderResult.class);
@@ -190,6 +199,10 @@ public class WxPayController {
             logger.info("签名验证错误");
         }
 
+        logger.debug(wxPayUrl);
+
+        //模拟支付结果
+        wxPayUrl = "http://127.0.0.1:8084/wx/mockPayResult?orderNo=" + out_trade_no;
 
         if(StringUtils.isNotBlank(wxPayUrl)){
             response.sendRedirect(wxPayUrl);
@@ -199,6 +212,16 @@ public class WxPayController {
 //        /**** 返回对象给页面 ****/
 //        return result;
     }
+
+
+    @GetMapping("mockPayResult")
+    public String payResult(Model model, String orderNo){
+        NetOrder netOrder = netOrderService.getByOrderNo(orderNo);
+        if(netOrder == null){ netOrder = new NetOrder();}
+        model.addAttribute("netOrder", netOrder);
+        return "payResult";
+    }
+
 
     /**
      * 微信统一下单接口 https://api.mch.weixin.qq.com/pay/unifiedorder
@@ -318,7 +341,7 @@ public class WxPayController {
 
 
         String retStr = new String(Util.readInput(request.getInputStream()),"utf-8");
-        logger.info("retStr:\n" + retStr);
+        logger.info("callback retStr:\n" + retStr);
         Map<String, Object> map = XMLParser.getMapFromXML(retStr);
         //返回的数据
 

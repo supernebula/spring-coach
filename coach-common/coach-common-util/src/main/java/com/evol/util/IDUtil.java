@@ -46,18 +46,18 @@ public class IDUtil {
         return LocalDateTime.now().format(hourFormat) + IdWorker.getIdStr();
     }
 
-//    public static void main(String[] args) {
-//        String no = IdNo("yyyyMMddHHmmssSSS");
-//        System.out.println(no + "，长度：" + no.length());
-//       //202105201635156351395297053714030593，长度：36
-//
-//        String hourIdNo = hourIdNo();
-//        System.out.println(hourIdNo + "，长度：" + hourIdNo.length());
-//        //20210520161395297053714030594，长度：29
+    public static void main(String[] args) {
+        String no = IdNo("yyyyMMddHHmmssSSS");
+        System.out.println(no + "，长度：" + no.length());
+       //202105201635156351395297053714030593，长度：36
 
-//        String minuteIdNo = minuteIdNo();
-//        System.out.println(minuteIdNo + "，长度：" + minuteIdNo.length());
-//        //2021052016351395297053714030595，长度：31
-//    }
+        String hourIdNo = hourIdNo();
+        System.out.println("TS" + hourIdNo + "，长度：" + hourIdNo.length());
+        //TS20210520161395297053714030594，长度：29
+
+        String minuteIdNo = minuteIdNo();
+        System.out.println(minuteIdNo + "，长度：" + minuteIdNo.length());
+        //2021052016351395297053714030595，长度：31
+    }
 
 }

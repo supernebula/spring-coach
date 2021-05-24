@@ -8,6 +8,8 @@ import com.arronlong.httpclientutil.exception.HttpProcessException;
 import com.evol.config.SystemConfig;
 import com.evol.config.WXPayConfig;
 import com.evol.domain.model.NetOrder;
+import com.evol.domain.request.PayCallBackParam;
+import com.evol.domain.request.PayOrderParam;
 import com.evol.domain.request.UnifiedOrderCustomParams;
 import com.evol.domain.request.wxpay.UnifiedOrderParams;
 import com.evol.domain.response.JsPayResult;
@@ -20,6 +22,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.http.Header;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +39,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -337,13 +344,26 @@ public class WxPayController {
     @PostMapping("callback")
     @ResponseBody
     public void callback(HttpServletRequest request, HttpServletResponse response) throws IOException, SAXException,
-            ParserConfigurationException {
+            ParserConfigurationException, ParseException {
 
 
         String retStr = new String(Util.readInput(request.getInputStream()),"utf-8");
         logger.info("callback retStr:\n" + retStr);
+
         Map<String, Object> map = XMLParser.getMapFromXML(retStr);
         //返回的数据
+        PayCallBackParam callBackParam = XmlUtil.getObjectFromXML(retStr, PayCallBackParam.class);
+
+        PayOrderParam payOrderParam = new PayOrderParam();
+        payOrderParam.setOutTradeNo(callBackParam.getOut_trade_no());
+        payOrderParam.setTransactionId(callBackParam.getTransaction_id());
+        payOrderParam.setMchId(callBackParam.getMch_id());
+        payOrderParam.setTotalFee(callBackParam.getTotal_fee());
+
+        Date endTime = DateUtils.parseDate(callBackParam.getTime_end(), "yyyyMMddHHmmss");
+        payOrderParam.setTimeEnd(endTime);
+
+        netOrderService.paidHandleOrder(payOrderParam);
 
         //支付回调处理订单 更改订单状态
 

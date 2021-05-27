@@ -17,7 +17,9 @@ public class PayOrderParam {
 
     private String mchId;
 
-    private String totalFee;
+    private Integer totalFee;
+
+    private Integer payModeType;
 
     /**
      * 支付完成时间

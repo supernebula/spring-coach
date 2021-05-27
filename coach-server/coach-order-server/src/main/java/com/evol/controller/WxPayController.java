@@ -8,15 +8,18 @@ import com.arronlong.httpclientutil.exception.HttpProcessException;
 import com.evol.config.SystemConfig;
 import com.evol.config.WXPayConfig;
 import com.evol.domain.model.NetOrder;
+import com.evol.domain.request.CreateOrderParam;
 import com.evol.domain.request.PayCallBackParam;
 import com.evol.domain.request.PayOrderParam;
 import com.evol.domain.request.UnifiedOrderCustomParams;
 import com.evol.domain.request.wxpay.UnifiedOrderParams;
+import com.evol.domain.response.CreateOrderResult;
 import com.evol.domain.response.JsPayResult;
 import com.evol.domain.response.UnifiedOrderCustomResult;
 import com.evol.domain.response.UnifiedOrderResult;
 import com.evol.service.NetOrderService;
 import com.evol.service.WechatPayService;
+import com.evol.util.IDUtil;
 import com.evol.utils.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -65,11 +68,14 @@ public class WxPayController {
 
     @GetMapping("index")
     public String index(){
+
         return "index";
     }
 
     @GetMapping("pay")
-    public String getPay(){
+    public String getPay(Model model){
+        String orderNo = IDUtil.hourIdNo();
+        model.addAttribute("orderNo", orderNo);
         return "pay";
     }
 
@@ -122,6 +128,19 @@ public class WxPayController {
         return bodyStr;
     }
 
+
+    public CreateOrderResult createMockOrder(CreateOrderParam createOrderParam){
+        NetOrder netOrder = netOrderService.getByOrderNo(createOrderParam.getOrderNo());
+        if(netOrder != null) {
+            CreateOrderResult result = new CreateOrderResult();
+            result.setOrderId(netOrder.getId());
+            result.setOrderNo(netOrder.getOrderNo());
+        }
+        createOrderParam.setUserId(1);
+        createOrderParam.setOrderNo(createOrderParam.getOrderNo());
+        CreateOrderResult createOrderResult = netOrderService.newOrder(createOrderParam);
+        return createOrderResult;
+    }
 
     /**
      * 微信统一下单接口 https://api.mch.weixin.qq.com/pay/unifiedorder
@@ -205,6 +224,8 @@ public class WxPayController {
         } else {
             logger.info("签名验证错误");
         }
+
+        //模拟订单，
 
         logger.debug(wxPayUrl);
 

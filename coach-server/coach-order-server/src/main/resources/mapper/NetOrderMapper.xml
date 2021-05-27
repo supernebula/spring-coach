@@ -15,7 +15,7 @@
     <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
     <result column="refund_order_no" jdbcType="VARCHAR" property="refundOrderNo" />
     <result column="refund_time" jdbcType="TIMESTAMP" property="refundTime" />
-    <result column="pay_mode_type" jdbcType="VARCHAR" property="payModeType" />
+    <result column="pay_mode_type" jdbcType="INTEGER" property="payModeType" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="udpate_time" jdbcType="TIMESTAMP" property="udpateTime" />
   </resultMap>
@@ -123,7 +123,7 @@
       #{moviceId,jdbcType=INTEGER}, #{moviceName,jdbcType=VARCHAR}, #{paidAmount,jdbcType=INTEGER}, 
       #{amount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{payOrderNo,jdbcType=VARCHAR}, 
       #{payTime,jdbcType=TIMESTAMP}, #{refundOrderNo,jdbcType=VARCHAR}, #{refundTime,jdbcType=TIMESTAMP}, 
-      #{payModeType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{udpateTime,jdbcType=TIMESTAMP}
+      #{payModeType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{udpateTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.NetOrder" useGeneratedKeys="true">
@@ -213,7 +213,7 @@
         #{refundTime,jdbcType=TIMESTAMP},
       </if>
       <if test="payModeType != null">
-        #{payModeType,jdbcType=VARCHAR},
+        #{payModeType,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -272,7 +272,7 @@
         refund_time = #{record.refundTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.payModeType != null">
-        pay_mode_type = #{record.payModeType,jdbcType=VARCHAR},
+        pay_mode_type = #{record.payModeType,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -300,7 +300,7 @@
       pay_time = #{record.payTime,jdbcType=TIMESTAMP},
       refund_order_no = #{record.refundOrderNo,jdbcType=VARCHAR},
       refund_time = #{record.refundTime,jdbcType=TIMESTAMP},
-      pay_mode_type = #{record.payModeType,jdbcType=VARCHAR},
+      pay_mode_type = #{record.payModeType,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       udpate_time = #{record.udpateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -347,7 +347,7 @@
         refund_time = #{refundTime,jdbcType=TIMESTAMP},
       </if>
       <if test="payModeType != null">
-        pay_mode_type = #{payModeType,jdbcType=VARCHAR},
+        pay_mode_type = #{payModeType,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -372,7 +372,7 @@
       pay_time = #{payTime,jdbcType=TIMESTAMP},
       refund_order_no = #{refundOrderNo,jdbcType=VARCHAR},
       refund_time = #{refundTime,jdbcType=TIMESTAMP},
-      pay_mode_type = #{payModeType,jdbcType=VARCHAR},
+      pay_mode_type = #{payModeType,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       udpate_time = #{udpateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

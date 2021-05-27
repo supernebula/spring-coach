@@ -186,16 +186,18 @@
 </body>
 <script language="javascript">
     function GetDateNow() {
-        var vNow = new Date();
-        var sNow = "";
-        sNow += String(vNow.getFullYear());
-        sNow += String(vNow.getMonth() + 1);
-        sNow += String(vNow.getDate());
-        sNow += String(vNow.getHours());
-        sNow += String(vNow.getMinutes());
-        sNow += String(vNow.getSeconds());
-        sNow += String(vNow.getMilliseconds());
-        document.getElementById("outTradeNo").value =  "TESTNO" + sNow;
+        // var vNow = new Date();
+        // var sNow = "";
+        // sNow += String(vNow.getFullYear());
+        // sNow += String(vNow.getMonth() + 1);
+        // sNow += String(vNow.getDate());
+        // sNow += String(vNow.getHours());
+        // sNow += String(vNow.getMinutes());
+        // sNow += String(vNow.getSeconds());
+        // sNow += String(vNow.getMilliseconds());
+        // document.getElementById("outTradeNo").value =  "TESTNO" + sNow;
+        document.getElementById("outTradeNo").value = "${orderNo}";
+
         document.getElementById("subject").value = "手机网站支付测试商品";
         document.getElementById("totalFee").value = "1";
         document.getElementById("detail").value = "购买测试商品0.01元";

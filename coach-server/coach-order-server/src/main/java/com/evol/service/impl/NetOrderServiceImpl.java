@@ -1,6 +1,7 @@
 package com.evol.service.impl;
 
-import com.alibaba.druid.support.json.JSONUtils;
+import com.evol.contancts.enums.NetOrderStatusEnum;
+import com.evol.contancts.enums.PayModeTypeEnum;
 import com.evol.domain.PageBase;
 import com.evol.domain.model.NetOrder;
 import com.evol.domain.model.NetOrderExample;
@@ -12,10 +13,10 @@ import com.evol.domain.response.PaidHandleOrderResult;
 import com.evol.enums.MoneyInOutTypeEnum;
 import com.evol.mapper.NetOrderMapper;
 import com.evol.service.NetOrderService;
+import com.evol.util.IDUtil;
 import com.evol.util.JsonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.rabbitmq.tools.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -34,9 +35,23 @@ public class NetOrderServiceImpl implements NetOrderService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+
     @Override
     public CreateOrderResult newOrder(CreateOrderParam reqParam) {
-        return null;
+        NetOrder netOrder = new NetOrder();
+        netOrder.setOrderNo(IDUtil.hourIdNo());
+        netOrder.setUserId(reqParam.getUserId());
+        netOrder.setMoviceId(reqParam.getMovieId());
+        netOrder.setMoviceName(reqParam.getMovieName());
+        netOrder.setStatus(NetOrderStatusEnum.UNPAID.getCode());
+        netOrder.setAmount(reqParam.getAmount());
+        netOrder.setPayModeType(PayModeTypeEnum.NONE.getCode());
+        netOrder.setCreateTime(new Date());
+        netOrdersMapper.insert(netOrder);
+        CreateOrderResult result = new CreateOrderResult();
+        result.setOrderId(netOrder.getId());
+        result.setOrderNo(netOrder.getOrderNo());
+        return result;
     }
 
     @Override
@@ -48,8 +63,11 @@ public class NetOrderServiceImpl implements NetOrderService {
 
         netOrder.setPayOrderNo(payOrderParam.getTransactionId());
         netOrder.setPayTime(payOrderParam.getTimeEnd());
+        netOrder.setStatus(NetOrderStatusEnum.PAID.getCode());
+        netOrder.setPaidAmount(payOrderParam.getTotalFee());
+        netOrder.setPayModeType(payOrderParam.getPayModeType());
+        netOrder.setUdpateTime(new Date());
         netOrdersMapper.updateByPrimaryKeySelective(netOrder);
-
         return PaidHandleOrderResult.success(payOrderParam.getOutTradeNo());
     }
 

@@ -30,7 +30,7 @@ public class PayCallBackParam implements Serializable {
 	private String return_code;
 	private String sign;// 签名
 	private String time_end;
-	private String total_fee;
+	private Integer total_fee;
 	private String coupon_fee;
 	private String coupon_count;
 	private String coupon_type;

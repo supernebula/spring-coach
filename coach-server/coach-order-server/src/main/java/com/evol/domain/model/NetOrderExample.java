@@ -945,62 +945,52 @@ public class NetOrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeEqualTo(String value) {
+        public Criteria andPayModeTypeEqualTo(Integer value) {
             addCriterion("pay_mode_type =", value, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeNotEqualTo(String value) {
+        public Criteria andPayModeTypeNotEqualTo(Integer value) {
             addCriterion("pay_mode_type <>", value, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeGreaterThan(String value) {
+        public Criteria andPayModeTypeGreaterThan(Integer value) {
             addCriterion("pay_mode_type >", value, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeGreaterThanOrEqualTo(String value) {
+        public Criteria andPayModeTypeGreaterThanOrEqualTo(Integer value) {
             addCriterion("pay_mode_type >=", value, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeLessThan(String value) {
+        public Criteria andPayModeTypeLessThan(Integer value) {
             addCriterion("pay_mode_type <", value, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeLessThanOrEqualTo(String value) {
+        public Criteria andPayModeTypeLessThanOrEqualTo(Integer value) {
             addCriterion("pay_mode_type <=", value, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeLike(String value) {
-            addCriterion("pay_mode_type like", value, "payModeType");
-            return (Criteria) this;
-        }
-
-        public Criteria andPayModeTypeNotLike(String value) {
-            addCriterion("pay_mode_type not like", value, "payModeType");
-            return (Criteria) this;
-        }
-
-        public Criteria andPayModeTypeIn(List<String> values) {
+        public Criteria andPayModeTypeIn(List<Integer> values) {
             addCriterion("pay_mode_type in", values, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeNotIn(List<String> values) {
+        public Criteria andPayModeTypeNotIn(List<Integer> values) {
             addCriterion("pay_mode_type not in", values, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeBetween(String value1, String value2) {
+        public Criteria andPayModeTypeBetween(Integer value1, Integer value2) {
             addCriterion("pay_mode_type between", value1, value2, "payModeType");
             return (Criteria) this;
         }
 
-        public Criteria andPayModeTypeNotBetween(String value1, String value2) {
+        public Criteria andPayModeTypeNotBetween(Integer value1, Integer value2) {
             addCriterion("pay_mode_type not between", value1, value2, "payModeType");
             return (Criteria) this;
         }

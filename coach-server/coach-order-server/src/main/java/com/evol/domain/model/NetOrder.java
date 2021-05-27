@@ -30,7 +30,7 @@ public class NetOrder implements Serializable {
 
     private Date refundTime;
 
-    private String payModeType;
+    private Integer payModeType;
 
     private Date createTime;
 
@@ -142,12 +142,12 @@ public class NetOrder implements Serializable {
         this.refundTime = refundTime;
     }
 
-    public String getPayModeType() {
+    public Integer getPayModeType() {
         return payModeType;
     }
 
-    public void setPayModeType(String payModeType) {
-        this.payModeType = payModeType == null ? null : payModeType.trim();
+    public void setPayModeType(Integer payModeType) {
+        this.payModeType = payModeType;
     }
 
     public Date getCreateTime() {

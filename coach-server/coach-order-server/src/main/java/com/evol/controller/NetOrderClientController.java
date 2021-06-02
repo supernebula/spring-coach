@@ -27,11 +27,13 @@ public class NetOrderClientController {
         return ApiResponse.success(pageResult);
     }
 
-    @ApiOperation(value = "根据ID获取网络订单", response = ApiResponse.class)
+    @ApiOperation(value = "根据订单获取网络订单", response = ApiResponse.class)
     @GetMapping("get")
     public ApiResponse get(Integer orderId){
         NetOrder item = netOrderService.getNetOrderById(orderId);
         return ApiResponse.success(item);
     }
+
+    
 
 }

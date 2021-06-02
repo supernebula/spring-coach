@@ -21,7 +21,7 @@ public class MovieClientController {
     private MovieService movieService;
 
 
-    @ApiOperation(value = "查询电影", response = ApiResponse.class)
+    @ApiOperation(value = "查询电影列表", response = ApiResponse.class)
     @PostMapping("/query")
     public ApiResponse query(MovieQueryRequest reqParam){
         PageBase<Movie> result = movieService.queryPage(reqParam);

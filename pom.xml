@@ -222,6 +222,7 @@
         <module>coach-common</module>
         <module>coach-common</module>
         <module>test</module>
+        <module>coach-web</module>
     </modules>
     <packaging>pom</packaging>
 

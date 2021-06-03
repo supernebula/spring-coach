@@ -11,7 +11,7 @@ public class MovieController {
 
     @GetMapping({"index", "/", ""})
     public String index(Model model){
-        return "movie/index";
+        return "/movie/index";
     }
 
 }

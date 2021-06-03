@@ -14,4 +14,9 @@ public class MovieController {
         return "/movie/index";
     }
 
+
+    @GetMapping({"detail", "/", ""})
+    public String detail(Model model){
+        return "/movie/detail";
+    }
 }

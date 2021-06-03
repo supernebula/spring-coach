@@ -2,110 +2,47 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="shared/layout">
 
 <head>
-    <title>Movie</title>
+    <title>M Management</title>
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}" />
+    <script th:src="@{/jquery/jquery.js}"></script>
+
+    <style>
+        .content #item-list { width: 100%; height: 100px; }
+        .movie-item {  height: 100px; }
+        .movie-item .movie-img { height:100px;  width: 20%; min-width: 100px; }
+        .movie-item .movie-img img { height:100px;  width: 100px; }
+        .movie-item .name { height: 20px; }
+        .movie-item .foreign_name{ height: 20px; }
+        .movie-item .minutes { height: 20px; }
+        .movie-item .space_type { height: 20px; }
+    </style>
+
 </head>
 <body>
 <!-- Content Wrapper. Contains page content -->
 <div layout:fragment="content" class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>
-            Movie List
-        </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Movie</a></li>
-            <li class="active">detail</li>
-            <li><a class="btn btn-default" href="javascript:history.go(-1)" role="button">返回</a></li>
         </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
         <!-- Main row -->
-        <div class="row">
-            <div class="col-lg-12 col-xs-12">
-                <div id="business-detail">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Name</label>
-                            <div class="col-sm-10">
-                                <span id="name"  class="checkbox"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">City</label>
-                            <div class="col-sm-10">
-                                <span id="city"  class="checkbox"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">State</label>
-                            <div class="col-sm-10">
-                                <span id="state" class="checkbox"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Neighborhood</label>
-                            <div class="col-sm-10">
-                                <span id="neighborhood" class="checkbox"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Address</label>
-                            <div class="col-sm-10">
-                                <span id="address" class="checkbox"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">PostalCode</label>
-                            <div class="col-sm-10">
-                                <span id="postalCode" class="checkbox"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Latitude</label>
-                            <div class="col-sm-10">
-                                <span id="latitude" class="checkbox"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Longitude</label>
-                            <div class="col-sm-10">
-                                <span id="longitude" class="checkbox"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Stars</label>
-                            <div class="col-sm-10">
-                                <span id="stars" class="checkbox"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">ReviewCount</label>
-                            <div class="col-sm-10">
-                                <span id="reviewCount" class="checkbox"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">IsOpen</label>
-                            <div class="col-sm-10">
-                                <span id="isOpen" class="checkbox"></span>
-                            </div>
-                        </div>
-
-                    </form>
-
-
-                </div>
-            </div>
+        <div class="row " id="item-list">
+            <!--                <div class="col-lg-12 col-xs-12 row movie-item">-->
+            <!--                    <div class="col-lg-4 col-xs-4 movie-img">-->
+            <!--                        <img src="" alt="" />-->
+            <!--                    </div>-->
+            <!--                    <div class="col-lg-8 col-xs-8 name"> </div>-->
+            <!--                    <div class="col-lg-8 col-xs-8 foreign_name"> </div>-->
+            <!--                    <div class="col-lg-8 col-xs-8 release_date"></div>-->
+            <!--                    <div class="col-lg-8 col-xs-8 minutes"> </div>-->
+            <!--                    <div class="col-lg-8 col-xs-8 space_type"> </div>-->
+            <!--                </div>-->
         </div>
         <!-- /.row (main row) -->
 
@@ -113,31 +50,39 @@
     <!-- /.content -->
 </div>
 <th:block layout:fragment="scriptsblock">
-    <script th:inline="javascript">
+    <script>
 
-        var apiUrl = "/api/business/detail/" + [[${id}]];
+        var item = {id:1, name:"name11", foreignName : "fore name11", releaseDate: "2021-01-20", minutes :
+                "120分钟", spaceType : "二维",
+            images :
+                "http://img.bj.wezhan.cn/content/sitefiles/2077061/images/12860219_qrcode_for_gh_48a5c13a8ebb_258.jpeg"};
+
+
+        var apiUrl = "http://localhost:7000/api-business/client/movie/query";
         $(document).ready(function() {
-            $.getJSON(apiUrl, null, function (response) {
-                if(!response.success)
-                {
-                    $("#business-detail #name").html(response.message);
-                }
-
-                var item = response.data;
-                $("#business-detail #name").html(item.name);
-                $("#business-detail #city").html(item.city);
-                $("#business-detail #state").html(item.state);
-                $("#business-detail #neighborhood").html(item.neighborhood);
-                $("#business-detail #address").html(item.address);
-                $("#business-detail #postalCode").html(item.postalCode);
-                $("#business-detail #latitude").html(item.latitude);
-                $("#business-detail #longitude").html(item.longitude);
-                $("#business-detail #stars").html(item.stars);
-                $("#business-detail #reviewCount").html(item.reviewCount);
-                $("#business-detail #isOpen").html(item.isOpen);
-            });
-
+            console.log(item);
+            show(item);
         });
+
+        function show(item) {
+            var imgUri = item.images;
+            var movieHtml = '<div class="col-lg-12 col-xs-12 movie-img">\n' +
+                '                        <a href="detail.html?movieId=' + item.id +'"><img src="' +
+                imgUri  +' " alt="'+ item.name +'" /></a>\n' +
+                '                    </div><div class="col-lg-12 col-xs-12 movie-item">\n' +
+                '                    <div class="col-lg-8 row">\n' +
+                '                    <div class="col-lg-7 col-xs-7 name"> ' + item.name + ' </div>\n' +
+                '                    <div class="col-lg-8 col-xs-8 foreign_name">' + item.foreignName +
+                ' </div>\n' +
+                '                    <div class="col-lg-8 col-xs-8 release_date">' + item.releaseDate + '</div>\n' +
+                '                    <div class="col-lg-8 col-xs-8 minutes"> ' + item.minutes + '</div>\n' +
+                '                    <div class="col-lg-8 col-xs-8 space_type">' + item.spaceType + ' </div>\n' +
+                '                </div><div><a href="detail.html?movieId=' + item.id +'">购买</a></div>>' +
+                '</div>
+            $("#item-list").append(movieHtml);
+
+        }
+
     </script>
 </th:block>
 </body>

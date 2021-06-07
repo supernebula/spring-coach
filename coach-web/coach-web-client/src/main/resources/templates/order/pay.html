@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="shared/layout">
+
 <head>
     <title>wx H5 统一下单</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -136,6 +137,7 @@
             color: #fff;
         }
     </style>
+    <script th:src="@{/jquery/jquery.js}"></script>
 </head>
 <body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4>
 <header class="am-header">
@@ -168,7 +170,8 @@
                 <dt></dt>
                 <dd id="btn-dd">
                         <span class="new-btn-login-sp">
-                            <button class="new-btn-login" type="submit" style="text-align:center;">确 认</button>
+                            <button class="new-btn-login" type="button" onclick="pay()" style="text-align:center;">确
+                                认</button>
                         </span>
                     <span class="note-help">如果您点击“确认”按钮，即表示您同意该次的执行操作。</span>
                 </dd>
@@ -203,5 +206,25 @@
         document.getElementById("detail").value = "购买测试商品0.01元";
     }
     GetDateNow();
+
+    function pay() {
+
+        window.location.replace("/payResult");
+
+        $.post("/pay/byBalance", { orderId: $("#orderId").val(), amount: $("#totalFee").val(), userId:
+                    $("#userId").val()},
+            function(resp){
+                if(resp.code != 0 || resp.subCode != 0){
+                    console.log(resp.code);
+                    console.log(resp.msg);
+                    console.log(resp.subCode);
+                }
+
+                //window.location.replace("/payResult");
+            });
+
+
+    }
+
 </script>
 </html>

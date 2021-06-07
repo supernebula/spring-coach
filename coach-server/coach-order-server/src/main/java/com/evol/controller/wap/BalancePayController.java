@@ -1,4 +1,4 @@
-package com.evol.controller;
+package com.evol.controller.wap;
 
 import com.evol.domain.request.PayOrderParam;
 import com.evol.domain.response.PaidHandleOrderResult;
@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/pay")
+@RequestMapping("/balancePay")
 @RestController
-public class PayController {
+public class BalancePayController {
 
     @Autowired
     private NetOrderService netOrderService;
 
-    @GetMapping("/byBalance")
-    public ApiResponse payByBalance(Integer amount, Integer userId, Integer orderId){
+    @GetMapping("/pay")
+    public ApiResponse pay(Integer amount, Integer userId, Integer orderId){
         PayOrderParam payOrderParam = new PayOrderParam();
         PaidHandleOrderResult result = netOrderService.payByBalance(amount, userId, orderId);
         return ApiResponse.success(result);

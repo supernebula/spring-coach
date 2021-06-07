@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/movie")
-public class MovieController {
+@RequestMapping("/")
+public class HomeController {
 
     @GetMapping({"index", "/", ""})
     public String index(Model model){
@@ -15,8 +15,18 @@ public class MovieController {
     }
 
 
-    @GetMapping({"detail", "/", ""})
+    @GetMapping({"/movie/detail"})
     public String detail(Model model){
         return "/movie/detail";
+    }
+
+    @GetMapping({"/pay"})
+    public String pay(Model model){
+        return "/order/pay";
+    }
+
+    @GetMapping({"/payResult"})
+    public String payResult(Model model){
+        return "/order/payResult";
     }
 }

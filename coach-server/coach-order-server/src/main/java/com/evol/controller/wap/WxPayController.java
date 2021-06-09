@@ -51,7 +51,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/wxAuth")
+@RequestMapping("/wxPay")
 public class WxPayController {
 
     private static final Logger logger = LoggerFactory.getLogger(com.evol.controller.WxPayController.class);

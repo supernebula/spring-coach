@@ -21,4 +21,6 @@ public interface NetOrderService {
 
     PaidHandleOrderResult payByBalance(Integer amount, Integer userId, Integer orderId);
 
+    PaidHandleOrderResult payByBalance(NetOrder netOrder);
+
 }

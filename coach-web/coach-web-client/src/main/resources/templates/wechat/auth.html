@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="shared/layout">
+
+<head>
+    <title>M Management</title>
+    <script th:src="@{/jquery/jquery.js}"></script>
+
+</head>
+<body>
+
+<div id="wxAuthCodeUrl">
+
+</div>
+
+<br/>
+
+跳转微信授权...
+
+
+<th:block layout:fragment="scriptsblock">
+    <script>
+        var apiUrl = "http://localhost:7000/api-order/wxAuth/reqCodeUri";
+        $(document).ready(function() {
+            $.ajax({ url: apiUrl, success: function(resp){
+
+                    if(resp.code ==0 && resp.subCode == 0){
+                        var wxAuthCodeUrl = resp.data;
+                        $("#wxAuthCodeUrl").text(wxAuthCodeUrl);
+                        window.location.replace(wxAuthCodeUrl);
+                    }
+                }});
+        });
+    </script>
+</th:block>
+</body>
+</html>

@@ -19,7 +19,8 @@
 
 <th:block layout:fragment="scriptsblock">
     <script>
-        var apiUrl = "http://localhost:7000/api-order/wxAuth/reqCodeUri";
+        var apiUrl = "http://localhost:7000/api-order/WxOAuth/requestCode";
+        var apiUrl = "http://localhost:8089/WxOAuth/requestCode";
         $(document).ready(function() {
             $.ajax({ url: apiUrl, success: function(resp){
 

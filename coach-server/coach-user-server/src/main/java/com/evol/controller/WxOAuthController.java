@@ -25,6 +25,7 @@ import java.time.Duration;
 @Slf4j
 @RestController
 @RequestMapping("/WxOAuth")
+@CrossOrigin
 public class WxOAuthController {
 
     //@Autowired

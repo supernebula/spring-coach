@@ -70,7 +70,7 @@ public class ApiResponse<T> implements Serializable {
         ApiResponse response = new ApiResponse();
         response.setCode(ApiResponseEnum.SUCCESS.getCode());
         response.setMsg(ApiResponseEnum.SUCCESS.getDescription());
-        response.setSubCode(1);
+        response.setSubCode(0);
         response.setSubMsg("ok");
         response.setData(data);
         return response;

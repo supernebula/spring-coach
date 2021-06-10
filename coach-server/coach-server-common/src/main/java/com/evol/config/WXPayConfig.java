@@ -29,9 +29,9 @@ public  class WXPayConfig {
      *
      * @return App ID
      */
-    private String appId = "30";
+    private String appId = "wx52fd0bec35a57abe";
 
-    private String appSecret = "15";
+    private String appSecret = "a82cbbe72f8f61a014e208603a4ebec0";
 
 
     /**
@@ -44,7 +44,8 @@ public  class WXPayConfig {
     //"http://h5test.dd.com/wx/callback";
     private String notifyUrl = "http://127.0.0.1:8084/wx/callback";
 
-    private String authCodeUrl = "http://h5test.dd.com/wx/getCode";
+    private String reqCodeCallbackUrl = "http://h5test.natapp1.cc/wx/requstCode";
+
 
     //统一下单接口地址
     //https://api.mch.weixin.qq.com/pay/unifiedorder

@@ -16,6 +16,11 @@ public class HomeController {
         return "/wechat/reqCode";
     }
 
+    @GetMapping("wechat/reqToken")
+    public String wechatReqToken(){
+        return "/wechat/reqToken";
+    }
+
     @GetMapping({"index", "/", ""})
     public String index(Model model){
         return "/movie/index";

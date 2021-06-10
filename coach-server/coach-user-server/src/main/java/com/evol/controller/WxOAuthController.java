@@ -41,16 +41,17 @@ public class WxOAuthController {
 
     @ApiOperation(value = "授权登录", response = String.class)
     @GetMapping(value = "/requestCode")
-    public ApiResponse reqCodeUri(HttpServletResponse response) throws IOException {
-        String redirectUri = URLEncoder.encode(wXPayConfig.getAuthCodeUrl(), StandardCharsets.UTF_8.toString()) ;
-        String uri = wXPayConfig.getAuthCodeUrl() + "?appid=" + wXPayConfig.getAppId() +
-                "&redirect_uri=" + redirectUri + "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+    public ApiResponse reqCodeUri() throws IOException {
+        String redirectUri = URLEncoder.encode(wXPayConfig.getReqCodeCallbackUrl(), StandardCharsets.UTF_8.toString()) ;
+        System.out.println("redirectUri:" + redirectUri);
+        String uri = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + wXPayConfig.getAppId() +
+                "&redirect_uri=" + redirectUri + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
         return ApiResponse.success(uri);
     }
 
-    @GetMapping("getToken")
+    @GetMapping("requestToken")
     @ResponseBody
-    public Object getToken(@RequestParam(name = "code", required = false) String code){
+    public Object requestToken(@RequestParam(name = "code", required = false) String code){
         System.out.println("code:" + code);
 
 

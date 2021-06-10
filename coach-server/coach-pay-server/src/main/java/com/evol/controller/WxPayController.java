@@ -16,7 +16,6 @@ import com.evol.model.response.UnifiedOrderCustomResult;
 import com.evol.model.response.UnifiedOrderResult;
 import com.evol.service.WechatPayService;
 import com.evol.util.*;
-import com.sun.deploy.net.HttpUtils;
 import com.sun.jndi.toolkit.url.UrlUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

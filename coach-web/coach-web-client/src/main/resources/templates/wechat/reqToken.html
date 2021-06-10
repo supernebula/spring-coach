@@ -29,15 +29,18 @@
 
 
         var authCode = getUrlParam("code");
-        var apiUrl = "http://mx53iq.natappfree.cc/WxOAuth/requestCode=" + authCode;
+        var apiUrl = "http://i92c5k.natappfree.cc/WxOAuth/requestToken?code=" + authCode;
         $(document).ready(function() {
             $.ajax({ url: apiUrl, success: function(resp){
 
-                    if(resp.code ==0 && resp.subCode == 0){
-                        var wxAuthCodeUrl = resp.data;
-                        $("#wxAuthCodeUrl").text(wxAuthCodeUrl);
-                        window.location.replace(wxAuthCodeUrl);
-                    }
+                    var result = resp.data;
+                    console.log(result);
+                    $("#wxAuthCodeUrl").text(JSON.stringify(result));
+
+                    // if(resp.code ==0 && resp.subCode == 0){
+                    //
+                    //     //window.location.replace(wxAuthCodeUrl);
+                    // }
                 }});
         });
     </script>

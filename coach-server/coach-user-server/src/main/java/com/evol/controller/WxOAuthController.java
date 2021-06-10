@@ -39,19 +39,21 @@ public class WxOAuthController {
     @Autowired
     private WXPayConfig wXPayConfig;
 
+    @CrossOrigin
     @ApiOperation(value = "授权登录", response = String.class)
     @GetMapping(value = "/requestCode")
     public ApiResponse reqCodeUri() throws IOException {
         String redirectUri = URLEncoder.encode(wXPayConfig.getReqCodeCallbackUrl(), StandardCharsets.UTF_8.toString()) ;
         System.out.println("redirectUri:" + redirectUri);
         String uri = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + wXPayConfig.getAppId() +
-                "&redirect_uri=" + redirectUri + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                "&redirect_uri=" + redirectUri + "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
         return ApiResponse.success(uri);
     }
 
-    @GetMapping("requestToken")
+    @CrossOrigin
+    @GetMapping("/requestToken")
     @ResponseBody
-    public Object requestToken(@RequestParam(name = "code", required = false) String code){
+    public ApiResponse requestToken(@RequestParam(name = "code", required = false) String code){
         System.out.println("code:" + code);
 
 
@@ -68,6 +70,7 @@ public class WxOAuthController {
         String bodyStr = "null";
 
         Request request = new Request.Builder().url(uri).build();
+        AccessTokenResult tokenResult = null;
         try (Response response = okHttpClient.newCall(request).execute()) {
             okhttp3.ResponseBody body = (okhttp3.ResponseBody) response.body();
             if (response.isSuccessful()) {
@@ -80,7 +83,7 @@ public class WxOAuthController {
 //                        "scope":"SCOPE"
 //                }
 
-                AccessTokenResult tokenResult = JsonUtil.ParseObject(bodyStr, AccessTokenResult.class);
+                tokenResult = JsonUtil.ParseObject(bodyStr, AccessTokenResult.class);
 
                 //todo
                 //保存到数据库
@@ -96,7 +99,7 @@ public class WxOAuthController {
         }
         System.out.println("bodyStr:" + bodyStr);
 
-        return bodyStr;
+        return ApiResponse.success(tokenResult);
     }
 
 

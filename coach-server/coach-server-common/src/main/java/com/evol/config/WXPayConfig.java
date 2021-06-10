@@ -29,9 +29,9 @@ public  class WXPayConfig {
      *
      * @return App ID
      */
-    private String appId = "wx52fd0bec35a57abe";
+    private String appId =  "wx732"; // "wx52fd0bec358888888";
 
-    private String appSecret = "a82cbbe72f8f61a014e208603a4ebec0";
+    private String appSecret = "1337";  //"a82cbbe72f8f61234567898765432";
 
 
     /**
@@ -44,7 +44,7 @@ public  class WXPayConfig {
     //"http://h5test.dd.com/wx/callback";
     private String notifyUrl = "http://127.0.0.1:8084/wx/callback";
 
-    private String reqCodeCallbackUrl = "http://h5test.natapp1.cc/wx/requstCode";
+    private String reqCodeCallbackUrl = "http://h5test.natapp1.cc/wechat/reqToken";
 
 
     //统一下单接口地址

@@ -11,11 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @CrossOrigin
 public class HomeController {
 
+    @GetMapping("wechat/wxCheck")
+    public String wxCheck(String token){
+        return token;
+    }
+
+    @CrossOrigin
     @GetMapping("wechat/reqCode")
     public String wechatReqCode(){
         return "/wechat/reqCode";
     }
 
+    @CrossOrigin
     @GetMapping("wechat/reqToken")
     public String wechatReqToken(){
         return "/wechat/reqToken";

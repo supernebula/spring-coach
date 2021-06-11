@@ -56,6 +56,7 @@
     </div>
     <th:block layout:fragment="scriptsblock">
         <script>
+            $.support.cors = true;
 
             var list = new Array();
             var item1 = {id:1, name:"name11", foreignName : "fore name11", releaseDate: "2021-01-20", minutes :
@@ -69,22 +70,23 @@
             list.push(item1);
             list.push(item2);
 
-            var apiUrl = "http://localhost:7000/api-business/client/movie/query";
+            //var apiUrl = "http://localhost:7000/api-business/client/movie/query";
+            var apiUrl = "http://localhost:8088/client/movie/query";
             $(document).ready(function() {
-                // $.getJSON(apiUrl, {name : "", pageNo : 1, pageSize :30} ,function(data){
-                //     console.log(data);
-                //     $.each(data.data, function(i,item){
-                //         debugger;
-                //         console.log(item)
-                //         show(item);
-                //     });
-                // });
-
-                $.each(list, function(i,item){
-                    //debugger;
-                    console.log(item);
-                    show(item);
+                $.post(apiUrl, {name : "", pageNo : 1, pageSize :30} ,function(resp){
+                    console.log(resp);
+                    $.each(resp.data.records, function(i,item){
+                        debugger;
+                        console.log(item)
+                        show(item);
+                    },"json");
                 });
+
+                // $.each(list, function(i,item){
+                //     //debugger;
+                //     console.log(item);
+                //     show(item);
+                // });
 
             });
 

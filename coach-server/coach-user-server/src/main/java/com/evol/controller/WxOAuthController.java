@@ -1,8 +1,9 @@
 package com.evol.controller;
 
 import com.evol.config.WXPayConfig;
-import com.evol.constants.ColumnNames;
-import com.evol.service.OAuthService;
+import com.evol.domain.model.User;
+import com.evol.enums.ApiResponseEnum;
+import com.evol.service.UserService;
 import com.evol.util.JsonUtil;
 import com.evol.utils.WeChatAuthorizeUtil;
 import com.evol.web.ApiResponse;
@@ -14,27 +15,21 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.Date;
 
 @Slf4j
 @RestController
 @RequestMapping("/WxOAuth")
-@CrossOrigin
 public class WxOAuthController {
-
-    //@Autowired
-    //private OAuthService oAuthService; //授权service层接口
-
 
     @Autowired
     private WeChatAuthorizeUtil weChatAuthorizeUtil; //微信授权工具类， 后面有
 
+    private UserService userService;
 
     @Autowired
     private WXPayConfig wXPayConfig;
@@ -54,10 +49,8 @@ public class WxOAuthController {
     @GetMapping("/requestToken")
     @ResponseBody
     public ApiResponse requestToken(@RequestParam(name = "code", required = false) String code){
-        System.out.println("code:" + code);
-
-
-        String uri = wXPayConfig.getWxTokenUrl() + "?appid=" + wXPayConfig.getAppId() +
+        log.info("wechat auth code:" + code);
+        String reqTokenUri = wXPayConfig.getWxTokenUrl() + "?appid=" + wXPayConfig.getAppId() +
                 "&secret=" + wXPayConfig.getAppSecret() +"&code=" + code + "&grant_type=authorization_code";
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -67,60 +60,44 @@ public class WxOAuthController {
                 .callTimeout(Duration.ofSeconds(15))//调用超时，也是整个请求过程的超时
                 .build();
 
-        String bodyStr = "null";
+        Request request = new Request.Builder().url(reqTokenUri).build();
 
-        Request request = new Request.Builder().url(uri).build();
-        AccessTokenResult tokenResult = null;
+        String tokenRespStr = null;
         try (Response response = okHttpClient.newCall(request).execute()) {
+            log.info("response.isSuccessful()?" + response.isSuccessful());
+            if(!response.isSuccessful()){
+                String errInfo = "获取微信token失败：" + response.code() + "，" + tokenRespStr;
+                log.error(errInfo);
+                return ApiResponse.fail(ApiResponseEnum.USER_DEFINED_ERROR, errInfo);
+            }
             okhttp3.ResponseBody body = (okhttp3.ResponseBody) response.body();
-            if (response.isSuccessful()) {
-                bodyStr = body.string();
-//                {
+            tokenRespStr = body.string();
+        } catch (IOException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+            log.info("tokenRespStr" + tokenRespStr);
+            //                {
 //                    "access_token":"ACCESS_TOKEN",
 //                        "expires_in":7200,
 //                        "refresh_token":"REFRESH_TOKEN",
 //                        "openid":"OPENID",
 //                        "scope":"SCOPE"
 //                }
-
-                tokenResult = JsonUtil.ParseObject(bodyStr, AccessTokenResult.class);
-
-                //todo
-                //保存到数据库
-
-
-                System.out.println("success:" + body == null ? "" : bodyStr);
-            } else {
-                System.out.println("error,statusCode={" + response.code() + "},body={" + body == null ? "" :
-                        body.string() + "}");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        AccessTokenResult tokenResult = JsonUtil.ParseObject(tokenRespStr, AccessTokenResult.class);
+        //保存到数据库
+        Date expiresDate = new Date(System.currentTimeMillis() + (tokenResult.getExpiresIn() * 1000));
+        User user = userService.saveWechatToken(tokenResult.getOpenid(),
+                tokenResult.getAccessToken(),
+                expiresDate,
+                tokenResult.getRefreshToken(),
+                tokenResult.getScope()
+            );
+        if(user != null)
+        {
+            String errInfo = "微信OAuth授权信息保存：" + tokenRespStr;
+            log.error(errInfo);
+            return ApiResponse.fail(ApiResponseEnum.USER_DEFINED_ERROR, errInfo);
         }
-        System.out.println("bodyStr:" + bodyStr);
-
         return ApiResponse.success(tokenResult);
     }
-
-
-//    /**
-//     * 第一步：用户同意授权，去请求获取code
-//     * @param response
-//     * @throws IOException
-//     */
-//    @ApiOperation(value = "授权登录", response = String.class)
-//    @GetMapping(value = "/requestCode")
-//    public void requestCode(HttpServletResponse response) throws IOException {
-//        response.sendRedirect(weChatAuthorizeUtil.getOAuthCodeUrlForUser());
-//    }
-//
-//
-//    @GetMapping(value = "/getCode")
-//    public void getOAuth(@RequestParam(name = "code", required = false) String code) {
-//        //此处直接获取请求的code，因为当用户点击授权后，会跳转到授权后重定向地址，也就是这个方法，从而携带过来code
-//        //oAuthService.getWXUserInfoOAuth(code);
-//    }
-
-
-
 }

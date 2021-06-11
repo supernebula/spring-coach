@@ -9,6 +9,7 @@ import com.evol.mapper.MovieMapper;
 import com.evol.service.MovieService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -85,7 +86,9 @@ public class MovieServiceImpl implements MovieService {
     public PageBase<Movie> queryPage(MovieQueryRequest movieQueryRequest) {
         Page page =  PageHelper.startPage(movieQueryRequest.getPageNo(), movieQueryRequest.getPageSize());
         MovieExample movieExample = new MovieExample();
-        movieExample.createCriteria().andNameLike("%" + movieQueryRequest.getName() + "%");
+        if(!StringUtils.isBlank(movieQueryRequest.getName())){
+            movieExample.createCriteria().andNameLike("%" + movieQueryRequest.getName() + "%");
+        }
         List<Movie> movieList = movieMapper.selectByExample(movieExample);
         if(CollectionUtils.isEmpty(movieList)){
             return PageBase.create(page.getTotal(), new ArrayList<>());

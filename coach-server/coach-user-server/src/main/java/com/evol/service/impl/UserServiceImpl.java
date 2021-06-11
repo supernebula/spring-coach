@@ -6,6 +6,7 @@ import com.evol.domain.dto.UserBalanceDTO;
 import com.evol.domain.dto.UserModifyDto;
 import com.evol.domain.model.User;
 import com.evol.domain.model.UserBalanceRecord;
+import com.evol.domain.model.UserExample;
 import com.evol.domain.request.UpdateUserBalanceParam;
 import com.evol.enums.Gender;
 import com.evol.enums.MoneyInOutTypeEnum;
@@ -18,7 +19,10 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -131,5 +135,45 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer deleteUserById(Integer userId) {
         return userMapper.deleteByPrimaryKey(userId);
+    }
+
+    @Override
+    public User saveWechatToken(String openId, String token, Date tokenExpires, String refreshToken, String scope) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andOpenIdEqualTo(openId);
+        List<User> userList = userMapper.selectByExample(userExample);
+        User user = userList != null ? userList.get(0) : null;
+
+        if(user == null){
+            user = new User();
+            user.setUsername(openId);
+            user.setPassword("");
+            user.setSalt("");
+            user.setBalance(0);
+            user.setNickname("");
+            user.setOpenId(openId);
+            user.setAccessToken(token);
+            user.setTokenExpiresIn(tokenExpires);
+            user.setRefreshToken(refreshToken);
+            user.setScope(scope);
+            user.setUserImg("");
+            user.setMobile("");
+            user.setGender(Gender.NONE.getCode());
+            user.setProvince("");
+            user.setCity("");
+            user.setCounty("");
+            user.setLastLoginTime(null);
+            user.setCreateTime(new Date());
+            user.setUpdateTime(null);
+            Integer id = userMapper.insert(user);
+            return user;
+        }
+
+        user.setAccessToken(token);
+        user.setTokenExpiresIn(tokenExpires);
+        user.setRefreshToken(refreshToken);
+        user.setScope(scope);
+        userMapper.updateByPrimaryKey(user);
+        return user;
     }
 }

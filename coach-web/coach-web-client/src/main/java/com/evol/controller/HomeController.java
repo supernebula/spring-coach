@@ -28,22 +28,25 @@ public class HomeController {
         return "/wechat/reqToken";
     }
 
+    @CrossOrigin
     @GetMapping({"index", "/", ""})
     public String index(Model model){
         return "/movie/index";
     }
 
-
+    @CrossOrigin
     @GetMapping({"/movie/detail"})
     public String detail(Model model){
         return "/movie/detail";
     }
 
+    @CrossOrigin
     @GetMapping({"/pay"})
     public String pay(Model model){
         return "/order/pay";
     }
 
+    @CrossOrigin
     @GetMapping({"/payResult"})
     public String payResult(Model model){
         return "/order/payResult";

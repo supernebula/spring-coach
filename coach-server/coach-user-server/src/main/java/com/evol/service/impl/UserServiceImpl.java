@@ -142,7 +142,7 @@ public class UserServiceImpl implements UserService {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andOpenIdEqualTo(openId);
         List<User> userList = userMapper.selectByExample(userExample);
-        User user = userList != null ? userList.get(0) : null;
+        User user = userList.size() > 0  ? userList.get(0) : null;
 
         if(user == null){
             user = new User();

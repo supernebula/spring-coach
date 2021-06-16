@@ -3,6 +3,8 @@
 
 <head>
     <title>wx H5 统一下单</title>
+    <script th:src="@{/jquery/jquery.js}"></script>
+    <script th:src="@{/site/func.js}"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <style>
         *{
@@ -149,6 +151,7 @@
             <dl class="content">
                 <dt>商户订单号：</dt>
                 <dd>
+                    <input type="hidden" id="orderId" name="orderId" />
                     <input id="outTradeNo" name="outTradeNo" />
                 </dd>
                 <hr class="one_line">
@@ -188,23 +191,48 @@
 </div>
 </body>
 <script language="javascript">
-    function GetDateNow() {
-        // var vNow = new Date();
-        // var sNow = "";
-        // sNow += String(vNow.getFullYear());
-        // sNow += String(vNow.getMonth() + 1);
-        // sNow += String(vNow.getDate());
-        // sNow += String(vNow.getHours());
-        // sNow += String(vNow.getMinutes());
-        // sNow += String(vNow.getSeconds());
-        // sNow += String(vNow.getMilliseconds());
-        // document.getElementById("outTradeNo").value =  "TESTNO" + sNow;
-        document.getElementById("outTradeNo").value = "${orderNo}";
+    function show(order) {
+
+        $("#orderId").val(item.orderNo) = "${orderNo}";
+        $("#orderId").val(item.orderNo) = "${orderNo}";
 
         document.getElementById("subject").value = "手机网站支付测试商品";
         document.getElementById("totalFee").value = "1";
         document.getElementById("detail").value = "购买测试商品0.01元";
     }
+
+    var movieId = getQueryString("movieId");
+    var apiUrl = "http://localhost:8088/client/movie/movie/get?movieId=" + movieId;
+    $(document).ready(function() {
+        $.getJSON( apiUrl, function( resp ) {
+            console.log(resp);
+            movieItem = resp.data;
+            placeOrder(movieItem);
+        });
+
+
+    });
+
+    //下单
+    function placeOrder(movie) {
+
+        buyUrl = "http://localhost:8088//client/netOrder/buy?userId=1&movieId=" + movieId + "&movieName=" + movieName
+            + "&amount";
+        $.post("/pay/byBalance", { movieId: $("#orderId").val(), amount: $("#totalFee").val(), userId:
+                    $("#userId").val()},
+            function(resp){
+                if(resp.code != 0 || resp.subCode != 0){
+                    console.log(resp.code);
+                    console.log(resp.msg);
+                    console.log(resp.subCode);
+                }
+
+                //window.location.replace("/payResult");
+            });
+        
+    }
+
+
     GetDateNow();
 
     function pay() {
@@ -221,7 +249,7 @@
                 }
 
                 //window.location.replace("/payResult");
-            });
+        });
 
 
     }

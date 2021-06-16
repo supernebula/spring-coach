@@ -11,7 +11,7 @@ public class CreateOrderParam {
 
     private String movieName;
 
-    private String orderNo;
+    //private String orderNo;
 
     private Integer amount;
 

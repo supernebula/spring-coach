@@ -2,6 +2,8 @@ package com.evol.controller;
 
 import com.evol.domain.PageBase;
 import com.evol.domain.model.NetOrder;
+import com.evol.domain.request.CreateOrderParam;
+import com.evol.domain.response.CreateOrderResult;
 import com.evol.service.NetOrderService;
 import com.evol.web.ApiResponse;
 import io.swagger.annotations.Api;
@@ -32,6 +34,19 @@ public class NetOrderClientController {
     public ApiResponse get(Integer orderId){
         NetOrder item = netOrderService.getNetOrderById(orderId);
         return ApiResponse.success(item);
+    }
+
+    @ApiOperation(value = "下单", response = ApiResponse.class)
+    @GetMapping("buy")
+    public ApiResponse buy(Integer userId, Integer movieId, String movieName, Integer amount){
+
+        CreateOrderParam param = new CreateOrderParam();
+        param.setUserId(userId);
+        param.setMovieId(movieId);
+        param.setMovieName(movieName);
+        param.setAmount(amount);
+        CreateOrderResult result = netOrderService.newOrder(param);
+        return ApiResponse.success(result);
     }
 
     

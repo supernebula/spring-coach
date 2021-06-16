@@ -86,6 +86,10 @@ public class NetOrderServiceImpl implements NetOrderService {
         return PaidHandleOrderResult.success(netOrder.getOrderNo());
     }
 
+    @Override
+    public PaidHandleOrderResult payByBalance(NetOrder netOrder) {
+        return null;
+    }
 
 
     @Override
@@ -108,7 +112,7 @@ public class NetOrderServiceImpl implements NetOrderService {
         order.setMoviceName("movice name1");
         order.setOrderNo("OR111111");
         order.setPaidAmount(100);
-        order.setPayModeType("1");
+        order.setPayModeType(1);
         order.setStatus(1);
         order.setUserId(1);
         order.setUsername("user1");

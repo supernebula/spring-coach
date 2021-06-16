@@ -41,6 +41,12 @@ public class HomeController {
     }
 
     @CrossOrigin
+    @GetMapping({"/order/place"})
+    public String placeOrder(Model model){
+        return "/order/place";
+    }
+
+    @CrossOrigin
     @GetMapping({"/pay"})
     public String pay(Model model){
         return "/order/pay";

@@ -12,9 +12,9 @@ public class NetOrder implements Serializable {
 
     private String username;
 
-    private Integer moviceId;
+    private Integer movieId;
 
-    private String moviceName;
+    private String movieName;
 
     private Integer paidAmount;
 
@@ -70,20 +70,20 @@ public class NetOrder implements Serializable {
         this.username = username == null ? null : username.trim();
     }
 
-    public Integer getMoviceId() {
-        return moviceId;
+    public Integer getMovieId() {
+        return movieId;
     }
 
-    public void setMoviceId(Integer moviceId) {
-        this.moviceId = moviceId;
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 
-    public String getMoviceName() {
-        return moviceName;
+    public String getMovieName() {
+        return movieName;
     }
 
-    public void setMoviceName(String moviceName) {
-        this.moviceName = moviceName == null ? null : moviceName.trim();
+    public void setMovieName(String movieName) {
+        this.movieName = movieName == null ? null : movieName.trim();
     }
 
     public Integer getPaidAmount() {
@@ -176,8 +176,8 @@ public class NetOrder implements Serializable {
         sb.append(", orderNo=").append(orderNo);
         sb.append(", userId=").append(userId);
         sb.append(", username=").append(username);
-        sb.append(", moviceId=").append(moviceId);
-        sb.append(", moviceName=").append(moviceName);
+        sb.append(", movieId=").append(movieId);
+        sb.append(", movieName=").append(movieName);
         sb.append(", paidAmount=").append(paidAmount);
         sb.append(", amount=").append(amount);
         sb.append(", status=").append(status);

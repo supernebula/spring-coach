@@ -2,8 +2,6 @@ package com.evol.controller;
 
 import com.evol.domain.PageBase;
 import com.evol.domain.model.NetOrder;
-import com.evol.domain.request.CreateOrderParam;
-import com.evol.domain.response.CreateOrderResult;
 import com.evol.service.NetOrderService;
 import com.evol.web.ApiResponse;
 import io.swagger.annotations.Api;
@@ -21,10 +19,10 @@ public class NetOrderWebController {
     @Autowired
     private NetOrderService netOrderService;
 
-    public ApiResponse newOrder(CreateOrderParam reqParam){
-        CreateOrderResult resp = netOrderService.newOrder(reqParam);
-        return new ApiResponse(resp);
-    }
+//    public ApiResponse newOrder(CreateOrderParam reqParam){
+//        CreateOrderResult resp = netOrderService.newOrder(reqParam);
+//        return new ApiResponse(resp);
+//    }
 
     @ApiOperation(value = "分页查询", response = ApiResponse.class)
     @GetMapping("/query")

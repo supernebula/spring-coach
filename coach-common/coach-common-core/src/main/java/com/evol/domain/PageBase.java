@@ -10,6 +10,21 @@ public class PageBase<T> implements Serializable {
     private static final long serialVersionUID = -4843054288180603924L;
 
     /**
+     * 总页数
+     */
+    private Long pageTotal;
+
+    /**
+     * 每页条数
+     */
+    private Integer pageSize;
+
+    /**
+     * 当前页号
+     */
+    private Integer page;
+
+    /**
      * 总记录数
      */
     private Long total=0L;

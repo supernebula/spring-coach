@@ -2,14 +2,15 @@ package com.evol.service;
 
 import com.evol.domain.PageBase;
 import com.evol.domain.model.NetOrder;
-import com.evol.domain.request.CreateOrderParam;
 import com.evol.domain.request.PayOrderParam;
 import com.evol.domain.response.CreateOrderResult;
 import com.evol.domain.response.PaidHandleOrderResult;
 
 public interface NetOrderService {
 
-    CreateOrderResult newOrder(CreateOrderParam reqParam);
+//    CreateOrderResult newOrder(CreateOrderParam reqParam);
+
+    CreateOrderResult newOrder(Integer movieId, Integer userId);
 
     PaidHandleOrderResult paidHandleOrder(PayOrderParam payOrderParam);
 

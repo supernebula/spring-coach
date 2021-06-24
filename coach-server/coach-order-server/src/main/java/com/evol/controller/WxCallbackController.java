@@ -66,7 +66,7 @@ public class WxCallbackController {
         payOrderParam.setOutTradeNo((String) treeMap.get("out_trade_no"));
         payOrderParam.setTransactionId((String) treeMap.get("transaction_id"));
         payOrderParam.setMchId((String) treeMap.get("mch_id"));
-        payOrderParam.setTotalFee((String) treeMap.get("total_fee"));
+        payOrderParam.setTotalFee((Integer) treeMap.get("total_fee"));
 
         try {
             Date date = DateUtils.parseDate((String) treeMap.get("time_end"), new String[]{"yyyyMMddHHmmss"});

@@ -23,7 +23,10 @@ public enum ApiResponseEnum {
     NO_RECORD(20004, "网关:错误的请求，没有记录"),
     MISS_SIGN(20005, "网关:请求缺少参数sign"),
     MiSS_PARAM(20006, "网关:请求缺少参数"),
-    TOKEN_ERROR(20007, "网关:请求参数错误，无效的access_token或未曾获取过Token");
+    TOKEN_ERROR(20007, "网关:请求参数错误，无效的access_token或未曾获取过Token"),
+
+
+    FEIGN_INVOKE_ERROR(1010001, "远程调用出错");
 
     private Integer code;
 

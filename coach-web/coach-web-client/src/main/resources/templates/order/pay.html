@@ -191,15 +191,7 @@
 </div>
 </body>
 <script language="javascript">
-    function show(order) {
 
-        $("#orderId").val(item.orderNo) = "${orderNo}";
-        $("#orderId").val(item.orderNo) = "${orderNo}";
-
-        document.getElementById("subject").value = "手机网站支付测试商品";
-        document.getElementById("totalFee").value = "1";
-        document.getElementById("detail").value = "购买测试商品0.01元";
-    }
 
     var movieId = getQueryString("movieId");
     var apiUrl = "http://localhost:8088/client/movie/movie/get?movieId=" + movieId;
@@ -216,10 +208,8 @@
     //下单
     function placeOrder(movie) {
 
-        buyUrl = "http://localhost:8088//client/netOrder/buy?userId=1&movieId=" + movieId + "&movieName=" + movieName
-            + "&amount";
-        $.post("/pay/byBalance", { movieId: $("#orderId").val(), amount: $("#totalFee").val(), userId:
-                    $("#userId").val()},
+        var buyUrl = "http://localhost:8088/client/netOrder/buy?userId=1&movieId=" + movieId;
+        $.post(buyUrl, { movieId: movieId, userId: $("#userId").val()},
             function(resp){
                 if(resp.code != 0 || resp.subCode != 0){
                     console.log(resp.code);

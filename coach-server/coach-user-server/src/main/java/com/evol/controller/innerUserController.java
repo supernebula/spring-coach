@@ -2,25 +2,31 @@ package com.evol.controller;
 
 import com.evol.base.client.UserDTO;
 import com.evol.domain.dto.UserBalanceDTO;
+import com.evol.domain.model.User;
+import com.evol.enums.ApiResponseEnum;
 import com.evol.service.UserService;
+import com.evol.web.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Api(tags = "内部接口用户列表测试")
-@RequestMapping("users")
+@RequestMapping("/inner/user")
 @RestController
 public class innerUserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/get")
+    public ApiResponse<UserDTO> get(@RequestParam(value = "userId") Integer userId){
+        User user = userService.getUserById(userId);
+        return user != null ? ApiResponse.success(user) : ApiResponse.fail(ApiResponseEnum.NO_RECORD, "参数错误，找不到指定的用户");
+    }
 
 
     @ApiOperation(value = "查询用户列表",notes = "查询用户列表")

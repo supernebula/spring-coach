@@ -17,6 +17,7 @@
         .movie-item .foreign_name{ height: 20px; }
         .movie-item .minutes { height: 20px; }
         .movie-item .space_type { height: 20px; }
+        #pay-link {height: 20px; width: 100px; background-color: #e0e0e0;}
     </style>
 
 </head>
@@ -69,10 +70,10 @@
 
 
         var movieId = getQueryString("movieId");
-        var apiUrl = "http://localhost:8088/client/movie/movie/get?movieId=" + movieId;
+        var apiUrl = "http://localhost:8088/client/movie/get?movieId=" + movieId;
 
-        var payUrl = "pay?movieId" + movieId;
-        $("pay-link").attr("href", payUrl);
+        var payUrl = "pay?movieId=" + movieId;
+        $("#pay-link").attr("href", payUrl);
 
 
 
@@ -88,13 +89,13 @@
 
         //note
         function show(item) {
-            $("#movie-img").attr("src", item.images);
+            $("#movie-img").attr("src", item.coverUri);
             $("#movie-img").attr("alt", item.name);
-            $("#movie-detail .name").text(item.name);
-            $("#movie-detail .foreign_name").text(item.foreignName);
-            $("#movie-detail .release_date").text(item.releaseDate);
-            $("#movie-detail .minutes").text(item.minutes);
-            $("#movie-detail .space_type").text(item.spaceType);
+            $("#movie-detail .name").text("中文名称：" + item.name);
+            $("#movie-detail .foreign_name").text("英文名称:" + item.foreignName);
+            $("#movie-detail .release_date").text("上映时间：" + item.releaseDate);
+            $("#movie-detail .minutes").text("时长：" + item.minutes);
+            $("#movie-detail .space_type").text(item.spaceType + "维");
         }
 
     </script>

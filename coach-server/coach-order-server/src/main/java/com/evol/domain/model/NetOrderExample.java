@@ -365,133 +365,133 @@ public class NetOrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andMoviceIdIsNull() {
-            addCriterion("movice_id is null");
+        public Criteria andMovieIdIsNull() {
+            addCriterion("movie_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceIdIsNotNull() {
-            addCriterion("movice_id is not null");
+        public Criteria andMovieIdIsNotNull() {
+            addCriterion("movie_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceIdEqualTo(Integer value) {
-            addCriterion("movice_id =", value, "moviceId");
+        public Criteria andMovieIdEqualTo(Integer value) {
+            addCriterion("movie_id =", value, "movieId");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceIdNotEqualTo(Integer value) {
-            addCriterion("movice_id <>", value, "moviceId");
+        public Criteria andMovieIdNotEqualTo(Integer value) {
+            addCriterion("movie_id <>", value, "movieId");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceIdGreaterThan(Integer value) {
-            addCriterion("movice_id >", value, "moviceId");
+        public Criteria andMovieIdGreaterThan(Integer value) {
+            addCriterion("movie_id >", value, "movieId");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("movice_id >=", value, "moviceId");
+        public Criteria andMovieIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("movie_id >=", value, "movieId");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceIdLessThan(Integer value) {
-            addCriterion("movice_id <", value, "moviceId");
+        public Criteria andMovieIdLessThan(Integer value) {
+            addCriterion("movie_id <", value, "movieId");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceIdLessThanOrEqualTo(Integer value) {
-            addCriterion("movice_id <=", value, "moviceId");
+        public Criteria andMovieIdLessThanOrEqualTo(Integer value) {
+            addCriterion("movie_id <=", value, "movieId");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceIdIn(List<Integer> values) {
-            addCriterion("movice_id in", values, "moviceId");
+        public Criteria andMovieIdIn(List<Integer> values) {
+            addCriterion("movie_id in", values, "movieId");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceIdNotIn(List<Integer> values) {
-            addCriterion("movice_id not in", values, "moviceId");
+        public Criteria andMovieIdNotIn(List<Integer> values) {
+            addCriterion("movie_id not in", values, "movieId");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceIdBetween(Integer value1, Integer value2) {
-            addCriterion("movice_id between", value1, value2, "moviceId");
+        public Criteria andMovieIdBetween(Integer value1, Integer value2) {
+            addCriterion("movie_id between", value1, value2, "movieId");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("movice_id not between", value1, value2, "moviceId");
+        public Criteria andMovieIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("movie_id not between", value1, value2, "movieId");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameIsNull() {
-            addCriterion("movice_name is null");
+        public Criteria andMovieNameIsNull() {
+            addCriterion("movie_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameIsNotNull() {
-            addCriterion("movice_name is not null");
+        public Criteria andMovieNameIsNotNull() {
+            addCriterion("movie_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameEqualTo(String value) {
-            addCriterion("movice_name =", value, "moviceName");
+        public Criteria andMovieNameEqualTo(String value) {
+            addCriterion("movie_name =", value, "movieName");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameNotEqualTo(String value) {
-            addCriterion("movice_name <>", value, "moviceName");
+        public Criteria andMovieNameNotEqualTo(String value) {
+            addCriterion("movie_name <>", value, "movieName");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameGreaterThan(String value) {
-            addCriterion("movice_name >", value, "moviceName");
+        public Criteria andMovieNameGreaterThan(String value) {
+            addCriterion("movie_name >", value, "movieName");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameGreaterThanOrEqualTo(String value) {
-            addCriterion("movice_name >=", value, "moviceName");
+        public Criteria andMovieNameGreaterThanOrEqualTo(String value) {
+            addCriterion("movie_name >=", value, "movieName");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameLessThan(String value) {
-            addCriterion("movice_name <", value, "moviceName");
+        public Criteria andMovieNameLessThan(String value) {
+            addCriterion("movie_name <", value, "movieName");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameLessThanOrEqualTo(String value) {
-            addCriterion("movice_name <=", value, "moviceName");
+        public Criteria andMovieNameLessThanOrEqualTo(String value) {
+            addCriterion("movie_name <=", value, "movieName");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameLike(String value) {
-            addCriterion("movice_name like", value, "moviceName");
+        public Criteria andMovieNameLike(String value) {
+            addCriterion("movie_name like", value, "movieName");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameNotLike(String value) {
-            addCriterion("movice_name not like", value, "moviceName");
+        public Criteria andMovieNameNotLike(String value) {
+            addCriterion("movie_name not like", value, "movieName");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameIn(List<String> values) {
-            addCriterion("movice_name in", values, "moviceName");
+        public Criteria andMovieNameIn(List<String> values) {
+            addCriterion("movie_name in", values, "movieName");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameNotIn(List<String> values) {
-            addCriterion("movice_name not in", values, "moviceName");
+        public Criteria andMovieNameNotIn(List<String> values) {
+            addCriterion("movie_name not in", values, "movieName");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameBetween(String value1, String value2) {
-            addCriterion("movice_name between", value1, value2, "moviceName");
+        public Criteria andMovieNameBetween(String value1, String value2) {
+            addCriterion("movie_name between", value1, value2, "movieName");
             return (Criteria) this;
         }
 
-        public Criteria andMoviceNameNotBetween(String value1, String value2) {
-            addCriterion("movice_name not between", value1, value2, "moviceName");
+        public Criteria andMovieNameNotBetween(String value1, String value2) {
+            addCriterion("movie_name not between", value1, value2, "movieName");
             return (Criteria) this;
         }
 

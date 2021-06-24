@@ -1,11 +1,12 @@
 package com.evol.service.impl;
 
+import com.evol.base.client.UserDTO;
 import com.evol.contancts.enums.NetOrderStatusEnum;
 import com.evol.contancts.enums.PayModeTypeEnum;
 import com.evol.domain.PageBase;
+import com.evol.domain.dto.MovieDetailDTO;
 import com.evol.domain.model.NetOrder;
 import com.evol.domain.model.NetOrderExample;
-import com.evol.domain.request.CreateOrderParam;
 import com.evol.domain.request.PayOrderParam;
 import com.evol.domain.request.UpdateUserBalanceParam;
 import com.evol.domain.response.CreateOrderResult;
@@ -13,8 +14,11 @@ import com.evol.domain.response.PaidHandleOrderResult;
 import com.evol.enums.MoneyInOutTypeEnum;
 import com.evol.mapper.NetOrderMapper;
 import com.evol.service.NetOrderService;
+import com.evol.service.invoke.FeignMovieClient;
+import com.evol.service.invoke.FeignUserClient;
 import com.evol.util.IDUtil;
 import com.evol.util.JsonUtil;
+import com.evol.web.ApiResponse;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,28 +34,65 @@ import java.util.List;
 public class NetOrderServiceImpl implements NetOrderService {
 
     @Autowired
-    private NetOrderMapper netOrdersMapper;
+    private NetOrderMapper netOrderMapper;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Autowired
+    FeignMovieClient feignMovieClient;
+
+    @Autowired
+    FeignUserClient feignUserClient;
+
+
+//    @Override
+//    public CreateOrderResult newOrder(CreateOrderParam reqParam) {
+//        NetOrder netOrder = new NetOrder();
+//        netOrder.setOrderNo(IDUtil.hourIdNo());
+//        netOrder.setUserId(reqParam.getUserId());
+//        netOrder.setMoviceId(reqParam.getMovieId());
+//        netOrder.setMoviceName(reqParam.getMovieName());
+//        netOrder.setStatus(NetOrderStatusEnum.UNPAID.getCode());
+//        netOrder.setAmount(reqParam.getAmount());
+//        netOrder.setPayModeType(PayModeTypeEnum.NONE.getCode());
+//        netOrder.setCreateTime(new Date());
+//        netOrdersMapper.insert(netOrder);
+//        CreateOrderResult result = new CreateOrderResult();
+//        result.setOrderId(netOrder.getId());
+//        result.setOrderNo(netOrder.getOrderNo());
+//        return result;
+//    }
 
     @Override
-    public CreateOrderResult newOrder(CreateOrderParam reqParam) {
+    public CreateOrderResult newOrder(Integer movieId, Integer userId) {
+        ApiResponse<MovieDetailDTO> apiResp = feignMovieClient.getMovie(movieId);
+        if(apiResp.getSubCode() != 0 || apiResp.getData() == null  ){
+            return new CreateOrderResult(false, null, null, apiResp.getSubMsg());
+        }
+        MovieDetailDTO movieDTO = apiResp.getData();
+
+        ApiResponse<UserDTO> userApiResp = feignUserClient.getUserById(userId);
+        if(userApiResp.getSubCode() != 0 || userApiResp.getData() == null  ){
+            return new CreateOrderResult(false, null, null, userApiResp.getSubMsg());
+        }
+        UserDTO userDTO = userApiResp.getData();
+
         NetOrder netOrder = new NetOrder();
         netOrder.setOrderNo(IDUtil.hourIdNo());
-        netOrder.setUserId(reqParam.getUserId());
-        netOrder.setMoviceId(reqParam.getMovieId());
-        netOrder.setMoviceName(reqParam.getMovieName());
+        netOrder.setUserId(userDTO.getId());
+        netOrder.setUsername(userDTO.getUsername());
+        netOrder.setMovieId(movieDTO.getId());
+        netOrder.setMovieName(movieDTO.getName());
+
+        netOrder.setPaidAmount(0);
+        netOrder.setAmount(movieDTO.getDiscountPrice());
         netOrder.setStatus(NetOrderStatusEnum.UNPAID.getCode());
-        netOrder.setAmount(reqParam.getAmount());
+
         netOrder.setPayModeType(PayModeTypeEnum.NONE.getCode());
         netOrder.setCreateTime(new Date());
-        netOrdersMapper.insert(netOrder);
-        CreateOrderResult result = new CreateOrderResult();
-        result.setOrderId(netOrder.getId());
-        result.setOrderNo(netOrder.getOrderNo());
-        return result;
+        netOrderMapper.insert(netOrder);
+        return new CreateOrderResult(true, netOrder.getId(), netOrder.getOrderNo(), null);
     }
 
     @Override
@@ -67,7 +108,7 @@ public class NetOrderServiceImpl implements NetOrderService {
         netOrder.setPaidAmount(payOrderParam.getTotalFee());
         netOrder.setPayModeType(payOrderParam.getPayModeType());
         netOrder.setUdpateTime(new Date());
-        netOrdersMapper.updateByPrimaryKeySelective(netOrder);
+        netOrderMapper.updateByPrimaryKeySelective(netOrder);
         return PaidHandleOrderResult.success(payOrderParam.getOutTradeNo());
     }
 
@@ -80,7 +121,7 @@ public class NetOrderServiceImpl implements NetOrderService {
 
         netOrder.setPayOrderNo("");
         netOrder.setPayTime(new Date());
-        netOrdersMapper.updateByPrimaryKeySelective(netOrder);
+        netOrderMapper.updateByPrimaryKeySelective(netOrder);
         //余额支付
         this.updateUserBalance(netOrder.getUserId(), netOrder.getAmount(), netOrder.getOrderNo());
         return PaidHandleOrderResult.success(netOrder.getOrderNo());
@@ -96,28 +137,13 @@ public class NetOrderServiceImpl implements NetOrderService {
     public NetOrder getByOrderNo(String orderNo) {
         NetOrderExample example = new NetOrderExample();
         example.createCriteria().andOrderNoEqualTo(orderNo);
-        List<NetOrder> list = netOrdersMapper.selectByExample(example);
+        List<NetOrder> list = netOrderMapper.selectByExample(example);
         return (list != null && list.size() > 0) ? list.get(0) : null;
     }
 
     @Override
     public NetOrder getNetOrderById(Integer id) {
-        NetOrder order = new NetOrder();
-        order.setId(1);
-        order.setPayOrderNo("PY1111111");
-        order.setPayTime(new Date());
-        order.setAmount(100);
-        order.setCreateTime(new Date());
-        order.setMoviceId(1);
-        order.setMoviceName("movice name1");
-        order.setOrderNo("OR111111");
-        order.setPaidAmount(100);
-        order.setPayModeType(1);
-        order.setStatus(1);
-        order.setUserId(1);
-        order.setUsername("user1");
-        return order;
-        //return netOrdersMapper.selectByPrimaryKey(id);
+        return netOrderMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -126,7 +152,7 @@ public class NetOrderServiceImpl implements NetOrderService {
         //PageHelper.startPage(pageNo, pageSize,"id asc");
         NetOrderExample example = new NetOrderExample();
         example.createCriteria().andUserIdEqualTo(userId);
-        List<NetOrder> movieList = netOrdersMapper.selectByExample(example);
+        List<NetOrder> movieList = netOrderMapper.selectByExample(example);
         if(CollectionUtils.isEmpty(movieList)){
             return PageBase.create(page.getTotal(), new ArrayList<>());
         }

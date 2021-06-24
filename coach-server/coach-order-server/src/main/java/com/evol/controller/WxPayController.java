@@ -8,12 +8,10 @@ import com.arronlong.httpclientutil.exception.HttpProcessException;
 import com.evol.config.SystemConfig;
 import com.evol.config.WXPayConfig;
 import com.evol.domain.model.NetOrder;
-import com.evol.domain.request.CreateOrderParam;
 import com.evol.domain.request.PayCallBackParam;
 import com.evol.domain.request.PayOrderParam;
 import com.evol.domain.request.UnifiedOrderCustomParams;
 import com.evol.domain.request.wxpay.UnifiedOrderParams;
-import com.evol.domain.response.CreateOrderResult;
 import com.evol.domain.response.JsPayResult;
 import com.evol.domain.response.UnifiedOrderCustomResult;
 import com.evol.domain.response.UnifiedOrderResult;
@@ -129,18 +127,19 @@ public class WxPayController {
     }
 
 
-    public CreateOrderResult createMockOrder(CreateOrderParam createOrderParam){
-        NetOrder netOrder = netOrderService.getByOrderNo(createOrderParam.getOrderNo());
-        if(netOrder != null) {
-            CreateOrderResult result = new CreateOrderResult();
-            result.setOrderId(netOrder.getId());
-            result.setOrderNo(netOrder.getOrderNo());
-        }
-        createOrderParam.setUserId(1);
-        createOrderParam.setOrderNo(createOrderParam.getOrderNo());
-        CreateOrderResult createOrderResult = netOrderService.newOrder(createOrderParam);
-        return createOrderResult;
-    }
+    //todo:
+//    public CreateOrderResult createMockOrder(CreateOrderParam createOrderParam){
+//        NetOrder netOrder = netOrderService.getByOrderNo(createOrderParam.getOrderNo());
+//        if(netOrder != null) {
+//            CreateOrderResult result = new CreateOrderResult();
+//            result.setOrderId(netOrder.getId());
+//            result.setOrderNo(netOrder.getOrderNo());
+//        }
+//        createOrderParam.setUserId(1);
+//        createOrderParam.setOrderNo(createOrderParam.getOrderNo());
+//        CreateOrderResult createOrderResult = netOrderService.newOrder(createOrderParam);
+//        return createOrderResult;
+//    }
 
     /**
      * 微信统一下单接口 https://api.mch.weixin.qq.com/pay/unifiedorder

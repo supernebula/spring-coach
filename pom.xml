@@ -154,12 +154,12 @@
             </dependency>
 
 
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-openfeign-core</artifactId>
-                <version>${openfeign-core}</version>
-                <scope>compile</scope>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-openfeign-core</artifactId>-->
+<!--                <version>${openfeign-core}</version>-->
+<!--                <scope>compile</scope>-->
+<!--            </dependency>-->
 
             <!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
             <dependency>

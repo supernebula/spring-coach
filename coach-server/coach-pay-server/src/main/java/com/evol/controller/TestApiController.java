@@ -1,6 +1,6 @@
 package com.evol.controller;
 
-import com.evol.base.client.User;
+
 import com.evol.service.feign.UserClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +21,11 @@ public class TestApiController {
         return "object1";
     }
 
-    @GetMapping("/payuser")
-    public Object payUser(){
-        List<User> users = userClient.getUsers();
-        return users;
-    }
+//    @GetMapping("/payuser")
+//    public Object payUser(){
+//        List<User> users = userClient.getUsers();
+//        return users;
+//    }
 
 
 

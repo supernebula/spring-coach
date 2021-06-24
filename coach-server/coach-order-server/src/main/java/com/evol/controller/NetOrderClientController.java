@@ -11,6 +11,7 @@ import com.evol.web.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,7 @@ public class NetOrderClientController {
     @Autowired
     FeignUserClient feignUserClient;
 
+    @CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "查询我的订单", response = ApiResponse.class)
     @GetMapping("/query")
     public ApiResponse query(Integer userId, Integer pageNo, Integer pageSize){
@@ -37,6 +39,7 @@ public class NetOrderClientController {
         return ApiResponse.success(pageResult);
     }
 
+    @CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "根据订单获取网络订单", response = ApiResponse.class)
     @GetMapping("get")
     public ApiResponse get(Integer orderId){
@@ -44,6 +47,7 @@ public class NetOrderClientController {
         return ApiResponse.success(item);
     }
 
+    @CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "下单", response = ApiResponse.class)
     @GetMapping("buy")
     public ApiResponse buy(Integer movieId, Integer userId){

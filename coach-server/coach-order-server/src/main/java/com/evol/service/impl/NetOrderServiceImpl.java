@@ -68,13 +68,13 @@ public class NetOrderServiceImpl implements NetOrderService {
     public CreateOrderResult newOrder(Integer movieId, Integer userId) {
         ApiResponse<MovieDetailDTO> apiResp = feignMovieClient.getMovie(movieId);
         if(apiResp.getSubCode() != 0 || apiResp.getData() == null  ){
-            return new CreateOrderResult(false, null, null, apiResp.getSubMsg());
+            return new CreateOrderResult(false, null, null, null, null, apiResp.getSubMsg());
         }
         MovieDetailDTO movieDTO = apiResp.getData();
 
         ApiResponse<UserDTO> userApiResp = feignUserClient.getUserById(userId);
         if(userApiResp.getSubCode() != 0 || userApiResp.getData() == null  ){
-            return new CreateOrderResult(false, null, null, userApiResp.getSubMsg());
+            return new CreateOrderResult(false, null, null, null, null, userApiResp.getSubMsg());
         }
         UserDTO userDTO = userApiResp.getData();
 
@@ -92,7 +92,8 @@ public class NetOrderServiceImpl implements NetOrderService {
         netOrder.setPayModeType(PayModeTypeEnum.NONE.getCode());
         netOrder.setCreateTime(new Date());
         netOrderMapper.insert(netOrder);
-        return new CreateOrderResult(true, netOrder.getId(), netOrder.getOrderNo(), null);
+        return new CreateOrderResult(true, netOrder.getId(), netOrder.getOrderNo(), netOrder.getAmount(), netOrder.getMovieName(),
+                null);
     }
 
     @Override

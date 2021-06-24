@@ -191,10 +191,20 @@
 </div>
 </body>
 <script language="javascript">
+    
+    function showOrder(order) {
+        $("#orderId").val(order.orderId);
+        $("#outTradeNo").val(order.orderNo);
+        $("#subject").val(order.movieName);
+        $("#totalFee").val(order.amount);
+        $("#detail").val(order.detail);
+        $("#totalFee").val(order.amount);
+
+    }
 
 
     var movieId = getQueryString("movieId");
-    var apiUrl = "http://localhost:8088/client/movie/movie/get?movieId=" + movieId;
+    var apiUrl = "http://localhost:8088/client/movie/get?movieId=" + movieId;
     $(document).ready(function() {
         $.getJSON( apiUrl, function( resp ) {
             console.log(resp);
@@ -215,7 +225,11 @@
                     console.log(resp.code);
                     console.log(resp.msg);
                     console.log(resp.subCode);
+
                 }
+
+                var orderResult = resp.data;
+                
 
                 //window.location.replace("/payResult");
             });
@@ -238,6 +252,7 @@
                     console.log(resp.subCode);
                 }
 
+                showOrder(resp.data);
                 //window.location.replace("/payResult");
         });
 

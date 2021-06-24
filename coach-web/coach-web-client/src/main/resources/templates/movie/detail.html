@@ -72,7 +72,7 @@
         var movieId = getQueryString("movieId");
         var apiUrl = "http://localhost:8088/client/movie/get?movieId=" + movieId;
 
-        var payUrl = "pay?movieId=" + movieId;
+        var payUrl = "/order/pay?movieId=" + movieId;
         $("#pay-link").attr("href", payUrl);
 
 

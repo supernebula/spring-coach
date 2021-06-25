@@ -114,7 +114,7 @@ public class NetOrderServiceImpl implements NetOrderService {
     }
 
     @Override
-    public PaidHandleOrderResult payByBalance(Integer amount, Integer userId, Integer orderId) {
+    public PaidHandleOrderResult payByBalance(Integer userId, Integer orderId) {
         NetOrder netOrder = this.getNetOrderById(orderId);
         if(netOrder == null){
             return PaidHandleOrderResult.noOrderRecord("" + orderId);
@@ -131,6 +131,16 @@ public class NetOrderServiceImpl implements NetOrderService {
     @Override
     public PaidHandleOrderResult payByBalance(NetOrder netOrder) {
         return null;
+//        if(netOrder == null){
+//            return PaidHandleOrderResult.noOrderRecord("" + orderId);
+//        }
+//
+//        netOrder.setPayOrderNo("");
+//        netOrder.setPayTime(new Date());
+//        netOrderMapper.updateByPrimaryKeySelective(netOrder);
+//        //余额支付
+//        this.updateUserBalance(netOrder.getUserId(), netOrder.getAmount(), netOrder.getOrderNo());
+//        return PaidHandleOrderResult.success(netOrder.getOrderNo());
     }
 
 

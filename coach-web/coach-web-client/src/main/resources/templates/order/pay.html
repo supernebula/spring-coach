@@ -157,17 +157,17 @@
                 <hr class="one_line">
                 <dt>商品描述：</dt>
                 <dd>
-                    <input id="subject" name="subject" />
+                    <span id="subject" name="subject"></span>
                 </dd>
                 <hr class="one_line">
                 <dt>总金额(分)：</dt>
                 <dd>
-                    <input id="totalFee" name="totalFee" />
+                    <span id="totalFee" name="totalFee"></span>
                 </dd>
                 <hr class="one_line"/>
                 <dt>商品详情：</dt>
                 <dd>
-                    <input id="detail" name="detail" />
+                    <span id="detail" name="detail"></span>
                 </dd>
                 <hr class="one_line">
                 <dt></dt>
@@ -193,12 +193,11 @@
 <script language="javascript">
     
     function showOrder(order) {
-        $("#orderId").val(order.orderId);
-        $("#outTradeNo").val(order.orderNo);
-        $("#subject").val(order.movieName);
-        $("#totalFee").val(order.amount);
-        $("#detail").val(order.detail);
-        $("#totalFee").val(order.amount);
+        $("#orderId").text(order.orderId);
+        $("#outTradeNo").text(order.orderNo);
+        $("#subject").text(order.movieName);
+        $("#totalFee").text(order.amount);
+        $("#detail").text(order.movieName);
 
     }
 
@@ -218,7 +217,7 @@
     //下单
     function placeOrder(movie) {
 
-        var buyUrl = "http://localhost:8088/client/netOrder/buy?userId=1&movieId=" + movieId;
+        var buyUrl = "http://localhost:8084/client/netOrder/buy?userId=1&movieId=" + movieId;
         $.post(buyUrl, { movieId: movieId, userId: $("#userId").val()},
             function(resp){
                 if(resp.code != 0 || resp.subCode != 0){
@@ -229,19 +228,16 @@
                 }
 
                 var orderResult = resp.data;
-                
 
+                showOrder(orderResult);
                 //window.location.replace("/payResult");
             });
         
     }
 
-
-    GetDateNow();
-
     function pay() {
 
-        window.location.replace("/payResult");
+
 
         $.post("/pay/byBalance", { orderId: $("#orderId").val(), amount: $("#totalFee").val(), userId:
                     $("#userId").val()},
@@ -252,6 +248,7 @@
                     console.log(resp.subCode);
                 }
 
+                window.location.replace("/payResult");
                 showOrder(resp.data);
                 //window.location.replace("/payResult");
         });

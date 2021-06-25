@@ -26,6 +26,10 @@ public class BalancePayController {
         if(order == null){
             return ApiResponse.fail(ApiResponseEnum.USER_DEFINED_ERROR, "没有指定的订单记录");
         }
+
+        if(order.getUserId().equals(payParam.getUserId())){
+            return ApiResponse.fail(ApiResponseEnum.USER_DEFINED_ERROR, "用户和订单不匹配");
+        }
         PaidHandleOrderResult result = netOrderService.payByBalance(order);
         return ApiResponse.success(result);
     }

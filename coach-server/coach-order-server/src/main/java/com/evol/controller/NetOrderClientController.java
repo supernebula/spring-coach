@@ -11,14 +11,12 @@ import com.evol.web.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Api("用户端订单API")
 @RestController
 @RequestMapping("/client/netOrder")
+@CrossOrigin
 public class NetOrderClientController {
 
     @Autowired
@@ -49,8 +47,8 @@ public class NetOrderClientController {
 
     @CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "下单", response = ApiResponse.class)
-    @GetMapping("buy")
-    public ApiResponse buy(Integer movieId, Integer userId){
+    @PostMapping("buy")
+    public ApiResponse buy(@RequestParam Integer movieId, @RequestParam Integer userId){
 
 //        ApiResponse<MovieDetailDTO> apiResp = feignMovieClient.getMovie(movieId);
 //        if(apiResp.getSubCode() != 0 || apiResp.getData() == null  ){

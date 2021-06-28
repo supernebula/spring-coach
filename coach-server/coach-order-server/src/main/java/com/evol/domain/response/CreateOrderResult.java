@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class CreateOrderResult {
 
+    private Integer userId;
+
     private Integer orderId;
 
     private String orderNo;
@@ -17,9 +19,11 @@ public class CreateOrderResult {
 
     private String message;
 
-    public CreateOrderResult(boolean success, Integer orderId, String orderNo, Integer amount, String  movieName,
+    public CreateOrderResult(boolean success, Integer userId, Integer orderId, String orderNo, Integer amount,
+                             String  movieName,
                              String message){
         this.success = success;
+        this.userId = userId;
         this.orderId = orderId;
         this.orderNo = orderNo;
         this.amount = amount;

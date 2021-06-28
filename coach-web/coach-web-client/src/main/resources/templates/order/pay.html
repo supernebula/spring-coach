@@ -191,6 +191,9 @@
 </div>
 </body>
 <script language="javascript">
+
+    var orderId = "";
+    var userId = "";
     
     function showOrder(order) {
         $("#orderId").text(order.orderId);
@@ -198,49 +201,25 @@
         $("#subject").text(order.movieName);
         $("#totalFee").text(order.amount);
         $("#detail").text(order.movieName);
-
     }
 
-
-    var movieId = getQueryString("movieId");
-    var apiUrl = "http://localhost:8088/client/movie/get?movieId=" + movieId;
+    var userId = getQueryString("userId");
+    var orderId = getQueryString("orderId");
     $(document).ready(function() {
+        var apiUrl = "http://localhost:8084/client/netOrder/get?orderId=" + orderId;
         $.getJSON( apiUrl, function( resp ) {
             console.log(resp);
-            movieItem = resp.data;
-            placeOrder(movieItem);
+            var order = resp.data;
+            showOrder(order);
         });
+     });
 
-
-    });
-
-    //下单
-    function placeOrder(movie) {
-
-        var buyUrl = "http://localhost:8084/client/netOrder/buy?userId=1&movieId=" + movieId;
-        $.post(buyUrl, { movieId: movieId, userId: $("#userId").val()},
-            function(resp){
-                if(resp.code != 0 || resp.subCode != 0){
-                    console.log(resp.code);
-                    console.log(resp.msg);
-                    console.log(resp.subCode);
-
-                }
-
-                var orderResult = resp.data;
-
-                showOrder(orderResult);
-                //window.location.replace("/payResult");
-            });
-        
-    }
 
     function pay() {
 
+        var param = { orderId: orderId, userId: userId};
 
-
-        $.post("/pay/byBalance", { orderId: $("#orderId").val(), amount: $("#totalFee").val(), userId:
-                    $("#userId").val()},
+        $.post("http://localhost:8084/pay/balance", param,
             function(resp){
                 if(resp.code != 0 || resp.subCode != 0){
                     console.log(resp.code);
@@ -248,7 +227,10 @@
                     console.log(resp.subCode);
                 }
 
-                window.location.replace("/payResult");
+                var result = resp.data;
+
+                window.location.replace("/payResult?orderId=" + result.orderId);
+
                 showOrder(resp.data);
                 //window.location.replace("/payResult");
         });

@@ -137,6 +137,7 @@
             color: #fff;
         }
     </style>
+    <script th:src="@{/site/func.js}"></script>
     <script th:src="@{/jquery/jquery.js}"></script>
 </head>
 <body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4>
@@ -149,18 +150,17 @@
             <dl class="content">
                 <dt>商户订单号：</dt>
                 <dd>
-                    11
+                    <span id="outTradeNo"></span>
                 </dd>
                 <hr class="one_line">
                 <dt>总金额(分)：</dt>
                 <dd>
-                22
+                    <span id="totalFee"></span>
                 </dd>
                 <hr class="one_line"/>
                 <dt>支付订单号：</dt>
                 <dd>
-                   33
-                   33
+                    <span id="payOrderNo"></span>
                 </dd>
                 <hr class="one_line">
             </dl>
@@ -175,4 +175,30 @@
     </div>
 </div>
 </body>
+
+<script language="javascript">
+
+
+    function showOrder(order) {
+        $("#orderId").text(order.orderId);
+        $("#outTradeNo").text(order.orderNo);
+        $("#subject").text(order.movieName);
+        $("#totalFee").text(order.amount);
+        $("#detail").text(order.movieName);
+        $("#payOrderNo").text(order.payOrderNo);
+    }
+
+    var orderId = getQueryString("orderId");
+    $(document).ready(function() {
+        var apiUrl = "http://localhost:8084/client/netOrder/get?orderId=" + orderId;
+        $.getJSON( apiUrl, function( resp ) {
+            console.log(resp);
+            var order = resp.data;
+            showOrder(order);
+        });
+    });
+
+
+
+</script>
 </html>

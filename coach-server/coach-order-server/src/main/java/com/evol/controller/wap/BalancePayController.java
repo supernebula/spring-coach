@@ -8,30 +8,22 @@ import com.evol.enums.ApiResponseEnum;
 import com.evol.service.NetOrderService;
 import com.evol.web.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/balancePay")
+@RequestMapping("/pay")
 @RestController
+@CrossOrigin
 public class BalancePayController {
 
     @Autowired
     private NetOrderService netOrderService;
 
-    @GetMapping("/pay")
-    public ApiResponse pay(@RequestParam PayParam payParam){
-        NetOrder order = netOrderService.getNetOrderById(payParam.getOrderId());
-        if(order == null){
-            return ApiResponse.fail(ApiResponseEnum.USER_DEFINED_ERROR, "没有指定的订单记录");
-        }
-
-        if(order.getUserId().equals(payParam.getUserId())){
-            return ApiResponse.fail(ApiResponseEnum.USER_DEFINED_ERROR, "用户和订单不匹配");
-        }
-        PaidHandleOrderResult result = netOrderService.payByBalance(order);
-        return ApiResponse.success(result);
+    @CrossOrigin(value = "http://localhost:8090")
+    @PostMapping(value = "/balance", produces = "application/json;charset=UTF-8")
+    public ApiResponse pay(PayParam payParam){
+        ApiResponse<PaidHandleOrderResult> apiResult = netOrderService.payByBalance(payParam.getUserId(),
+                payParam.getOrderId());
+        return apiResult;
     }
 
 }

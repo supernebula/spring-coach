@@ -11,6 +11,7 @@ import com.evol.domain.request.PayOrderParam;
 import com.evol.domain.request.UpdateUserBalanceParam;
 import com.evol.domain.response.CreateOrderResult;
 import com.evol.domain.response.PaidHandleOrderResult;
+import com.evol.enums.ApiResponseEnum;
 import com.evol.enums.MoneyInOutTypeEnum;
 import com.evol.mapper.NetOrderMapper;
 import com.evol.service.NetOrderService;
@@ -68,13 +69,13 @@ public class NetOrderServiceImpl implements NetOrderService {
     public CreateOrderResult newOrder(Integer movieId, Integer userId) {
         ApiResponse<MovieDetailDTO> apiResp = feignMovieClient.getMovie(movieId);
         if(apiResp.getSubCode() != 0 || apiResp.getData() == null  ){
-            return new CreateOrderResult(false, null, null, null, null, apiResp.getSubMsg());
+            return new CreateOrderResult(false, userId,null, null, null, null, apiResp.getSubMsg());
         }
         MovieDetailDTO movieDTO = apiResp.getData();
 
         ApiResponse<UserDTO> userApiResp = feignUserClient.getUserById(userId);
         if(userApiResp.getSubCode() != 0 || userApiResp.getData() == null  ){
-            return new CreateOrderResult(false, null, null, null, null, userApiResp.getSubMsg());
+            return new CreateOrderResult(false, userId, null, null, null, null, userApiResp.getSubMsg());
         }
         UserDTO userDTO = userApiResp.getData();
 
@@ -92,7 +93,8 @@ public class NetOrderServiceImpl implements NetOrderService {
         netOrder.setPayModeType(PayModeTypeEnum.NONE.getCode());
         netOrder.setCreateTime(new Date());
         netOrderMapper.insert(netOrder);
-        return new CreateOrderResult(true, netOrder.getId(), netOrder.getOrderNo(), netOrder.getAmount(), netOrder.getMovieName(),
+        return new CreateOrderResult(true, userId, netOrder.getId(), netOrder.getOrderNo(), netOrder.getAmount(),
+                netOrder.getMovieName(),
                 null);
     }
 
@@ -110,22 +112,24 @@ public class NetOrderServiceImpl implements NetOrderService {
         netOrder.setPayModeType(payOrderParam.getPayModeType());
         netOrder.setUdpateTime(new Date());
         netOrderMapper.updateByPrimaryKeySelective(netOrder);
-        return PaidHandleOrderResult.success(payOrderParam.getOutTradeNo());
+        return PaidHandleOrderResult.success(netOrder.getId(), payOrderParam.getOutTradeNo());
     }
 
     @Override
-    public PaidHandleOrderResult payByBalance(Integer userId, Integer orderId) {
+    public ApiResponse<PaidHandleOrderResult> payByBalance(Integer userId, Integer orderId) {
         NetOrder netOrder = this.getNetOrderById(orderId);
         if(netOrder == null){
-            return PaidHandleOrderResult.noOrderRecord("" + orderId);
+            return new ApiResponse(ApiResponseEnum.NO_RECORD, PaidHandleOrderResult.noOrderRecord("" + orderId));
         }
-
-        netOrder.setPayOrderNo("");
+        if(!netOrder.getUserId().equals(userId)){
+            return ApiResponse.fail(ApiResponseEnum.USER_DEFINED_ERROR, "用户和订单不匹配");
+        }
+        netOrder.setPayOrderNo("Balance" + netOrder.getId());
         netOrder.setPayTime(new Date());
         netOrderMapper.updateByPrimaryKeySelective(netOrder);
         //余额支付
         this.updateUserBalance(netOrder.getUserId(), netOrder.getAmount(), netOrder.getOrderNo());
-        return PaidHandleOrderResult.success(netOrder.getOrderNo());
+        return ApiResponse.success(PaidHandleOrderResult.success(netOrder.getId(), netOrder.getOrderNo()));
     }
 
     @Override
@@ -169,7 +173,6 @@ public class NetOrderServiceImpl implements NetOrderService {
         }
         return PageBase.create(page.getTotal(),movieList);
     }
-
 
 
     public void updateUserBalance(Integer userId, Integer money, String orderNo){

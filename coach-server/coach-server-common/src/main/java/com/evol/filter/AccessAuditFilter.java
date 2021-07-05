@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author admin
  */
 @Slf4j
-@WebFilter(filterName = "filter1",urlPatterns = {"/hello/*"})
+@WebFilter(filterName = "AccessAuditFilter",urlPatterns = {"/*"})
 public class AccessAuditFilter  implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -20,15 +20,13 @@ public class AccessAuditFilter  implements Filter {
         HttpServletRequest httpServletRequest=(HttpServletRequest)servletRequest;
         HttpServletResponse httpServletResponse=(HttpServletResponse)servletResponse;
 
-        String uri = ((HttpServletRequest) servletRequest).getRequestURI();
-        String httpMethod = ((HttpServletRequest) servletRequest).getMethod();
+        String uri = httpServletRequest.getRequestURI();
+        String httpMethod = httpServletRequest.getMethod();
         Long startTime = System.currentTimeMillis();
-
         filterChain.doFilter(servletRequest,servletResponse);
         Long endTime = System.currentTimeMillis();
-
-       // log.info();
-
+        String queryString = httpServletRequest.getQueryString();
+       log.info(String.format("%s %s, %s,   耗时毫秒数: %s", httpMethod,  uri, queryString, (endTime - startTime)));
 
     }
 }

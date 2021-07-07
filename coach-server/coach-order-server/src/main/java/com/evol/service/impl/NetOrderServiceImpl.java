@@ -7,6 +7,7 @@ import com.evol.domain.PageBase;
 import com.evol.domain.dto.MovieDetailDTO;
 import com.evol.domain.model.NetOrder;
 import com.evol.domain.model.NetOrderExample;
+import com.evol.domain.request.OrderCancelParam;
 import com.evol.domain.request.PayOrderParam;
 import com.evol.domain.request.UpdateUserBalanceParam;
 import com.evol.domain.response.CreateOrderResult;
@@ -22,6 +23,11 @@ import com.evol.util.JsonUtil;
 import com.evol.web.ApiResponse;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import io.swagger.models.auth.In;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -32,6 +38,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Slf4j
 public class NetOrderServiceImpl implements NetOrderService {
 
     @Autowired
@@ -133,6 +140,20 @@ public class NetOrderServiceImpl implements NetOrderService {
     }
 
     @Override
+    public boolean expireCanceledOrder(OrderCancelParam param) {
+        NetOrder netOrder = netOrderMapper.selectByPrimaryKey(param.getOrderId());
+        if(netOrder == null){return true;}
+
+        if(!NetOrderStatusEnum.UNPAID.getCode().equals(netOrder.getStatus())){
+            return true;
+        }
+
+        netOrder.setStatus(NetOrderStatusEnum.EXPIRE_CANCELED.getCode());
+        Integer count = netOrderMapper.updateByPrimaryKeySelective(netOrder);
+        return count > 0;
+    }
+
+    @Override
     public PaidHandleOrderResult payByBalance(NetOrder netOrder) {
         return null;
 //        if(netOrder == null){
@@ -183,5 +204,25 @@ public class NetOrderServiceImpl implements NetOrderService {
         param.setTradeNo(orderNo);
         String jsonStr = JsonUtil.ParseString(param);
         rabbitTemplate.convertAndSend(RabbitContants.USER_BALANCE_EXCHANGE, RabbitContants.USER_BALANCE_ROUTING_KEY, jsonStr);
+    }
+
+    public void cancelDelayNotPaidOrder(Integer orderId, String orderNo, Date createTime){
+        OrderCancelParam param = new OrderCancelParam();
+        param.setOrderId(orderId);
+        param.setOrderNo(orderNo);
+        param.setCreateTime(createTime);
+        String jsonStr = JsonUtil.ParseString(param);
+
+
+        //给延迟队列发送消息
+        rabbitTemplate.convertAndSend(RabbitContants.ORDER_DELAY_CANCEL_EXCHANGE, RabbitContants.ORDER_DELAY_CANCEL_ROUTING_KEY, jsonStr, new MessagePostProcessor() {
+            @Override
+            public Message postProcessMessage(Message message) throws AmqpException {
+                //给消息设置延迟毫秒值
+                message.getMessageProperties().setHeader("x-delay", 10 * 1000);
+                return message;
+            }
+        });
+        log.info("send delay message orderId:{}",orderId);
     }
 }

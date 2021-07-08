@@ -29,7 +29,8 @@ public class MsgRabbitConsumer {
 
     @RabbitListener(bindings = {
             @QueueBinding(value = @Queue(RabbitContants.ORDER_DELAY_CANCEL_QUEUE), exchange =
-            @Exchange(RabbitContants.ORDER_DELAY_CANCEL_EXCHANGE), key = {RabbitContants.ORDER_DELAY_CANCEL_ROUTING_KEY})
+            @Exchange( value = RabbitContants.ORDER_DELAY_CANCEL_EXCHANGE, type = "x-delayed-message"), key =
+                    {RabbitContants.ORDER_DELAY_CANCEL_ROUTING_KEY})
     })
     public void receiveMsg(String message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws IOException {
 

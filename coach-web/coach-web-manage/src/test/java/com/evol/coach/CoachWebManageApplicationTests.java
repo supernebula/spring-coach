@@ -1,13 +1,13 @@
-package com.evol.coach;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class CoachWebManageApplicationTests {
-
-    @Test
-    void contextLoads() {
-    }
-
-}
+//package com.evol.coach;
+//
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
+//
+//@SpringBootTest
+//class CoachWebManageApplicationTests {
+//
+//    @Test
+//    void contextLoads() {
+//    }
+//
+//}

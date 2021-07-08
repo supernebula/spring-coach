@@ -27,6 +27,7 @@ import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,6 +101,9 @@ public class NetOrderServiceImpl implements NetOrderService {
         netOrder.setPayModeType(PayModeTypeEnum.NONE.getCode());
         netOrder.setCreateTime(new Date());
         netOrderMapper.insert(netOrder);
+
+        this.cancelDelayNotPaidOrder(netOrder.getId(), netOrder.getOrderNo(), netOrder.getCreateTime());
+
         return new CreateOrderResult(true, userId, netOrder.getId(), netOrder.getOrderNo(), netOrder.getAmount(),
                 netOrder.getMovieName(),
                 null);
@@ -128,9 +132,16 @@ public class NetOrderServiceImpl implements NetOrderService {
         if(netOrder == null){
             return new ApiResponse(ApiResponseEnum.NO_RECORD, PaidHandleOrderResult.noOrderRecord("" + orderId));
         }
+
+        if(NetOrderStatusEnum.EXPIRE_CANCELED.getCode().equals(netOrder.getStatus()){
+            return ApiResponse.fail(ApiResponseEnum.USER_DEFINED_ERROR, "订单未及时支付已过期，请重新下单");
+        }
+
         if(!netOrder.getUserId().equals(userId)){
             return ApiResponse.fail(ApiResponseEnum.USER_DEFINED_ERROR, "用户和订单不匹配");
         }
+
+
         netOrder.setPayOrderNo("Balance" + netOrder.getId());
         netOrder.setPayTime(new Date());
         netOrderMapper.updateByPrimaryKeySelective(netOrder);
@@ -206,6 +217,7 @@ public class NetOrderServiceImpl implements NetOrderService {
         rabbitTemplate.convertAndSend(RabbitContants.USER_BALANCE_EXCHANGE, RabbitContants.USER_BALANCE_ROUTING_KEY, jsonStr);
     }
 
+    @Override
     public void cancelDelayNotPaidOrder(Integer orderId, String orderNo, Date createTime){
         OrderCancelParam param = new OrderCancelParam();
         param.setOrderId(orderId);
@@ -213,15 +225,10 @@ public class NetOrderServiceImpl implements NetOrderService {
         param.setCreateTime(createTime);
         String jsonStr = JsonUtil.ParseString(param);
 
-
-        //给延迟队列发送消息
-        rabbitTemplate.convertAndSend(RabbitContants.ORDER_DELAY_CANCEL_EXCHANGE, RabbitContants.ORDER_DELAY_CANCEL_ROUTING_KEY, jsonStr, new MessagePostProcessor() {
-            @Override
-            public Message postProcessMessage(Message message) throws AmqpException {
-                //给消息设置延迟毫秒值
-                message.getMessageProperties().setHeader("x-delay", 10 * 1000);
-                return message;
-            }
+        rabbitTemplate.convertAndSend(RabbitContants.ORDER_DELAY_CANCEL_EXCHANGE, RabbitContants.ORDER_DELAY_CANCEL_ROUTING_KEY, jsonStr, message ->{
+            message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);  //消息持久化
+            message.getMessageProperties().setDelay(30 * 60 * 1000);   // 单位为毫秒, 30分钟定时取消
+            return message;
         });
         log.info("send delay message orderId:{}",orderId);
     }

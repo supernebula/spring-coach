@@ -54,7 +54,7 @@ public class MovieWebController {
     }
 
     @ApiOperation(value = "查询电影记录", response = ApiResponse.class)
-    @GetMapping("/queryMovie")
+    @GetMapping("/query")
     public ApiResponse queryMovie(MovieQueryRequest reqParam){
         PageBase<Movie> pageList = movieService.queryPage(reqParam);
         return ApiResponse.success(pageList);

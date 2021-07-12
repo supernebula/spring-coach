@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="shared/layout">
+
+<head>
+    <title>Yelp Role Management</title>
+    <link rel="stylesheet" th:href="@{/kendoui/css/kendo.common-material.min.css}" />
+    <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.min.css}" />
+    <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.mobile.min.css}" />
+</head>
+<body>
+<!-- Content Wrapper. Contains page content -->
+<div layout:fragment="content" class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Role Detail
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Role</a></li>
+            <li class="active">detail</li>
+            <li><a class="btn btn-default" th:href="@{/movie/index}" role="button">返回</a></li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- Main row -->
+        <div class="row">
+            <div class="col-lg-12 col-xs-12">
+                <div id="item-detail">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-10">
+                                <span id="name"  class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">ForeignName</label>
+                            <div class="col-sm-10">
+                                <span id="foreignName"  class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">releaseDate</label>
+                            <div class="col-sm-10">
+                                <span id="releaseDate" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">minutes</label>
+                            <div class="col-sm-10">
+                                <span id="minutes" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">discountCount</label>
+                            <div class="col-sm-10">
+                                <span id="discountCount" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">discountPrice</label>
+                            <div class="col-sm-10">
+                                <span id="discountPrice" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">releaseRegion</label>
+                            <div class="col-sm-10">
+                                <span id="releaseRegion" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">spaceType</label>
+                            <div class="col-sm-10">
+                                <span id="spaceType" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">coverUri</label>
+                            <div class="col-sm-10">
+                                <span id="coverUri" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">images</label>
+                            <div class="col-sm-10">
+                                <span id="images" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">description</label>
+                            <div class="col-sm-10">
+                                <span id="description" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">ratings</label>
+                            <div class="col-sm-10">
+                                <span id="ratings" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">language</label>
+                            <div class="col-sm-10">
+                                <span id="language" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">createTime</label>
+                            <div class="col-sm-10">
+                                <span id="createTime" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">updateTime</label>
+                            <div class="col-sm-10">
+                                <span id="updateTime" class="checkbox"></span>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- /.row (main row) -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<th:block layout:fragment="scriptsblock">
+    <script th:inline="javascript">
+
+        var apiUrl = "/web/movie/getMovie/" + [[${id}]];
+        $(document).ready(function() {
+            $.getJSON(apiUrl, null, function (response) {
+                if(!response.success)
+                {
+                    $("#item-detail #name").html(response.message);
+                }
+
+                var item = response.data;
+                $("#item-detail #name").html(item.name);
+                $("#item-detail #foreignName").html(item.foreignName);
+                $("#item-detail #releaseDate").html(item.releaseDate);
+                $("#item-detail #minutes").html(item.minutes);
+                $("#item-detail #discountCount").html(item.discountCount);
+                $("#item-detail #discountPrice").html(item.discountPrice);
+                $("#item-detail #releaseRegion").html(item.releaseRegion);
+                $("#item-detail #spaceType").html(item.spaceType);
+                $("#item-detail #coverUri").html(item.coverUri);
+                $("#item-detail #images").html(item.images);
+                $("#item-detail #description").html(item.description);
+                $("#item-detail #ratings").html(item.ratings);
+                $("#item-detail #language").html(item.language);
+                $("#item-detail #createTime").html(item.createTime);
+                $("#item-detail #updateTime").html(item.updateTime);
+            });
+
+        });
+    </script>
+</th:block>
+</body>
+</html>

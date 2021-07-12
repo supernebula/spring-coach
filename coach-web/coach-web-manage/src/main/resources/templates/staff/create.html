@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="shared/layout">
+
+<head>
+    <title>Yelp Admin Management</title>
+    <link rel="stylesheet" th:href="@{/kendoui/css/kendo.common-material.min.css}" />
+    <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.min.css}" />
+    <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.mobile.min.css}" />
+
+</head>
+<body>
+<!-- Content Wrapper. Contains page content -->
+<div layout:fragment="content" class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Admin Create
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li class="active">create</li>
+            <li><a class="btn btn-default" th:href="@{/admin/index}" role="button">返回</a></li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- Main row -->
+        <div class="row">
+            <div class="col-lg-12 col-xs-12">
+                <div id="item-form">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Username</label>
+                            <div class="col-sm-10">
+                                <input type="text" style="width: 300px;" id="username" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" style="width: 300px;"  class="short-input" id="password" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Confirm Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" style="width: 300px;"  class="short-input" id="confirmPassword" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="text" style="width: 300px;"  class="short-input" id="email" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Mobile</label>
+                            <div class="col-sm-10">
+                                <input type="text" style="width: 300px;" class="short-input" id="mobile" placeholder="" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button id="submitButton" type="button"  onclick="javascript:return adminCreateSubmit();"  class="btn btn-default">Submit</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <span id="validate-message-ok" style="color: green;"></span>
+                                <span id="validate-message-error" style="color: red;"></span>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- /.row (main row) -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<th:block layout:fragment="scriptsblock">
+    <script th:inline="javascript">
+
+        function adminCreateSubmit() {
+            var username =$("#item-form input#username").val();
+            var password =$("#item-form input#password").val();
+            var confirmPassword =$("#item-form input#confirmPassword").val();
+            var email =$("#item-form input#email").val();
+            var mobile =$("#item-form input#mobile").val();
+
+            var apiUrl = "/api/admin/create";
+            var adminIndexUrl = "/admin/index";
+
+            $.post(apiUrl, { username: username, password : password, confirmPassword: confirmPassword, email: email, mobile : mobile },
+                function(response){
+                    $("#validate-message-ok").html("");
+                    $("#validate-message-error").html("");
+                    if(response.success)
+                    {
+                        $("#validate-message-ok").html(response.message);
+                        window.location.href = adminIndexUrl;
+                        return;
+                    }
+
+                    $("#validate-message-error").html(response.message);
+                    $("#submitButton").removeAttr("disabled");
+
+                }, "json");
+            return false;
+        }
+    </script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="shared/layout">
+
+<head>
+    <title>Yelp Role Management</title>
+    <link rel="stylesheet" th:href="@{/kendoui/css/kendo.common-material.min.css}" />
+    <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.min.css}" />
+    <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.mobile.min.css}" />
+</head>
+<body>
+<!-- Content Wrapper. Contains page content -->
+<div layout:fragment="content" class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Role Edit
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Role</a></li>
+            <li class="active">edit</li>
+            <li><a class="btn btn-default" th:href="@{/role/index}" role="button">返回</a></li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- Main row -->
+        <div class="row">
+            <div class="col-lg-12 col-xs-12">
+                <div id="item-form">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" style="width: 300px;" id="name" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Foreign Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" style="width: 300px;"  class="short-input" id="foreignName" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">releaseDate</label>
+                            <div class="col-sm-10">
+                                <input type="text" style="width: 300px;"  class="short-input" id="releaseDate" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">minutes</label>
+                            <div class="col-sm-10">
+                                <input type="text" style="width: 300px;"  class="short-input" id="minutes" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">discountPrice</label>
+                            <div class="col-sm-10">
+                                <input type="text" style="width: 300px;"  class="short-input" id="discountPrice" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">releaseRegion</label>
+                            <div class="col-sm-10">
+                                <input type="text" style="width: 300px;"  class="short-input" id="releaseRegion" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">spaceType</label>
+                            <div class="col-sm-10">
+                                <input type="text" style="width: 300px;"  class="short-input" id="spaceType" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">coverUri</label>
+                            <div class="col-sm-10">
+                                <input type="text" style="width: 300px;"  class="short-input" id="coverUri" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">description</label>
+                            <div class="col-sm-10">
+                                <input type="text" style="width: 300px;"  class="short-input" id="description" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">language</label>
+                            <div class="col-sm-10">
+                                <input type="text" style="width: 300px;"  class="short-input" id="language" placeholder="" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button id="submitButton" type="submit"  onclick="javascript:editSubmit();"
+                                        class="btn btn-default">Submit</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <span id="validate-message-ok" style="color: green;"></span>
+                                <span id="validate-message-error" style="color: red;"></span>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- /.row (main row) -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<th:block layout:fragment="scriptsblock">
+    <script th:inline="javascript">
+
+        var apiDetailUrl = "/web/movie/getMovie/" + [[${id}]];
+        var apiEditUrl = "/web/movie/getMovie/modifyMovie/" + [[${id}]];
+        $(document).ready(function() {
+            $.getJSON(apiDetailUrl, null, function (response) {
+                if(!response.success)
+                {
+                    $("#validate-message-error").html(response.message);
+                    return;
+                }
+
+                var item = response.data;
+                $("#item-form input#id").val(item.id);
+                $("#item-form #name").val(item.name);
+                $("#item-form #foreignName").val(item.foreignName);
+                $("#item-form #releaseDate").val(item.releaseDate);
+                $("#item-form #minutes").val(item.minutes);
+                $("#item-form #discountPrice").val(item.discountPrice);
+                $("#item-form #releaseRegion").val(item.releaseRegion);
+                $("#item-form #spaceType").val(item.spaceType);
+                $("#item-form #coverUri").val(item.coverUri);
+                $("#item-form #description").val(item.description);
+                $("#item-form #language").val(item.language);
+            });
+
+        });
+
+        function editSubmit() {
+
+            $("#submitButton").attr({"disabled":"disabled"});
+
+            var name =$("#item-form input#name").val();
+            var description =$("#item-form input#description").val();
+            var available =$("#item-form input#available").val();
+
+            $.post(apiEditUrl, { name: name, description : description, available: available },
+                function(response){
+                    $("#validate-message-ok").html("");
+                    $("#validate-message-error").html("");
+                    if(response.success)
+                    {
+                        $("#validate-message-ok").html(response.message);
+                    }else{
+                        $("#validate-message-error").html(response.message);
+                    }
+                    $("#submitButton").removeAttr("disabled");
+
+                }, "json");
+
+        }
+    </script>
+</th:block>
+</body>
+</html>

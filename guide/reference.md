@@ -231,5 +231,17 @@ Spring系列（8）- 过滤器+监听器+拦截器+AOP 比较
 
 https://segmentfault.com/a/1190000021823564
 
+## MQ
+
+1. rabbitmq 延迟消息
+
+RabbitMQ安装延迟队列插件(docker)
+
+RabbitMQ实战：界面管理和监控
+
+https://www.jianshu.com/p/78354a3e35d0
+
+https://juejin.cn/post/6844903591174471688
+
 
 

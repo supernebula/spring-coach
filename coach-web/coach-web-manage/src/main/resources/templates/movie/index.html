@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.common-material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.mobile.min.css}" />
+    <script src="../../static/site/func.js"></script>
 </head>
 <body>
 <!-- Content Wrapper. Contains page content -->
@@ -37,10 +38,6 @@
                             <label for="foreignName">foreignName</label>
                             <input type="text" class="form-control" id="foreignName" placeholder="" />
                         </div>
-                        <div class="form-group">
-                            <label for="description">description</label>
-                            <input type="text" class="form-control" id="description" placeholder="" />
-                        </div>
 
                         <button type="button" onclick="javascript:querySearch();" class="btn btn-default">Search
                         </button>
@@ -67,17 +64,18 @@
 </div>
 <th:block layout:fragment="scriptsblock">
     <script th:src="@{/kendoui/js/kendo.all.min.js}"></script>
+    <script th:src="@{/site/func.js}"></script>
     <script>
         function getSearchParam() {
 
             return {
                 "name" : $("#name").val().trim(),
-                "foreignName" : $("#foreignName").val().trim(),
-                "description" : $("#description").val().trim()
+                "foreignName" : $("#foreignName").val().trim()
             };
         }
 
         var queryApiUrl = "/web/movie/query";
+
 
         $(document).ready(function() {
             window.roleGrid = $("#data-grid").kendoGrid({
@@ -209,7 +207,7 @@
                     sortable: false,
                     filterable: false,
                     template:
-                        '<a href="/web/movie/modifyMovie/#: id #">edit</a>&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="javascript: return confirmDelete(this);" api-href="/web/movie/deleteMovie/#: id #" style="cursor:pointer; ">delete</a>'
+                        '<a href="/web/movie/update/#: id #">edit</a>&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="javascript: return confirmDelete(this);" api-href="/web/movie/delete/?#: id #" style="cursor:pointer; ">delete</a>'
                 }],
                 dataBound: function () {
                     var rows = this.items();

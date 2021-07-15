@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="shared/layout0 (title='replace方式布局')">
+<div th:fragment="content(text)">
+    页面中正文内容：采用th:include + th:replace方式进行页面布局
+    模板传输参数为：<span th:text="${text}"></span>
+</div>
+</html>

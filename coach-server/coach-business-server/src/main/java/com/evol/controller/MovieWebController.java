@@ -21,6 +21,7 @@ import java.util.List;
 @Api(tags = "电影管理")
 @RestController
 @RequestMapping("/web/movie")
+@CrossOrigin
 public class MovieWebController {
 
     @Autowired
@@ -32,27 +33,31 @@ public class MovieWebController {
 //    @Value("${file.access.pic.url}")
 //    private String uploadFileUrl = "E:\\upload\\";
 
+    @CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "添加电影", response = ApiResponse.class)
-    @PostMapping("/addMovie")
-    public ApiResponse addMovie(MoiveUpsertDto param){
-        Integer id =  movieService.addMovie(param);
+    @PostMapping("/create")
+    public ApiResponse createMovie(MoiveUpsertDto param){
+        Integer id =  movieService.createMovie(param);
         return ApiResponse.success(id);
     }
 
+    @CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "删除电影", response = ApiResponse.class)
-    @PostMapping("/deleteMovie")
+    @PostMapping("/delete")
     public ApiResponse deleteMovie(Integer movieId){
         Integer num = movieService.deleteMoive(movieId);
         return ApiResponse.success(num);
     }
 
+    @CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "修改电影", response = ApiResponse.class)
-    @PostMapping("/modifyMovie")
-    public ApiResponse modifyMovie(Integer movieId, MoiveUpsertDto param){
-        Integer id =  movieService.modifyMovie(movieId, param);
+    @PostMapping("/update")
+    public ApiResponse updateMovie(Integer movieId, MoiveUpsertDto param){
+        Integer id =  movieService.updateMovie(movieId, param);
         return ApiResponse.success(id);
     }
 
+    @CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "查询电影记录", response = ApiResponse.class)
     @GetMapping("/query")
     public ApiResponse queryMovie(MovieQueryRequest reqParam){
@@ -60,13 +65,15 @@ public class MovieWebController {
         return ApiResponse.success(pageList);
     }
 
+    @CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "获取电影", response = ApiResponse.class)
-    @PostMapping("/getMovie")
+    @PostMapping("/get")
     public ApiResponse getMovie(Integer movieId){
         Movie movie = movieService.getMovie(movieId);
         return ApiResponse.success(movie);
     }
 
+    @CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "上传封面文件", response = ApiResponse.class)
     @PostMapping("/uploadCover")
     public ApiResponse uploadCover(@RequestParam("files") MultipartFile files[]){

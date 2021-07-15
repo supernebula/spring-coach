@@ -132,9 +132,11 @@
     <!-- /.content -->
 </div>
 <th:block layout:fragment="scriptsblock">
+    <script th:src="@{/site/func.js}"></script>
     <script th:inline="javascript">
 
-        var apiUrl = "/web/movie/getMovie/" + [[${id}]];
+        var movieId = getQueryString("movieId");
+        var apiUrl = "/web/movie/get/movieId=" + movieId;
         $(document).ready(function() {
             $.getJSON(apiUrl, null, function (response) {
                 if(!response.success)

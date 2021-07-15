@@ -5,12 +5,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping({"home"})
 public class HomeController {
 
-    @GetMapping({"index", "/", ""})
-    public String index(){
+    @GetMapping("/index")
+    public String index() {
         return "home/index";
+    }
+
+    @GetMapping("/default0")
+    public String default0(){
+        return "home/default0";
+    }
+
+    @GetMapping("/default1")
+    public String default1(){
+        return "home/default1";
+    }
+
+    @GetMapping("/default2")
+    public String default2(){
+        return "home/default2";
     }
 
 

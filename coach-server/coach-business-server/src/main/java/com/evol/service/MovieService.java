@@ -7,9 +7,9 @@ import com.evol.domain.request.MovieQueryRequest;
 
 public interface MovieService {
 
-    Integer addMovie(MoiveUpsertDto dto);
+    Integer createMovie(MoiveUpsertDto dto);
 
-    Integer modifyMovie(Integer movieId, MoiveUpsertDto dto);
+    Integer updateMovie(Integer movieId, MoiveUpsertDto dto);
 
     Integer deleteMoive(Integer movieId);
 

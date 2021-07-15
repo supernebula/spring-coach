@@ -27,7 +27,7 @@ public class MovieServiceImpl implements MovieService {
     private MovieMapper movieMapper;
 
     @Override
-    public Integer addMovie(MoiveUpsertDto dto) {
+    public Integer createMovie(MoiveUpsertDto dto) {
         Movie movie = new Movie();
         movie.setName(dto.getName());
         movie.setForeignName(dto.getForeignName());
@@ -52,7 +52,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Integer modifyMovie(Integer movieId, MoiveUpsertDto dto) {
+    public Integer updateMovie(Integer movieId, MoiveUpsertDto dto) {
         Movie movie = movieMapper.selectByPrimaryKey(movieId);
         if(movie == null){
             return null;

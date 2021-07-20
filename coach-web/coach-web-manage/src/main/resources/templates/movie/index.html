@@ -6,7 +6,6 @@
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.common-material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.mobile.min.css}" />
-    <script src="../../static/site/func.js"></script>
 </head>
 <body>
 <!-- Content Wrapper. Contains page content -->
@@ -64,7 +63,6 @@
 </div>
 <th:block layout:fragment="scriptsblock">
     <script th:src="@{/kendoui/js/kendo.all.min.js}"></script>
-    <script th:src="@{/site/func.js}"></script>
     <script>
         function getSearchParam() {
 
@@ -74,7 +72,7 @@
             };
         }
 
-        var queryApiUrl = "/web/movie/query";
+        var queryApiUrl = "http://localhost:8088/web/movie/query";
 
 
         $(document).ready(function() {

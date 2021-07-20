@@ -18,6 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.util.List;
 
+/**
+ * @author admin
+ */
 @Api(tags = "电影管理")
 @RestController
 @RequestMapping("/web/movie")
@@ -33,7 +36,7 @@ public class MovieWebController {
 //    @Value("${file.access.pic.url}")
 //    private String uploadFileUrl = "E:\\upload\\";
 
-    @CrossOrigin(value = "http://localhost:8090")
+    @CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "添加电影", response = ApiResponse.class)
     @PostMapping("/create")
     public ApiResponse createMovie(MoiveUpsertDto param){
@@ -41,7 +44,7 @@ public class MovieWebController {
         return ApiResponse.success(id);
     }
 
-    @CrossOrigin(value = "http://localhost:8090")
+    @CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "删除电影", response = ApiResponse.class)
     @PostMapping("/delete")
     public ApiResponse deleteMovie(Integer movieId){
@@ -49,7 +52,7 @@ public class MovieWebController {
         return ApiResponse.success(num);
     }
 
-    @CrossOrigin(value = "http://localhost:8090")
+    @CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "修改电影", response = ApiResponse.class)
     @PostMapping("/update")
     public ApiResponse updateMovie(Integer movieId, MoiveUpsertDto param){
@@ -57,7 +60,7 @@ public class MovieWebController {
         return ApiResponse.success(id);
     }
 
-    @CrossOrigin(value = "http://localhost:8090")
+    @CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "查询电影记录", response = ApiResponse.class)
     @GetMapping("/query")
     public ApiResponse queryMovie(MovieQueryRequest reqParam){
@@ -65,7 +68,7 @@ public class MovieWebController {
         return ApiResponse.success(pageList);
     }
 
-    @CrossOrigin(value = "http://localhost:8090")
+    @CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "获取电影", response = ApiResponse.class)
     @PostMapping("/get")
     public ApiResponse getMovie(Integer movieId){
@@ -73,7 +76,7 @@ public class MovieWebController {
         return ApiResponse.success(movie);
     }
 
-    @CrossOrigin(value = "http://localhost:8090")
+    @CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "上传封面文件", response = ApiResponse.class)
     @PostMapping("/uploadCover")
     public ApiResponse uploadCover(@RequestParam("files") MultipartFile files[]){

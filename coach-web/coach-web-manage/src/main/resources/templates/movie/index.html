@@ -85,7 +85,7 @@
                             contentType: "application/json",
                             success: function(result) {
                                 // notify the data source that the request succeeded
-                                options.success(result.data.list);
+                                options.success(result.data.records);
                             },
                             error: function(result) {
                                 // notify the data source that the request failed
@@ -106,7 +106,7 @@
                     },
                     schema: {
                         data: function(response) {
-                            return response.data.list; // twitter's response is { "statuses": [ /* results */ ] }
+                            return response.data.records; // twitter's response is { "statuses": [ /* results */ ] }
                         },total: function(response){
                             return response.data.total;
                         },
@@ -150,19 +150,19 @@
                     title: "Name",
                     sortable: false,
                     filterable: false,
-                    template: '<a href="/role/detail/#: id #">#: name #</a>'
+                    template: '<a href="/movie/detail/?movieId=#: id #">#: name #</a>'
                 },{
                     field:"foreignName",
                     title: "ForeignName",
                     sortable: false,
                     filterable: false,
-                    template: '<a href="/role/detail/#: id #">#: foreignName #</a>'
+                    template: '<a href="/movie/detail/?movieId=#: id #">#: foreignName #</a>'
                 },{
                     field:"releaseDate",
                     title: "ReleaseDate",
+                    width: "100px",
                     sortable: false,
-                    filterable: false,
-                    template: '<a href="/role/detail/#: id #">#: releaseDate #</a>'
+                    filterable: false
                 },{
                     field:"minutes",
                     title: "Minutes",
@@ -205,7 +205,7 @@
                     sortable: false,
                     filterable: false,
                     template:
-                        '<a href="/web/movie/update/#: id #">edit</a>&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="javascript: return confirmDelete(this);" api-href="/web/movie/delete/?#: id #" style="cursor:pointer; ">delete</a>'
+                        '<a href="/movie/edit/?movieId=#: id #">edit</a>&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="javascript: return confirmDelete(this);" api-href="/movie/delete/?movieId=#: id #" style="cursor:pointer; ">delete</a>'
                 }],
                 dataBound: function () {
                     var rows = this.items();

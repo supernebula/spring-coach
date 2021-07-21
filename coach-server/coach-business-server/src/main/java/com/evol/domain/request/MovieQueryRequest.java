@@ -12,8 +12,8 @@ public class MovieQueryRequest {
     private String name;
 
     //@NotNull(message = "页码不能为空")
-    @ApiModelProperty(name = "pageNo", value = "页码", required = true)
-    private Integer pageNo = 1;
+    @ApiModelProperty(name = "page", value = "页码", required = true)
+    private Integer page = 1;
 
     //@NotNull(message = "页码容量不能为空")
     @ApiModelProperty(name = "pageSize", value = "页面条数", required = true)

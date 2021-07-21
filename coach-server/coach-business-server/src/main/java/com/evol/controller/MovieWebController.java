@@ -70,7 +70,7 @@ public class MovieWebController {
 
     @CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "获取电影", response = ApiResponse.class)
-    @PostMapping("/get")
+    @GetMapping("/get")
     public ApiResponse getMovie(Integer movieId){
         Movie movie = movieService.getMovie(movieId);
         return ApiResponse.success(movie);

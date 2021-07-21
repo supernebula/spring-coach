@@ -136,7 +136,7 @@
     <script th:inline="javascript">
 
         var movieId = getQueryString("movieId");
-        var apiUrl = "/web/movie/get/movieId=" + movieId;
+        var apiUrl = "http://localhost:8088/web/movie/get?movieId=" + movieId;
         $(document).ready(function() {
             $.getJSON(apiUrl, null, function (response) {
                 if(!response.success)

@@ -77,9 +77,10 @@ public class StaffServiceImpl implements StaffService {
         staffExample.createCriteria();
         List<Staff> staffList = staffMapper.selectByExample(staffExample);
         if(CollectionUtils.isEmpty(staffList)){
-            return PageBase.create(page.getTotal(), new ArrayList<>());
+            return PageBase.create(page.getTotal(), staffQueryRequest.getPageNo(), staffQueryRequest.getPageSize(),
+                    new ArrayList<>());
         }
-        return PageBase.create(page.getTotal(),staffList);
+        return PageBase.create(page.getTotal(), staffQueryRequest.getPageNo(), staffQueryRequest.getPageSize(),staffList);
     }
 
     @Override

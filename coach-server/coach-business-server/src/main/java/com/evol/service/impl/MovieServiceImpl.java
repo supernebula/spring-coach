@@ -84,18 +84,25 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public PageBase<Movie> queryPage(MovieQueryRequest movieQueryRequest) {
-        Page page =  PageHelper.startPage(movieQueryRequest.getPageNo(), movieQueryRequest.getPageSize());
+
+        Page<Object> page = PageHelper.startPage(movieQueryRequest.getPage(), movieQueryRequest.getPageSize(),"id asc");
+        //Page page =  PageHelper.startPage(movieQueryRequest.getPageNo(), movieQueryRequest.getPageSize());
+
         MovieExample movieExample = new MovieExample();
         if(!StringUtils.isBlank(movieQueryRequest.getName())){
             movieExample.createCriteria().andNameLike("%" + movieQueryRequest.getName() + "%");
         }
+
+
         List<Movie> movieList = movieMapper.selectByExample(movieExample);
         if(CollectionUtils.isEmpty(movieList)){
-            return PageBase.create(page.getTotal(), new ArrayList<>());
+            return PageBase.create(page.getTotal(), movieQueryRequest.getPage(), movieQueryRequest.getPageSize(),
+                    new ArrayList<>());
         }
-        return PageBase.create(page.getTotal(),movieList);
+        return PageBase.create(page.getTotal(), movieQueryRequest.getPage(), movieQueryRequest.getPageSize(),movieList);
     }
 
+    @Override
     public Movie getMovie(Integer movieId){
         return movieMapper.selectByPrimaryKey(movieId);
     }

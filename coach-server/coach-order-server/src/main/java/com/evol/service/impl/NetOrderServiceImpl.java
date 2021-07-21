@@ -133,7 +133,7 @@ public class NetOrderServiceImpl implements NetOrderService {
             return new ApiResponse(ApiResponseEnum.NO_RECORD, PaidHandleOrderResult.noOrderRecord("" + orderId));
         }
 
-        if(NetOrderStatusEnum.EXPIRE_CANCELED.getCode().equals(netOrder.getStatus()){
+        if(NetOrderStatusEnum.EXPIRE_CANCELED.getCode().equals(netOrder.getStatus())){
             return ApiResponse.fail(ApiResponseEnum.USER_DEFINED_ERROR, "订单未及时支付已过期，请重新下单");
         }
 
@@ -201,9 +201,9 @@ public class NetOrderServiceImpl implements NetOrderService {
         example.createCriteria().andUserIdEqualTo(userId);
         List<NetOrder> movieList = netOrderMapper.selectByExample(example);
         if(CollectionUtils.isEmpty(movieList)){
-            return PageBase.create(page.getTotal(), new ArrayList<>());
+            return PageBase.create(page.getTotal(), pageNo, pageSize, new ArrayList<>());
         }
-        return PageBase.create(page.getTotal(),movieList);
+        return PageBase.create(page.getTotal(), pageNo, pageSize,movieList);
     }
 
 

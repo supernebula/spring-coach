@@ -34,9 +34,12 @@ public class PageBase<T> implements Serializable {
      */
     private List records;
 
-    public static <T> PageBase<T> create(Long total,List<T> records) {
+    public static <T> PageBase<T> create(Long total, Integer page, Integer pageSize,List<T> records) {
         PageBase pageInfo = new PageBase();
         pageInfo.setTotal(total);
+        pageInfo.setPage(page);
+        pageInfo.setPageSize(pageSize);
+        pageInfo.setPageTotal(total > 0 && total / pageSize > 0 ? total / pageSize + 1 : total /pageSize + 1);
         pageInfo.setRecords(records);
         return pageInfo;
     }

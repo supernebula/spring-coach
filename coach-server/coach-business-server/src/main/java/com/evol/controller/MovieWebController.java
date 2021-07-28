@@ -40,13 +40,13 @@ public class MovieWebController {
     @ApiOperation(value = "添加电影", response = ApiResponse.class)
     @PostMapping("/create")
     public ApiResponse createMovie(MoiveUpsertDto param){
-        Integer id =  movieService.createMovie(param);
-        return ApiResponse.success(id);
+        Integer movieId =  movieService.createMovie(param);
+        return ApiResponse.success(movieId);
     }
 
     @CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "删除电影", response = ApiResponse.class)
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public ApiResponse deleteMovie(Integer movieId){
         Integer num = movieService.deleteMoive(movieId);
         return ApiResponse.success(num);

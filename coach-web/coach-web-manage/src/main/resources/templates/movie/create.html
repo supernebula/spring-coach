@@ -131,6 +131,7 @@
             var language =$("#item-form input#language").val();
 
             var createUrl = "http://localhost:8088/web/movie/create";
+            var detailUrl = "/movie/detail";
             var indexUrl = "/movie/index";
 
             $.post(createUrl, { name: name,
@@ -147,10 +148,10 @@
                 function(response){
                     $("#validate-message-ok").html("");
                     $("#validate-message-error").html("");
-                    if(response.success)
+                    if(response.code == 0)
                     {
                         $("#validate-message-ok").html(response.message);
-                        window.location.href = indexUrl;
+                        window.location.href = detailUrl + "?movieId=" + response.data;
                         return;
                     }
 

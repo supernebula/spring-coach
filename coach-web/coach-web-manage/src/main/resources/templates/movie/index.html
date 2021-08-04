@@ -147,6 +147,12 @@
                     width: "100px",
                     template: '<span style="color:gray;" class="row-number"></span>'
                 },{
+                    field:"coverUri",
+                    title: "DoverUri",
+                    sortable: false,
+                    filterable: false,
+                    template: '<img height="100px" src="#: coverUri #" />'
+                },{
                     field:"name",
                     title: "Name",
                     sortable: false,
@@ -161,7 +167,9 @@
                 },{
                     field:"releaseDate",
                     title: "ReleaseDate",
-                    width: "100px",
+                    type: "date",
+                    format: "{0: yyyy-MM-dd}",
+                    width: "110px",
                     sortable: false,
                     filterable: false
                 },{
@@ -183,23 +191,17 @@
                     sortable: false,
                     filterable: false
                 },{
-                    field:"coverUri",
-                    title: "DoverUri",
-                    width: "250px",
-                    sortable: false,
-                    filterable: false
-                },{
                     field:"language",
                     title: "Language",
-                    width: "200px",
                     sortable: false,
                     filterable: false,
                 },{
                     field:"createTime",
                     title: "CreateTime",
-                    width: "200px",
+                    type: "date",
+                    format: "{0: yyyy-MM-dd}",
                     sortable: false,
-                    filterable: false,
+                    filterable: false
                 },{
                     field:"operate",
                     title: "Operate",

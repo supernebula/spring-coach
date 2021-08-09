@@ -2,7 +2,7 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="shared/layout">
 
 <head>
-    <title>Yelp Business Management</title>
+    <title>Yelp Role Management</title>
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.common-material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.mobile.min.css}" />
@@ -13,12 +13,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Business Detail
+            Net Order Detail
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Business</a></li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> Net Order</a></li>
             <li class="active">detail</li>
-            <li><a class="btn btn-default" href="javascript:history.go(-1)" role="button">返回</a></li>
+            <li><a class="btn btn-default" th:href="@{/netOrder/index}" role="button">返回</a></li>
         </ol>
     </section>
 
@@ -27,80 +27,79 @@
         <!-- Main row -->
         <div class="row">
             <div class="col-lg-12 col-xs-12">
-                <div id="business-detail">
+                <div id="item-detail">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Name</label>
+                            <label class="col-sm-2 control-label">username</label>
                             <div class="col-sm-10">
-                                <span id="name"  class="checkbox"></span>
+                                <span id="username"  class="checkbox"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">City</label>
+                            <label class="col-sm-2 control-label">nickname</label>
                             <div class="col-sm-10">
-                                <span id="city"  class="checkbox"></span>
+                                <span id="nickname"  class="checkbox"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">State</label>
+                            <label class="col-sm-2 control-label">balance</label>
                             <div class="col-sm-10">
-                                <span id="state" class="checkbox"></span>
+                                <span id="balance" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Neighborhood</label>
+                            <label class="col-sm-2 control-label">userImg</label>
                             <div class="col-sm-10">
-                                <span id="neighborhood" class="checkbox"></span>
+                                <span id="userImg" class="checkbox"></span>
+                                <img id="userImg-uri" height="100px" src="" />
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Address</label>
+                            <label class="col-sm-2 control-label">mobile</label>
                             <div class="col-sm-10">
-                                <span id="address" class="checkbox"></span>
+                                <span id="mobile" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">PostalCode</label>
+                            <label class="col-sm-2 control-label">gender</label>
                             <div class="col-sm-10">
-                                <span id="postalCode" class="checkbox"></span>
+                                <span id="gender" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Latitude</label>
+                            <label class="col-sm-2 control-label">province</label>
                             <div class="col-sm-10">
-                                <span id="latitude" class="checkbox"></span>
+                                <span id="province" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Longitude</label>
+                            <label class="col-sm-2 control-label">city</label>
                             <div class="col-sm-10">
-                                <span id="longitude" class="checkbox"></span>
+                                <span id="city" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Stars</label>
+                            <label class="col-sm-2 control-label">county</label>
                             <div class="col-sm-10">
-                                <span id="stars" class="checkbox"></span>
+                                <span id="county" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">ReviewCount</label>
+                            <label class="col-sm-2 control-label">last login time</label>
                             <div class="col-sm-10">
-                                <span id="reviewCount" class="checkbox"></span>
+                                <span id="lastLoginTime" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">IsOpen</label>
+                            <label class="col-sm-2 control-label">createTime</label>
                             <div class="col-sm-10">
-                                <span id="isOpen" class="checkbox"></span>
+                                <span id="createTime" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">updateTime</label>
+                            <div class="col-sm-10">
+                                <span id="updateTime" class="checkbox"></span>
                             </div>
                         </div>
 
@@ -116,28 +115,33 @@
     <!-- /.content -->
 </div>
 <th:block layout:fragment="scriptsblock">
+    <script th:src="@{/site/func.js}"></script>
     <script th:inline="javascript">
 
-        var apiUrl = "/api/business/detail/" + [[${id}]];
+        var userId = getQueryString("userId");
+        var apiUrl = "http://localhost:8088/web/user/get?userId=" + userId;
         $(document).ready(function() {
             $.getJSON(apiUrl, null, function (response) {
                 if(!response.success)
                 {
-                    $("#business-detail #name").html(response.message);
+                    $("#item-detail #name").html(response.message);
                 }
 
                 var item = response.data;
-                $("#business-detail #name").html(item.name);
-                $("#business-detail #city").html(item.city);
-                $("#business-detail #state").html(item.state);
-                $("#business-detail #neighborhood").html(item.neighborhood);
-                $("#business-detail #address").html(item.address);
-                $("#business-detail #postalCode").html(item.postalCode);
-                $("#business-detail #latitude").html(item.latitude);
-                $("#business-detail #longitude").html(item.longitude);
-                $("#business-detail #stars").html(item.stars);
-                $("#business-detail #reviewCount").html(item.reviewCount);
-                $("#business-detail #isOpen").html(item.isOpen);
+                $("#item-detail #username").html(item.username);
+                $("#item-detail #nickname").html(item.nickname);
+                $("#item-detail #balance").html(item.balance);
+                $("#item-detail #userImg").html(item.userImg);
+                $("#item-detail #userImg-uri").attr("src", item.userImg);
+                $("#item-detail #mobile").html(item.mobile);
+                $("#item-detail #gender").html(item.gender);
+                $("#item-detail #province").html(item.province);
+                $("#item-detail #city").html(item.city);
+                $("#item-detail #county").html(item.county);
+                $("#item-detail #lastLoginTime").html(item.lastLoginTime);
+
+                $("#item-detail #createTime").html(item.createTime);
+                $("#item-detail #udpateTime").html(item.udpateTime);
             });
 
         });

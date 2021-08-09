@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api("订单管理")
 @RestController
-@RequestMapping("/netOrder")
+@RequestMapping("/web/netOrder")
 public class NetOrderWebController {
 
     @Autowired

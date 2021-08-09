@@ -2,7 +2,7 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="shared/layout">
 
 <head>
-    <title>Yelp Review Management</title>
+    <title>Yelp Role Management</title>
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.common-material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.mobile.min.css}" />
@@ -13,11 +13,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Review Management
+            Net Order Management
             <small>List</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Photo</a></li>
+            <li><a href="#"><i class="fa fa-dashboard"></i>Net Order</a></li>
             <li class="active">list</li>
         </ol>
     </section>
@@ -26,26 +26,38 @@
     <section class="content">
         <!-- Main row -->
         <div class="row">
-            <div class="col-lg-12 col-xs-12">
-                <div id="main-search" class="search-bar">
+            <div class="col-lg-8 col-xs-8">
+                <div id="role-search" class="search-bar">
                     <form class="form-inline">
                         <div class="form-group">
-                            <label for="businessId">BusinessId</label>
-                            <input type="text" class="form-control" id="businessId" placeholder="" />
+                            <label for="username">username</label>
+                            <input type="text" class="form-control" id="username" placeholder="" />
                         </div>
                         <div class="form-group">
-                            <label for="userId">UserId</label>
-                            <input type="text" class="form-control" id="userId" placeholder="" />
+                            <label for="orderNo">orderNo</label>
+                            <input type="text" class="form-control" id="orderNo" placeholder="" />
                         </div>
-                        <button type="button" onclick="javascript:mainSearch();" class="btn btn-default">Search</button>
+
+                        <div class="form-group">
+                            <label for="payOrderNo">payOrderNo</label>
+                            <input type="text" class="form-control" id="payOrderNo" placeholder="" />
+                        </div>
+
+                        <button type="button" onclick="javascript:querySearch();" class="btn btn-default">Search
+                        </button>
                         <button type="reset" class="btn btn-default">Clear</button>
                     </form>
                 </div>
             </div>
+            <div class="col-lg-4 col-xs-4 pull-right">
+                <div class="search-bar pull-right">
+                </div>
+
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12 col-xs-12">
-                <div id="main-grid"></div>
+                <div id="data-grid"></div>
             </div>
         </div>
         <!-- /.row (main row) -->
@@ -59,24 +71,26 @@
         function getSearchParam() {
 
             return {
-                "businessId" : $("#businessId").val().trim(),
-                "userId" : $("#userId").val().trim()
+                "username" : $("#username").val().trim(),
+                "orderNo" : $("#orderNo").val().trim(),
+                "payOrderNo" : $("#payOrderNo").val().trim()
             };
         }
 
-        var apiUrl = "/api/review/search";
+        var queryApiUrl = "http://localhost:8088/web/netOrder/query";
+
 
         $(document).ready(function() {
-            $("#main-grid").kendoGrid({
+            window.roleGrid = $("#data-grid").kendoGrid({
                 theme: "bootstrap",
                 dataSource: {
                     transport: {
                         read:{
-                            url: apiUrl,
+                            url: queryApiUrl,
                             contentType: "application/json",
                             success: function(result) {
                                 // notify the data source that the request succeeded
-                                options.success(result.data.list);
+                                options.success(result.data.records);
                             },
                             error: function(result) {
                                 // notify the data source that the request failed
@@ -97,21 +111,26 @@
                     },
                     schema: {
                         data: function(response) {
-                            return response.data.list; // twitter's response is { "statuses": [ /* results */ ] }
+                            return response.data.records; // twitter's response is { "statuses": [ /* results */ ] }
                         },total: function(response){
                             return response.data.total;
                         },
                         model: {
                             fields: {
-                                id: { type: "string" },
-                                businessId: { type: "string" },
-                                userId: { type: "string" },
-                                stars: { type: "number" },
-                                date: { type: "number" },
-                                useful: { type: "number" },
-                                funny: { type: "number" },
-                                cool: { type: "number" },
-                                text: { type: "string" }
+                                orderNo: { type: "string" },
+                                username: { type: "string" },
+                                movieName: { type: "string" },
+                                paidAmount: { type: "number" },
+                                amount: { type: "number" },
+                                status: { type: "string" },
+                                payOrderNo: { type: "string" },
+                                payTime: { type: "date" },
+                                status: { type: "string" },
+                                payOrderNo: { type: "string" },
+                                refundOrderNo: { type: "string" },
+                                refundTime: { type: "date" },
+                                payModeType: { type: "string" },
+                                createTime: { type: "date" }
                             }
                         }
                     },
@@ -134,60 +153,73 @@
                 columns: [{
                     field: "rowNumber",
                     title: "No",
-                    width: "60px",
+                    width: "100px",
                     template: '<span style="color:gray;" class="row-number"></span>'
                 },{
-                    field:"id",
-                    title: "Id",
-                    width: "220px",
+                    field:"orderNo",
+                    title: "order No",
                     sortable: false,
                     filterable: false,
-                    template: '<a href="/review/detail/#: id #">#: id #</a>'
+                    template: '<a href="/netOrder/detail/?orderId=#: id #">#: name #</a>'
                 },{
-                    field:"businessId",
-                    title: "BusinessId",
-                    width: "220px",
+                    field:"username",
+                    title: "username",
                     sortable: false,
                     filterable: false
                 },{
-                    field:"userId",
-                    title: "UserId",
-                    width: "220px",
-                    sortable: false,
-                    filterable: false,
-                },{
-                    field:"stars",
-                    title: "Stars",
-                    width: "60px",
+                    field:"movieName",
+                    title: "movieName",
                     sortable: false,
                     filterable: false
                 },{
-                    field:"date",
-                    title: "Date",
-                    width: "130px",
+                    field:"paidAmount",
+                    title: "paidAmount",
                     sortable: false,
                     filterable: false
                 },{
-                    field:"useful",
-                    title: "Useful",
-                    width: "60px",
+                    field:"amount",
+                    title: "amount",
                     sortable: false,
                     filterable: false
                 },{
-                    field:"funny",
-                    title: "Funny",
-                    width: "60px",
+                    field:"status",
+                    title: "status",
                     sortable: false,
                     filterable: false
                 },{
-                    field:"cool",
-                    title: "Cool",
-                    width: "60px",
+                    field:"payOrderNo",
+                    title: "payOrderNo",
                     sortable: false,
                     filterable: false
                 },{
-                    field:"text",
-                    title: "Text",
+                    field:"payTime",
+                    title: "PayTime",
+                    type: "date",
+                    format: "{0: yyyy-MM-dd}",
+                    sortable: false,
+                    filterable: false
+                },{
+                    field:"refundOrderNo",
+                    title: "RefundOrderNo",
+                    sortable: false,
+                    filterable: false
+                },{
+                    field:"refundTime",
+                    title: "RefundTime",
+                    type: "date",
+                    format: "{0: yyyy-MM-dd}",
+                    sortable: false,
+                    filterable: false
+                },{
+                    field:"payModeType",
+                    title: "PayModeType",
+                    sortable: false,
+                    filterable: false
+                },{
+                    field:"createTime",
+                    title: "CreateTime",
+                    type: "date",
+                    format: "{0: yyyy-MM-dd}",
                     sortable: false,
                     filterable: false
                 }],
@@ -198,22 +230,44 @@
                         var index = $(this).index() + 1;
                         var rowLabel = $(this).find(".row-number");
                         $(rowLabel).html(index);
-                    });
+                    });;
                 }
             });
         });
 
 
+        function confirmDelete(_this) {
+            var apiDeleteUrl = $(_this).attr("api-href");
+            console.log("api-href:" + apiDeleteUrl);
 
+            if(!confirm("确定删除？")){
+                return;
+            }
+
+            $.ajax({
+                type: "DELETE",
+                url: apiDeleteUrl,
+                dataType: "json",
+                success: function(response){
+                    if(response.code == 0)
+                    {
+                        console.log(response.msg);
+                        querySearch();
+                        //window.location.reload();
+                    }
+                }
+            });
+
+        }
 
 
         /*<![CDATA[*/
-        function mainSearch() {
-            var mainGrid = $("#main-grid").data("kendoGrid");
-            mainGrid.dataSource.read().then(function () {
-                mainGrid.dataSource.view();
+        function querySearch() {
+            var roleGrid = $("#data-grid").data("kendoGrid");
+            roleGrid.dataSource.read().then(function () {
+                roleGrid.dataSource.view();
             });
-            mainGrid.refresh();
+            roleGrid.refresh();
 
         }
         /*]]>*/

@@ -7,6 +7,7 @@ import com.evol.domain.PageBase;
 import com.evol.domain.dto.MovieDetailDTO;
 import com.evol.domain.model.NetOrder;
 import com.evol.domain.model.NetOrderExample;
+import com.evol.domain.request.NetOrderQueryRequest;
 import com.evol.domain.request.OrderCancelParam;
 import com.evol.domain.request.PayOrderParam;
 import com.evol.domain.request.UpdateUserBalanceParam;
@@ -25,6 +26,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageDeliveryMode;
@@ -194,16 +196,33 @@ public class NetOrderServiceImpl implements NetOrderService {
     }
 
     @Override
-    public PageBase<NetOrder> queryNetOrder(Integer userId, Integer pageNo, Integer pageSize) {
-        Page<Object> page = PageHelper.startPage(pageNo, pageSize,"id asc");
-        //PageHelper.startPage(pageNo, pageSize,"id asc");
-        NetOrderExample example = new NetOrderExample();
-        example.createCriteria().andUserIdEqualTo(userId);
-        List<NetOrder> movieList = netOrderMapper.selectByExample(example);
-        if(CollectionUtils.isEmpty(movieList)){
-            return PageBase.create(page.getTotal(), pageNo, pageSize, new ArrayList<>());
+    public PageBase<NetOrder> queryNetOrder(NetOrderQueryRequest netOrderQueryRequest) {
+
+        Page<NetOrder> page = PageHelper.startPage(netOrderQueryRequest.getPage(), netOrderQueryRequest.getPageSize()
+                ,"id asc");
+        //Page page =  PageHelper.startPage(movieQueryRequest.getPageNo(), movieQueryRequest.getPageSize());
+
+        NetOrderExample netOrderExample = new NetOrderExample();
+        if(!StringUtils.isBlank(netOrderQueryRequest.getUsername())){
+            netOrderExample.createCriteria().andUsernameEqualTo(netOrderQueryRequest.getUsername());
         }
-        return PageBase.create(page.getTotal(), pageNo, pageSize,movieList);
+
+        if(!StringUtils.isBlank(netOrderQueryRequest.getOrderNo())){
+            netOrderExample.createCriteria().andOrderNoEqualTo(netOrderQueryRequest.getOrderNo());
+        }
+
+        if(!StringUtils.isBlank(netOrderQueryRequest.getPayOrderNo())){
+            netOrderExample.createCriteria().andPayOrderNoEqualTo(netOrderQueryRequest.getPayOrderNo());
+        }
+
+
+        List<NetOrder> netOrderList = netOrderMapper.selectByExample(netOrderExample);
+        if(CollectionUtils.isEmpty(netOrderList)){
+            return PageBase.create(page.getTotal(), netOrderQueryRequest.getPage(), netOrderQueryRequest.getPageSize(),
+                    new ArrayList<>());
+        }
+        return PageBase.create(page.getTotal(), netOrderQueryRequest.getPage(), netOrderQueryRequest.getPageSize(),netOrderList);
+
     }
 
 

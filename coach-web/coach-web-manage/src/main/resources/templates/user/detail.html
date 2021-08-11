@@ -119,7 +119,7 @@
     <script th:inline="javascript">
 
         var userId = getQueryString("userId");
-        var apiUrl = "http://localhost:8088/web/user/get?userId=" + userId;
+        var apiUrl = "http://localhost:8089/web/user/get?userId=" + userId;
         $(document).ready(function() {
             $.getJSON(apiUrl, null, function (response) {
                 if(!response.success)

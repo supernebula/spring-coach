@@ -124,7 +124,7 @@
     <script th:inline="javascript">
 
         var orderId = getQueryString("orderId");
-        var apiUrl = "http://localhost:8088/web/netOrder/get?orderId=" + orderId;
+        var apiUrl = "http://localhost:8084/web/netOrder/get?orderId=" + orderId;
         $(document).ready(function() {
             $.getJSON(apiUrl, null, function (response) {
                 if(!response.success)

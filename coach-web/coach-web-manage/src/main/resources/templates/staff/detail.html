@@ -2,7 +2,7 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="shared/layout">
 
 <head>
-    <title>Yelp Admin Management</title>
+    <title>Yelp Role Management</title>
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.common-material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.mobile.min.css}" />
@@ -13,12 +13,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Admin Detail
+            Staff Detail
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li><a href="#"><i class="fa fa-dashboard"></i>Staff</a></li>
             <li class="active">detail</li>
-            <li><a class="btn btn-default" th:href="@{/admin/index}" role="button">返回</a></li>
+            <li><a class="btn btn-default" th:href="@{/staff/index}" role="button">返回</a></li>
         </ol>
     </section>
 
@@ -30,15 +30,15 @@
                 <div id="item-detail">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Username</label>
+                            <label class="col-sm-2 control-label">Login Name</label>
                             <div class="col-sm-10">
-                                <span id="username"  class="checkbox"></span>
+                                <span id="loginName"  class="checkbox"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Email</label>
+                            <label class="col-sm-2 control-label">Real Name</label>
                             <div class="col-sm-10">
-                                <span id="email"  class="checkbox"></span>
+                                <span id="realName"  class="checkbox"></span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -47,20 +47,37 @@
                                 <span id="mobile" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">CreateTime</label>
+                            <label class="col-sm-2 control-label">Status</label>
                             <div class="col-sm-10">
-                                <span id="createTime" class="checkbox"></span>
+                                <span id="status" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">LastLoginTime</label>
+                            <label class="col-sm-2 control-label">Access Failed Count</label>
+                            <div class="col-sm-10">
+                                <span id="accessFailedCount" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Last Login Time</label>
                             <div class="col-sm-10">
                                 <span id="lastLoginTime" class="checkbox"></span>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Create Time</label>
+                            <div class="col-sm-10">
+                                <span id="createTime" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Update Time</label>
+                            <div class="col-sm-10">
+                                <span id="updateTime" class="checkbox"></span>
+                            </div>
+                        </div>
+
 
                     </form>
 
@@ -74,9 +91,11 @@
     <!-- /.content -->
 </div>
 <th:block layout:fragment="scriptsblock">
+    <script th:src="@{/site/func.js}"></script>
     <script th:inline="javascript">
 
-        var apiUrl = "/api/admin/detail/" + [[${id}]];
+        var staffId = getQueryString("staffId");
+        var apiUrl = "http://localhost:8088/web/staff/get?staffId=" + staffId;
         $(document).ready(function() {
             $.getJSON(apiUrl, null, function (response) {
                 if(!response.success)
@@ -85,12 +104,14 @@
                 }
 
                 var item = response.data;
-                $("#item-detail #username").html(item.username);
-                $("#item-detail #password").html(item.password);
-                $("#item-detail #email").html(item.email);
+                $("#item-detail #loginName").html(item.loginName);
+                $("#item-detail #realName").html(item.realName);
                 $("#item-detail #mobile").html(item.mobile);
-                $("#item-detail #createTime").html(item.createTime);
+                $("#item-detail #status").html(item.status);
+                $("#item-detail #accessFailedCount").html(item.accessFailedCount);
                 $("#item-detail #lastLoginTime").html(item.lastLoginTime);
+                $("#item-detail #createTime").html(item.createTime);
+                $("#item-detail #updateTime").html(item.updateTime);
             });
 
         });

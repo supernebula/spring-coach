@@ -35,10 +35,10 @@ public class UserBalanceRecordServiceImpl implements UserBalanceRecordService {
         Page page =  PageHelper.startPage(pageNo, pageSize);
         UserBalanceRecordExample example = new UserBalanceRecordExample();
         example.createCriteria();
-        List<UserBalanceRecord> movieList = userBalanceRecordMapper.selectByExample(example);
-        if(CollectionUtils.isEmpty(movieList)){
-            return PageBase.create(page.getTotal(), new ArrayList<>());
+        List<UserBalanceRecord> recordList = userBalanceRecordMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(recordList)){
+            return PageBase.create(page.getTotal(), pageNo, pageSize, new ArrayList<>());
         }
-        return PageBase.create(page.getTotal(),movieList);
+        return PageBase.create(page.getTotal(), pageNo, pageSize, recordList);
     }
 }

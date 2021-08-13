@@ -31,4 +31,9 @@ public class StaffController {
         return "staff/detail";
     }
 
+    @GetMapping("changePwd")
+    public String changePwd(){
+        return "staff/changePwd";
+    }
+
 }

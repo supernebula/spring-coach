@@ -195,7 +195,7 @@
                     sortable: false,
                     filterable: false,
                     template:
-                        '<a href="/staff/edit/?staffId=#: id #">edit</a>&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="javascript: return confirmDelete(this);" api-href="' + deleteApiUrl+ '?staffId=#: id #" style="cursor:pointer; ">delete</a>'
+                        '<a href="/staff/changePwd/?staffId=#: id #">change Password</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/staff/edit/?staffId=#: id #">edit</a>&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="javascript: return confirmDelete(this);" api-href="' + deleteApiUrl+ '?staffId=#: id #" style="cursor:pointer; ">delete</a>'
                 }],
                 dataBound: function () {
                     var rows = this.items();

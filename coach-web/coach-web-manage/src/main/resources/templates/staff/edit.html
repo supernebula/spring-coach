@@ -115,7 +115,7 @@
                 function(response){
                     $("#validate-message-ok").html("");
                     $("#validate-message-error").html("");
-                    if(response.success)
+                    if(response.code == 0)
                     {
                         $("#validate-message-ok").html(response.message);
                     }else{

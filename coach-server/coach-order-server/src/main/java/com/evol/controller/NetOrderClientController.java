@@ -2,6 +2,7 @@ package com.evol.controller;
 
 import com.evol.domain.PageBase;
 import com.evol.domain.model.NetOrder;
+import com.evol.domain.request.NetOrderQueryRequest;
 import com.evol.domain.response.CreateOrderResult;
 import com.evol.enums.ApiResponseEnum;
 import com.evol.service.NetOrderService;
@@ -31,9 +32,9 @@ public class NetOrderClientController {
     @CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "查询我的订单", response = ApiResponse.class)
     @GetMapping("/query")
-    public ApiResponse query(Integer userId, Integer pageNo, Integer pageSize){
+    public ApiResponse query(NetOrderQueryRequest netOrderQueryRequest){
         //分页查询
-        PageBase<NetOrder> pageResult = netOrderService.queryNetOrder(userId, pageNo, pageSize);
+        PageBase<NetOrder> pageResult = netOrderService.queryNetOrder(netOrderQueryRequest);
         return ApiResponse.success(pageResult);
     }
 

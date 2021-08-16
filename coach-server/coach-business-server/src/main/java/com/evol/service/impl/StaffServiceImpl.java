@@ -8,6 +8,7 @@ import com.evol.domain.model.StaffExample;
 import com.evol.domain.request.StaffQueryRequest;
 import com.evol.mapper.StaffMapper;
 import com.evol.service.StaffService;
+import com.evol.util.MD5Util;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang.StringUtils;
@@ -32,9 +33,9 @@ public class StaffServiceImpl implements StaffService {
         staff.setCreateStaffId(dto.getCreateStaffId());
         staff.setLoginName(dto.getLoginName());
 
-//        staff.setSalt(UUID.randomUUID().toString());
-//        String password = MD5Util.MD5(userAddDto.getPassword(), user.getSalt());
-        staff.setPassword(dto.getPassword());
+
+        String password = MD5Util.MD5(dto.getPassword(), "");
+        staff.setPassword(password);
         staff.setRealName(dto.getRealName());
         staff.setMobile(dto.getMobile());
         staff.setStatus(dto.getStatus());
@@ -61,18 +62,21 @@ public class StaffServiceImpl implements StaffService {
         return id;
     }
 
+    @Override
     public Integer changePassword(Integer staffId, StaffChangePwdDto dto){
         Staff staff = staffMapper.selectByPrimaryKey(staffId);
         if(staff == null){
             return null;
         }
-        if(!staff.getPassword().equals(dto.getPassword())){
+        String oldPwd = MD5Util.MD5(dto.getPassword(), "");
+        if(!staff.getPassword().equals(oldPwd)){
             throw new RuntimeException("旧密码错误");
         }
         if(StringUtils.isNotBlank(dto.getNewPassword()) || dto.getNewPassword().equals(dto.getConfimPassword())){
             throw new RuntimeException("两次新密码不同");
         }
-        staff.setPassword(dto.getNewPassword());
+        String newPwd = MD5Util.MD5(dto.getNewPassword(), "");
+        staff.setPassword(newPwd);
         staff.setUpdateTime(new Date());
         Integer id = staffMapper.updateByPrimaryKey(staff);
         return id;

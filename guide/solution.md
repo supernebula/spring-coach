@@ -88,3 +88,11 @@ mysql
 # optional
 eventbus
 
+
+## JWT（Json web token） 登录
+
+https://segmentfault.com/a/1190000024448199
+
+https://www.huaweicloud.com/zhishi/arc-9558590.html
+
+https://www.jianshu.com/p/e88d3f8151db

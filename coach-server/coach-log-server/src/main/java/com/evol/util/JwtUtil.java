@@ -14,7 +14,7 @@ public class JwtUtil {
 
     private static String secret = "HSyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9";
 
-    private String generateToken(String userId){
+    public String generateToken(String userId){
         Date now = new Date();
         Date expireDate = new Date(now.getTime() + expire);
         return Jwts.builder().setHeaderParam("type", "JWT")
@@ -34,7 +34,7 @@ public class JwtUtil {
     }
 
     /** * 判断 token 是否过期 */
-    public boolean isTokenExpried(Date expiration){
+    public boolean isTokenExpired(Date expiration){
         return expiration.before(new Date());
     }
 }

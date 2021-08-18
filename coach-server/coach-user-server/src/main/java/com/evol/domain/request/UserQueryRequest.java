@@ -1,17 +1,19 @@
 package com.evol.domain.request;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * @author admin
+ */
 @Data
-@ApiModel
-public class StaffQueryRequest {
-    @ApiModelProperty(name = "loginName", value = "登录名")
-    private String loginName;
+public class UserQueryRequest {
 
-    @ApiModelProperty(name = "realName", value = "真实姓名")
-    private String realName;
+    @ApiModelProperty(name = "username", value = "用户名")
+    private String username;
+
+    @ApiModelProperty(name = "nickname", value = "昵称")
+    private String nickname;
 
     @ApiModelProperty(name = "mobile", value = "手机号")
     private String mobile;

@@ -2,7 +2,7 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="shared/layout">
 
 <head>
-    <title>Yelp Business Management</title>
+    <title>Staff Management</title>
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.common-material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.mobile.min.css}" />
@@ -13,11 +13,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Admin Management
+            Staff Management
             <small>List</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li><a href="#"><i class="fa fa-dashboard"></i>Staff</a></li>
             <li class="active">list</li>
         </ol>
     </section>
@@ -27,36 +27,37 @@
         <!-- Main row -->
         <div class="row">
             <div class="col-lg-8 col-xs-8">
-                <div id="business-search" class="search-bar">
+                <div id="role-search" class="search-bar">
                     <form class="form-inline">
                         <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="" />
+                            <label for="loginName">login name</label>
+                            <input type="text" class="form-control" id="loginName" placeholder="" />
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" placeholder="" />
+                            <label for="realName">real name</label>
+                            <input type="text" class="form-control" id="realName" placeholder="" />
                         </div>
                         <div class="form-group">
-                            <label for="mobile">Mobile</label>
+                            <label for="mobile">mobile</label>
                             <input type="text" class="form-control" id="mobile" placeholder="" />
                         </div>
 
-                        <button type="button" onclick="javascript:adminSearch();" class="btn btn-default">Search</button>
+                        <button type="button" onclick="javascript:querySearch();" class="btn btn-default">Search
+                        </button>
                         <button type="reset" class="btn btn-default">Clear</button>
                     </form>
                 </div>
             </div>
             <div class="col-lg-4 col-xs-4 pull-right">
                 <div class="search-bar pull-right">
-                    <a th:href="@{/admin/create}" class="btn btn-default">Create New</a>
+                    <a th:href="@{/staff/create}" class="btn btn-default">New Staff</a>
                 </div>
 
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12 col-xs-12">
-                <div id="admin-grid"></div>
+                <div id="data-grid"></div>
             </div>
         </div>
         <!-- /.row (main row) -->
@@ -70,25 +71,27 @@
         function getSearchParam() {
 
             return {
-                "username" : $("#username").val().trim(),
-                "email" : $("#email").val().trim(),
+                "loginName" : $("#loginName").val().trim(),
+                "realName" : $("#realName").val().trim(),
                 "mobile" : $("#mobile").val().trim()
             };
         }
 
-        var apiUrl = "/api/admin/search";
+        var queryApiUrl = "http://localhost:8088/web/staff/query";
+        var deleteApiUrl = "http://localhost:8088/web/staff/delete";
+
 
         $(document).ready(function() {
-            window.businessGrid = $("#admin-grid").kendoGrid({
+            window.roleGrid = $("#data-grid").kendoGrid({
                 theme: "bootstrap",
                 dataSource: {
                     transport: {
                         read:{
-                            url: apiUrl,
+                            url: queryApiUrl,
                             contentType: "application/json",
                             success: function(result) {
                                 // notify the data source that the request succeeded
-                                options.success(result.data.list);
+                                options.success(result.data.records);
                             },
                             error: function(result) {
                                 // notify the data source that the request failed
@@ -109,18 +112,22 @@
                     },
                     schema: {
                         data: function(response) {
-                            return response.data.list; // twitter's response is { "statuses": [ /* results */ ] }
+                            return response.data.records; // twitter's response is { "statuses": [ /* results */ ] }
                         },total: function(response){
                             return response.data.total;
                         },
                         model: {
                             fields: {
-                                username: { type: "string" },
-                                email: { type: "string" },
+                                loginName: { type: "string" },
+                                realName: { type: "string" },
                                 mobile: { type: "string" },
-                                createTime: {type: "string"},
-                                lastLoginTime:{type: "string"},
-                                operate:{type: "string"}
+                                status: { type: "string" },
+                                accessFailedCount: { type: "number" },
+                                lastLoginTime: { type: "date" },
+                                isDeleted: { type: "string" },
+                                createTime: { type: "date" },
+                                updateTime: { type: "date" },
+                                deleteTime: { type: "date" }
                             }
                         }
                     },
@@ -146,40 +153,49 @@
                     width: "100px",
                     template: '<span style="color:gray;" class="row-number"></span>'
                 },{
-                    field:"username",
-                    title: "Username",
+                    field:"loginName",
+                    title: "loginName",
                     sortable: false,
                     filterable: false,
-                    template: '<a href="/admin/detail/#: id #">#: username #</a>'
+                    template: '<a href="/staff/detail/?staffId=#: id #">#: loginName #</a>'
                 },{
-                    field:"email",
-                    title: "Email",
-                    width: "250px",
+                    field:"realName",
+                    title: "realName",
+                    sortable: false,
+                    filterable: false,
+                    template: '<a href="/staff/detail/?staffId=#: id #">#: realName #</a>'
+                },{
+                    field:"mobile",
+                    title: "mobile",
                     sortable: false,
                     filterable: false
                 },{
-                    field:"mobile",
-                    title: "Mobile",
-                    width: "200px",
+                    field:"status",
+                    title: "status",
                     sortable: false,
-                    filterable: false,
+                    filterable: false
+                },{
+                    field:"access_failed_count",
+                    title: "access_failed_count",
+                    sortable: false,
+                    filterable: false
                 },{
                     field:"createTime",
                     title: "CreateTime",
-                    width: "150px",
                     sortable: false,
                     filterable: false
                 },{
-                    field:"lastLoginTime",
-                    title: "LastLoginTime",
+                    field:"updateTime",
+                    title: "UpdateTime",
                     sortable: false,
-                    filterable: false
+                    filterable: false,
                 },{
                     field:"operate",
                     title: "Operate",
                     sortable: false,
                     filterable: false,
-                    template: '<a href="/admin/edit/#: id #">edit</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/admin/changePwd/#: id #">Change Password</a>&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="javascript: return confirmDelete(this);" api-href="/api/admin/delete/#: id #" style="cursor:pointer; ">delete</a>'
+                    template:
+                        '<a href="/staff/changePwd/?staffId=#: id #">change Password</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/staff/edit/?staffId=#: id #">edit</a>&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="javascript: return confirmDelete(this);" api-href="' + deleteApiUrl+ '?staffId=#: id #" style="cursor:pointer; ">delete</a>'
                 }],
                 dataBound: function () {
                     var rows = this.items();
@@ -188,14 +204,7 @@
                         var index = $(this).index() + 1;
                         var rowLabel = $(this).find(".row-number");
                         $(rowLabel).html(index);
-                    });
-                    // var page = this.pager.page() - 1;
-                    // var pagesize = this.pager.pageSize();
-                    // $(rows).each(function () {
-                    //     var index = $(this).index() + 1 + page * pagesize;
-                    //     var rowLabel = $(this).find(".row-number");
-                    //     $(rowLabel).html(index);
-                    // });
+                    });;
                 }
             });
         });
@@ -214,10 +223,11 @@
                 url: apiDeleteUrl,
                 dataType: "json",
                 success: function(response){
-                    if(response.success)
+                    if(response.code == 0)
                     {
                         console.log(response.msg);
-                        window.location.reload();
+                        querySearch();
+                        //window.location.reload();
                     }
                 }
             });
@@ -226,12 +236,12 @@
 
 
         /*<![CDATA[*/
-        function adminSearch() {
-            var businessGrid = $("#admin-grid").data("kendoGrid");
-            businessGrid.dataSource.read().then(function () {
-                businessGrid.dataSource.view();
+        function querySearch() {
+            var roleGrid = $("#data-grid").data("kendoGrid");
+            roleGrid.dataSource.read().then(function () {
+                roleGrid.dataSource.view();
             });
-            businessGrid.refresh();
+            roleGrid.refresh();
 
         }
         /*]]>*/

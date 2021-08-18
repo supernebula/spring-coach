@@ -2,7 +2,7 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="shared/layout">
 
 <head>
-    <title>Yelp Review Detail</title>
+    <title>Yelp Role Management</title>
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.common-material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.min.css}" />
     <link rel="stylesheet" th:href="@{/kendoui/css/kendo.material.mobile.min.css}" />
@@ -13,12 +13,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Review Detail
+            Net Order Detail
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Review</a></li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> Net Order</a></li>
             <li class="active">detail</li>
-            <li><a class="btn btn-default" href="javascript:history.go(-1)" role="button">返回</a></li>
+            <li><a class="btn btn-default" th:href="@{/netOrder/index}" role="button">返回</a></li>
         </ol>
     </section>
 
@@ -27,66 +27,84 @@
         <!-- Main row -->
         <div class="row">
             <div class="col-lg-12 col-xs-12">
-                <div id="main-detail">
+                <div id="item-detail">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Id</label>
+                            <label class="col-sm-2 control-label">orderNo</label>
                             <div class="col-sm-10">
-                                <span id="id"  class="checkbox"></span>
+                                <span id="orderNo"  class="checkbox"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">BusinessId</label>
+                            <label class="col-sm-2 control-label">username</label>
                             <div class="col-sm-10">
-                                <span id="businessId"  class="checkbox"></span>
+                                <span id="username"  class="checkbox"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">UserId</label>
+                            <label class="col-sm-2 control-label">movieName</label>
                             <div class="col-sm-10">
-                                <span id="userId" class="checkbox"></span>
+                                <span id="movieName" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Stars</label>
+                            <label class="col-sm-2 control-label">paidAmount</label>
                             <div class="col-sm-10">
-                                <span id="stars" class="checkbox"></span>
+                                <span id="paidAmount" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Date</label>
+                            <label class="col-sm-2 control-label">amount</label>
                             <div class="col-sm-10">
-                                <span id="date" class="checkbox"></span>
+                                <span id="amount" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Useful</label>
+                            <label class="col-sm-2 control-label">status</label>
                             <div class="col-sm-10">
-                                <span id="useful" class="checkbox"></span>
+                                <span id="status" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Funny</label>
+                            <label class="col-sm-2 control-label">payOrderNo</label>
                             <div class="col-sm-10">
-                                <span id="funny" class="checkbox"></span>
+                                <span id="payOrderNo" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Cool</label>
+                            <label class="col-sm-2 control-label">payTime</label>
                             <div class="col-sm-10">
-                                <span id="cool" class="checkbox"></span>
+                                <span id="payTime" class="checkbox"></span>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Text</label>
+                            <label class="col-sm-2 control-label">refundOrderNo</label>
                             <div class="col-sm-10">
-                                <span id="text" class="checkbox"></span>
+                                <span id="refundOrderNo" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">refundTime</label>
+                            <div class="col-sm-10">
+                                <span id="refundTime" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">payModeType</label>
+                            <div class="col-sm-10">
+                                <span id="pay_mode_type" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">createTime</label>
+                            <div class="col-sm-10">
+                                <span id="createTime" class="checkbox"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">updateTime</label>
+                            <div class="col-sm-10">
+                                <span id="updateTime" class="checkbox"></span>
                             </div>
                         </div>
 
@@ -102,26 +120,32 @@
     <!-- /.content -->
 </div>
 <th:block layout:fragment="scriptsblock">
+    <script th:src="@{/site/func.js}"></script>
     <script th:inline="javascript">
 
-        var apiUrl = "/api/review/detail/" + [[${id}]];
+        var orderId = getQueryString("orderId");
+        var apiUrl = "http://localhost:8084/web/netOrder/get?orderId=" + orderId;
         $(document).ready(function() {
             $.getJSON(apiUrl, null, function (response) {
                 if(!response.success)
                 {
-                    $("#main-detail #name").html(response.message);
+                    $("#item-detail #name").html(response.message);
                 }
 
                 var item = response.data;
-                $("#main-detail #id").html(item.id);
-                $("#main-detail #businessId").html(item.businessId);
-                $("#main-detail #userId").html(item.userId);
-                $("#main-detail #stars").html(item.stars);
-                $("#main-detail #date").html(item.date);
-                $("#main-detail #useful").html(item.useful);
-                $("#main-detail #funny").html(item.funny);
-                $("#main-detail #cool").html(item.cool);
-                $("#main-detail #text").html(item.text);
+                $("#item-detail #orderNo").html(item.orderNo);
+                $("#item-detail #username").html(item.username);
+                $("#item-detail #movieName").html(item.movieName);
+                $("#item-detail #paidAmount").html(item.paidAmount);
+                $("#item-detail #amount").html(item.amount);
+                $("#item-detail #status").html(item.status);
+                $("#item-detail #payOrderNo").html(item.payOrderNo);
+                $("#item-detail #payTime").html(item.payTime);
+                $("#item-detail #refundOrderNo").html(item.refundOrderNo);
+                $("#item-detail #refundTime").attr("src", item.refundTime);
+                $("#item-detail #payModeType").html(item.payModeType);
+                $("#item-detail #createTime").html(item.createTime);
+                $("#item-detail #udpateTime").html(item.udpateTime);
             });
 
         });

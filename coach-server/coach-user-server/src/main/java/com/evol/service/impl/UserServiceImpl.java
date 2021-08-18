@@ -1,5 +1,6 @@
 package com.evol.service.impl;
 
+import com.evol.domain.PageBase;
 import com.evol.domain.UpdateUserBalanceResult;
 import com.evol.domain.dto.UserAddDto;
 import com.evol.domain.dto.UserBalanceDTO;
@@ -8,6 +9,7 @@ import com.evol.domain.model.User;
 import com.evol.domain.model.UserBalanceRecord;
 import com.evol.domain.model.UserExample;
 import com.evol.domain.request.UpdateUserBalanceParam;
+import com.evol.domain.request.UserQueryRequest;
 import com.evol.enums.Gender;
 import com.evol.enums.MoneyInOutTypeEnum;
 import com.evol.mapper.UserBalanceRecordMapper;
@@ -15,12 +17,15 @@ import com.evol.mapper.UserMapper;
 import com.evol.mapper.custom.UserCustomMapper;
 import com.evol.service.UserService;
 import com.evol.util.MD5Util;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -46,6 +51,33 @@ public class UserServiceImpl implements UserService {
         dto.setBalance(user.getBalance());
         dto.setUsername(user.getUsername());
         return dto;
+    }
+
+    @Override
+    public PageBase<User> queryPage(UserQueryRequest userQueryRequest) {
+        Page<Object> page = PageHelper.startPage(userQueryRequest.getPage(), userQueryRequest.getPageSize(),"id asc");
+        //Page page =  PageHelper.startPage(movieQueryRequest.getPageNo(), movieQueryRequest.getPageSize());
+
+        UserExample userExample = new UserExample();
+        if(!StringUtils.isBlank(userQueryRequest.getUsername())){
+            userExample.createCriteria().andUserImgEqualTo(userQueryRequest.getUsername());
+        }
+
+        if(!StringUtils.isBlank(userQueryRequest.getNickname())){
+            userExample.createCriteria().andNicknameEqualTo("%" + userQueryRequest.getNickname() + "%");
+        }
+
+        if(!StringUtils.isBlank(userQueryRequest.getMobile())){
+            userExample.createCriteria().andMobileEqualTo(userQueryRequest.getMobile());
+        }
+
+
+        List<User> userList = userMapper.selectByExample(userExample);
+        if(CollectionUtils.isEmpty(userList)){
+            return PageBase.create(page.getTotal(), userQueryRequest.getPage(), userQueryRequest.getPageSize(),
+                    new ArrayList<>());
+        }
+        return PageBase.create(page.getTotal(), userQueryRequest.getPage(), userQueryRequest.getPageSize(),userList);
     }
 
     @Override

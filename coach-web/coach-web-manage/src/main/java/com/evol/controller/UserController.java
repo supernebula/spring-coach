@@ -16,15 +16,6 @@ public class UserController {
         return "user/index";
     }
 
-    @GetMapping("create")
-    public String create(){
-        return "user/create";
-    }
-
-    @GetMapping("edit")
-    public String edit(){
-        return "user/edit";
-    }
 
     @GetMapping("detail")
     public String detail(){

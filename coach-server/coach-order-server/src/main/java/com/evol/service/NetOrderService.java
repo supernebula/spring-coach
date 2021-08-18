@@ -2,6 +2,7 @@ package com.evol.service;
 
 import com.evol.domain.PageBase;
 import com.evol.domain.model.NetOrder;
+import com.evol.domain.request.NetOrderQueryRequest;
 import com.evol.domain.request.OrderCancelParam;
 import com.evol.domain.request.PayOrderParam;
 import com.evol.domain.response.CreateOrderResult;
@@ -22,7 +23,7 @@ public interface NetOrderService {
 
     NetOrder getNetOrderById(Integer id);
 
-    PageBase<NetOrder> queryNetOrder(Integer userId, Integer page, Integer pageSize);
+    PageBase<NetOrder> queryNetOrder(NetOrderQueryRequest netOrderQueryRequest);
 
     ApiResponse<PaidHandleOrderResult> payByBalance(Integer userId, Integer orderId);
 

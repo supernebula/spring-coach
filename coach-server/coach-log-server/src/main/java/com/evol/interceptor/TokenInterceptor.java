@@ -25,7 +25,7 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
         // 1. 从请求头种获取token
         String token = request.getHeader("token");
         // 2. 判断 token 是否存在
-        if(StringUtils.isNotBlank(token)){
+        if(StringUtils.isBlank(token)){
             log.info("未登录");
             throw new TokenRuntimeException("未登录");
         }

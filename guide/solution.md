@@ -96,3 +96,8 @@ https://segmentfault.com/a/1190000024448199
 https://www.huaweicloud.com/zhishi/arc-9558590.html
 
 https://www.jianshu.com/p/e88d3f8151db
+
+
+使用git克隆github上的项目失败，报错error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054
+
+https://www.cnblogs.com/mmzs/p/12039888.html

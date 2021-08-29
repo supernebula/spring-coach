@@ -8,6 +8,7 @@ import lombok.Getter;
 public enum ApiResponseEnum {
     //
     SUCCESS(0, "网关响应成功"),
+    NOT_FOUND(401, "Unauthorized 未授权"),
     SERVER_INTERNAL_ERROR(500, "网关:系统出错"),
     SIGN_ERROR(10001, "网关:请求参数sign签名错误"),
     APP_KEY_INVALID(10002, "网关:请求参数app_key无效"),
@@ -23,9 +24,14 @@ public enum ApiResponseEnum {
     NO_RECORD(20004, "网关:错误的请求，没有记录"),
     MISS_SIGN(20005, "网关:请求缺少参数sign"),
     MiSS_PARAM(20006, "网关:请求缺少参数"),
-    TOKEN_ERROR(20007, "网关:请求参数错误，无效的access_token或未曾获取过Token");
+    TOKEN_ERROR(20007, "网关:请求参数错误，无效的access_token或未曾获取过Token"),
+
+
+    FEIGN_INVOKE_ERROR(1010001, "远程调用出错");
 
     private Integer code;
 
     private String description;
+
+
 }

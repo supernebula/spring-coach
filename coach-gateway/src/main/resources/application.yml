@@ -5,6 +5,11 @@ spring:
     host: 127.0.0.1
     port: 6379
     password:
+  redisson:
+    host: true
+    master-name: false
+    cluster:
+      nodes: false
   cloud:
     gateway:
       routes:
@@ -46,3 +51,5 @@ eureka:
     enabled: true
     register-with-eureka: true
     fetch-registry: true
+
+

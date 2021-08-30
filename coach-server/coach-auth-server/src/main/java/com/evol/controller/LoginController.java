@@ -1,13 +1,18 @@
 package com.evol.controller;
 
+import com.evol.constant.Constants;
 import com.evol.domain.dto.LoginParam;
+import com.evol.domain.dto.LoginUser;
 import com.evol.domain.dto.StaffToken;
 import com.evol.domain.model.Staff;
+import com.evol.enums.UserType;
 import com.evol.service.StaffService;
 import com.evol.util.JsonUtil;
 import com.evol.util.JwtUtil;
+import com.evol.util.RedisClientUtil;
 import com.evol.web.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sun.security.krb5.internal.PAData;
 
@@ -18,21 +23,27 @@ public class LoginController {
     private JwtUtil jwtUtil;
 
     @Autowired
+    private RedisClientUtil redisClientUtil;
+
+    @Autowired
     private StaffService staffService;
 
 
-//    public ApiResponse login(String username, String password) {
-//        String userId = "123456";
-//        String token = jwtUtil.generateToken(userId);
-//        return ApiResponse.success(token);
-//    }
-
+    @PostMapping("/login")
     public ApiResponse login(LoginParam param){
         Staff staff = staffService.login(param);
-        StaffToken staffToken = new StaffToken();
-        staffToken.setId(staff.getId());
-        staffToken.setLoginName(staff.getLoginName());
-        String token = jwtUtil.generateToken(JsonUtil.ParseString(staffToken));
+        LoginUser loginUser = new LoginUser();
+        loginUser.setId(staff.getId());
+        loginUser.setLoginName(staff.getLoginName());
+        String token = jwtUtil.generateToken(UserType.STAFF.getCode() + "_" + loginUser.getId());
+        redisClientUtil.add(Constants.TOKEN + token, loginUser);
         return ApiResponse.success(token);
+    }
+
+
+    @PostMapping("/logout")
+    public ApiResponse logout(String token){
+        redisClientUtil.deleteByKeys(token);
+        return ApiResponse.success(0);
     }
 }

@@ -3,6 +3,7 @@ package com.evol.coach.filter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.evol.constant.Constants;
+import com.evol.domain.LoginUser;
 import com.evol.enums.ApiResponseEnum;
 import com.evol.util.RedisClientUtil;
 import com.evol.web.ApiResponse;
@@ -10,11 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -24,9 +28,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 @Slf4j
-public class AuthFilter {
+@Component
+public class AuthFilter implements GlobalFilter, Ordered{
 
-    private static final String[] whiteList = {"/auth/login", "/user/register"};
+    private static final String[] whiteList = {"/login", "/logout"};
 
 //    @Resource(name = "stringRedisTemplate")
 //    private ValueOperations<String, String> ops;
@@ -50,21 +55,20 @@ public class AuthFilter {
 
         //String userStr = ops.get(Constants.ACCESS_TOKEN + token);
         //String userStr = ops.get(Constants.ACCESS_TOKEN + token);
-        String userStr = redisClientUtil.get(Constants.ACCESS_TOKEN + token);
-        if (org.apache.commons.lang3.StringUtils.isBlank(userStr))
+        LoginUser loignUser = redisClientUtil.getByKey(Constants.TOKEN + token);
+        if (loignUser == null)
         {
             return setUnauthorizedResponse(exchange, "token verify error");
         }
-        JSONObject json = JSONObject.parseObject(userStr);
-        String userId = json.getString("userId");
+        Integer userId = loignUser.getId();
         //查询token信息
-        if(StringUtils.isBlank(userId)){
+        if(userId == null){
             return setUnauthorizedResponse(exchange, "token verify error");
         }
 
         // 设置userId到request里，后续根据userId，获取用户信息
-        ServerHttpRequest mutableReq = exchange.getRequest().mutate().header(Constants.CURRENT_ID, userId)
-                .header(Constants.CURRENT_USERNAME, json.getString("loginName")).build();
+        ServerHttpRequest mutableReq = exchange.getRequest().mutate().header(Constants.CURRENT_ID, userId + "")
+                .header(Constants.CURRENT_USERNAME, loignUser.getLoginName()).build();
 
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
         return chain.filter(mutableExchange);

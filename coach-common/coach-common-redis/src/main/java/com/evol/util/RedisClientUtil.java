@@ -27,6 +27,7 @@ import java.util.function.Consumer;
 @Slf4j
 public class RedisClientUtil {
 
+
     private static final Logger logger = LoggerFactory.getLogger(RedisClientUtil.class);
 
     @Autowired

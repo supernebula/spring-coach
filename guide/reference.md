@@ -44,6 +44,16 @@ https://blog.51cto.com/15091660/2603999
 
 https://www.cnblogs.com/ye-feng-yu/p/11111803.html
 
+
+#### 问题
+
+Unable to start ServletWebServerApplicationContext due to missing ServletWebServerFactory bean.
+
+https://blog.devmgr.cn/2020/02/16/spring-gateway-%E9%81%87%E5%88%B0%E5%BC%82%E5%B8%B8unable-to-start-servletwebserverapplicationcontext-due-to-missing-servletwebserverfactory-bean-%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8/
+
+出现这种状况，是由于项目中混入了 spring-webmvc 的包导致的，spring gateway 使用 webflux， 而webflux和webmvc不兼容，就会出现上面的错误。
+
+
 ### 限流 
 
 https://blog.csdn.net/m0_37834471/article/details/82621353?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control

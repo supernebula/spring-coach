@@ -7,7 +7,7 @@
 //import org.springframework.context.annotation.Configuration;
 //import reactor.core.publisher.Mono;
 //
-//@Configuration
+//@Configuration  //note
 //public class RateLimiterConfiguration {
 //
 //    private static final Logger logger = LoggerFactory.getLogger(RateLimiterConfiguration.class);

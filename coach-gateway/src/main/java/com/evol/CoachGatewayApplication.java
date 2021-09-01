@@ -16,6 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableFeignClients
 public class CoachGatewayApplication {
 
+    //note
     public static void main(String[] args) {
         SpringApplication.run(com.evol.CoachGatewayApplication.class, args);
     }

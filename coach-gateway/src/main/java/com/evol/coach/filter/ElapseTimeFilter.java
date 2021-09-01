@@ -13,6 +13,7 @@
 //
 //    private static final Log log = LogFactory.getLog(ElapseTimeFilter.class);
 //
+// note
 //    private static final String START_STAMP = "startStamp";
 //    /**
 //     * 请求响应时长统计

@@ -9,7 +9,7 @@
 //@Configuration
 //public class RoutesConfig {
 //
-//    @Bean
+//    @Bean  //note
 //public RouteLocator routeLocator(RouteLocatorBuilder builder) {
 //    return builder.routes().route(r ->
 //            r.path("/aa")

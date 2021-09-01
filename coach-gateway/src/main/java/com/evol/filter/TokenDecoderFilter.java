@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class TokenDecoderFilter extends AbstractGatewayFilterFactory {
 
 
+    //note
     @Override
     public GatewayFilter apply(Object config) {
         return (exchange, chain) -> {

@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono;
 @Configuration
 public class GlobalGatewayFilterConfig {
 
+    //note
     @Bean
     public GlobalFilter elapsedGlobalFilter()
     {

@@ -28,7 +28,7 @@
 //import java.util.Arrays;
 //
 //@Slf4j
-//@Component
+//@Component  //note
 //public class AuthFilter implements GlobalFilter, Ordered{
 //
 //    private static final String[] whiteList = {"/login", "/logout"};

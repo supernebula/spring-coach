@@ -38,6 +38,7 @@
         <druid.version>1.1.24</druid.version>
         <mybatisPlus.version>3.0.6</mybatisPlus.version>
         <elasticsearch.version>7.6.2</elasticsearch.version>
+        <soul.version>2.3.0-RELEASE</soul.version>
     </properties>
 
     <!-- 依赖声明 -->

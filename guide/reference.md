@@ -45,6 +45,14 @@ https://blog.51cto.com/15091660/2603999
 https://www.cnblogs.com/ye-feng-yu/p/11111803.html
 
 
+## 网关  soul
+
+官方安装教程
+
+https://dromara.org/zh/projects/soul/soul-set-up/
+
+
+
 #### 问题
 
 Unable to start ServletWebServerApplicationContext due to missing ServletWebServerFactory bean.

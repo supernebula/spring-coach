@@ -7,6 +7,7 @@ import com.evol.domain.request.MovieQueryRequest;
 import com.evol.service.MovieService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.dromara.soul.client.springcloud.annotation.SoulSpringCloudClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,7 @@ public class MovieClientController {
     @CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "获取电影信息", response = ApiResponse.class)
     @GetMapping("/get")
+    @SoulSpringCloudClient(path = "/get")
     public ApiResponse get(Integer movieId){
         Movie movie = movieService.getMovie(movieId);
         return ApiResponse.success(movie);

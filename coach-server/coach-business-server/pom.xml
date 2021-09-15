@@ -135,6 +135,12 @@
             <version>0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.dromara</groupId>
+            <artifactId>soul-client-springcloud</artifactId>
+            <version>2.3.0-RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
 
 
     </dependencies>

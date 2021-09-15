@@ -51,6 +51,10 @@ https://www.cnblogs.com/ye-feng-yu/p/11111803.html
 
 https://dromara.org/zh/projects/soul/soul-set-up/
 
+SpringCloud接入Soul网关
+
+https://dromara.org/zh/projects/soul/spring-cloud-proxy/
+
 
 
 #### 问题

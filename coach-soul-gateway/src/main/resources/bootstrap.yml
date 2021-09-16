@@ -1,0 +1,65 @@
+server:
+  port: 9000
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: coach-soul-gateway
+#  redis:
+#    database: 0
+#    password: changchong#
+#    host: 192.168.0.24
+#    port: 6379
+#    # 连接池最大连接数（使用负值表示没有限制）
+#    lettuce:
+#      pool:
+#        max-active: 100
+#        # 连接池中的最大空闲连接
+#        max-idle: 100
+#        min-idle: 50
+#        # 连接池中的最小空闲连接毫秒
+#        maxWaitMillis: 10000
+#      timeout: 10000ms
+
+soul :
+  sync:
+    websocket :
+      urls: ws://localhost:9095/websocket
+  httpclient:
+    readTimeout: 10000
+    writeTimeout: 10000
+    connectTimeout: 10000
+
+
+oauth.key: 10$JIv5CH
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@192.168.0.9:8761/eureka/
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+#eureka:
+#  instance:
+#    lease-renewal-interval-in-seconds: 10
+#  client:
+#    service-url:
+#      defaultZone: http://ddcx:ddcx@192.168.0.25:8888/eureka/
+#      registry-fetch-interval-seconds: 10
+#      instance-info-replication-interval-seconds: 5
+
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
+    org.springframework.http.server.reactive: info
+    org.springframework.web.reactive: info
+    reactor.ipc.netty: info
+
+
+
+

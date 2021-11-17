@@ -289,16 +289,16 @@ public class RedisClientUtil {
 //        return list.range(k, l, l1);
 //    }
 //
-//    /**
-//     * 集合添加
-//     *
-//     * @param key
-//     * @param value
-//     */
-//    public void add(String key, Object value) {
-//        SetOperations<String, Object> set = redisTemplate.opsForSet();
-//        set.add(key, value);
-//    }
+    /**
+     * 集合添加
+     *
+     * @param key
+     * @param value
+     */
+    public void add(String key, Object value) {
+        SetOperations<String, Object> set = redisTemplate.opsForSet();
+        set.add(key, value);
+    }
 //
 //    /**
 //     * 集合获取
@@ -458,13 +458,13 @@ public class RedisClientUtil {
 //        redisTemplate.delete(keys);
 //    }
 //
-//    /**
-//     * 删除多个key
-//     * @param keys
-//     */
-//    public void deleteByKeys(String... keys) {
-//        redisTemplate.delete(Arrays.asList(keys));
-//    }
+    /**
+     * 删除多个key
+     * @param keys
+     */
+    public void deleteByKeys(String... keys) {
+        redisTemplate.delete(Arrays.asList(keys));
+    }
 //    /**
 //     *根据前缀模糊删除
 //     * @param prex

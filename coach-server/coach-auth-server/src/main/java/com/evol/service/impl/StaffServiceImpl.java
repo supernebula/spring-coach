@@ -7,10 +7,12 @@ import com.evol.mapper.StaffMapper;
 import com.evol.service.StaffService;
 import com.evol.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
+@Service
 public class StaffServiceImpl implements StaffService {
 
     @Autowired

@@ -43,7 +43,7 @@ public class LoginController {
 
     @PostMapping("/logout")
     public ApiResponse logout(String token){
-        redisClientUtil.deleteByKeys(token);
+        redisClientUtil.deleteByKeys(Constants.TOKEN + token);
         return ApiResponse.success(0);
     }
 }

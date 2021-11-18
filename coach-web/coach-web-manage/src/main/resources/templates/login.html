@@ -91,13 +91,16 @@
         var loginName = $("#loginName").val();
         var password = $("#password").val();
 
-        $.post(loginApiUrl, { loginName: loginName,
+        $.post(loginApiUrl, {
+                loginName: loginName,
                 password: password
             },
             function(response){
 
                 if(response.code == 0)
                 {
+                    var token = response.data;
+                    window.sessionStorage.setItem("token", token);
                     console.log(response.data);
                     window.location.href = "/home/index";
                 }

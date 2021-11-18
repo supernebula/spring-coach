@@ -4,10 +4,8 @@ import com.evol.constant.Constants;
 import com.evol.util.RedisClientUtil;
 import com.evol.web.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.ServletWebRequest;
 
 @RequestMapping("auth")
 @RestController
@@ -18,11 +16,12 @@ public class AuthController {
 
     /**
      * 判断当前token是否存在（token是否存在）
-     * @param token
      * @return
      */
+    @CrossOrigin(value = "http://localhost:8090")
     @GetMapping("/verify")
-    public ApiResponse verify(String token){
+    public ApiResponse verify(ServletWebRequest request){
+        String token = request.getHeader("Authorization");
         String key = Constants.TOKEN + token;
         Boolean isExist = redisClientUtil.exists(key);
         return ApiResponse.success(isExist);

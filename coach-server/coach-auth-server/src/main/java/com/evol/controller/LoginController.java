@@ -12,6 +12,7 @@ import com.evol.util.JwtUtil;
 import com.evol.util.RedisClientUtil;
 import com.evol.web.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sun.security.krb5.internal.PAData;
@@ -29,6 +30,7 @@ public class LoginController {
     private StaffService staffService;
 
 
+    @CrossOrigin(value = "http://localhost:8090")
     @PostMapping("/login")
     public ApiResponse login(LoginParam param){
         Staff staff = staffService.login(param);
@@ -41,6 +43,7 @@ public class LoginController {
     }
 
 
+    @CrossOrigin(value = "http://localhost:8090")
     @PostMapping("/logout")
     public ApiResponse logout(String token){
         redisClientUtil.deleteByKeys(Constants.TOKEN + token);

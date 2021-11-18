@@ -536,7 +536,28 @@
 
     var apiCurrentUserUrl = "/api/login/currentUser";
 
+    var authVerifyUrl = "http://localhost:8090/auth/verify";
+
     $(document).ready(function() {
+        var token = window.sessionStorage.getItem("token");
+        $.ajax({
+            headers:{
+                "Authorization" : token
+            }
+        ,
+        type: "POST",
+        contentType:"application/x-www-form-urlencoded",
+        success : function(response) {
+            if(response.code == 0)
+            {
+                var isExist = response.data;
+                if(!isExist){
+                    window.sessionStorage.removeItem("token");
+                    window.location.href = "/login";
+                }
+            }
+        }});
+
         $.getJSON(apiCurrentUserUrl, function (response) {
             if(response.success)
             {

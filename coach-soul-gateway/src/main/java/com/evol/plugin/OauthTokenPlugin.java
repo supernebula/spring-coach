@@ -1,27 +1,38 @@
 package com.evol.plugin;
 
 import com.alibaba.fastjson.JSONObject;
+import com.evol.enums.ApiResponseEnum;
 import com.evol.plugin.pojo.CustomLogRuleDTO;
+import com.evol.util.RedisClientUtil;
+import com.evol.web.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Test;
+import org.apache.commons.lang.StringUtils;
 import org.dromara.soul.common.dto.RuleData;
 import org.dromara.soul.common.dto.SelectorData;
 import org.dromara.soul.common.enums.PluginEnum;
-import org.dromara.soul.common.utils.GsonUtils;
 import org.dromara.soul.plugin.api.SoulPluginChain;
 import org.dromara.soul.plugin.base.AbstractSoulPlugin;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import com.evol.constant.Constants;
+
+import java.util.List;
+import java.util.Objects;
 
 @Component
 @Slf4j
-public class CustomLogPlugin extends AbstractSoulPlugin {
+public class OauthTokenPlugin extends AbstractSoulPlugin {
 
+    @Autowired
+    private RedisClientUtil redisClientUtil;
 
     @Override
     public int getOrder() {
-         return PluginEnum.SPRING_CLOUD.getCode()-2;
+        return PluginEnum.SPRING_CLOUD.getCode()-2;
     }
 
     @Override
@@ -35,11 +46,27 @@ public class CustomLogPlugin extends AbstractSoulPlugin {
         return false;
     }
 
-
     @Override
-    protected Mono<Void> doExecute(ServerWebExchange exchange, SoulPluginChain chain, SelectorData selector, RuleData rule) {
+    protected Mono<Void> doExecute(ServerWebExchange exchange, SoulPluginChain chain, SelectorData selector,
+                                   RuleData rule){
+        ServerHttpRequest request = Objects.requireNonNull(exchange).getRequest();
+        ServerHttpResponse response = Objects.requireNonNull(exchange).getResponse();
+        List<String> authHeaders = request.getHeaders().get("Authorization");
+        String token = authHeaders.size() == 0 ? null : authHeaders.get(0);
+        if(StringUtils.isBlank(token)){
 
-        log.debug("--function CustomLogPlugin plugin start--");
+            ServerHttpResponse newResponse =
+            return ApiResponse.fail(ApiResponseEnum.ACCESS_TOKEN_INVALID);
+            response.
+            response.setStatusCode()
+        }
+
+
+        Boolean isExist = redisClientUtil.exists(key);
+
+
+        String token = exchange.getRequest() .getHeader("Authorization");
+        log.debug("--function OauthTokenPlugin plugin start--");
         final String ruleHandle = rule.getHandle();
         log.info(ruleHandle);
         CustomLogRuleDTO ruleDTO = JSONObject.parseObject(ruleHandle, CustomLogRuleDTO.class);
@@ -60,4 +87,5 @@ public class CustomLogPlugin extends AbstractSoulPlugin {
         //log.debug(test.toString());
         return chain.execute(exchange);
     }
+
 }

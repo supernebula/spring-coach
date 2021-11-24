@@ -11,6 +11,8 @@ import reactor.core.publisher.Mono;
  */
 @Component
 public class OauthTokenFilter implements WebFilter {
+
+
     @Override
     public Mono<Void> filter(ServerWebExchange serverWebExchange, WebFilterChain webFilterChain) {
         return null;

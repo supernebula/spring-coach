@@ -9,6 +9,7 @@ public enum ApiResponseEnum {
     //
     SUCCESS(0, "网关响应成功"),
     NOT_FOUND(401, "Unauthorized 未授权"),
+    NOT_RECORD(404, "没有记录"),
     SERVER_INTERNAL_ERROR(500, "网关:系统出错"),
     SIGN_ERROR(10001, "网关:请求参数sign签名错误"),
     APP_KEY_INVALID(10002, "网关:请求参数app_key无效"),

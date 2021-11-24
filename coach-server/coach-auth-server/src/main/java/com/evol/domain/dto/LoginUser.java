@@ -9,4 +9,8 @@ public class LoginUser {
 
     private String loginName;
 
+    private String realName;
+
+    private String token;
+
 }

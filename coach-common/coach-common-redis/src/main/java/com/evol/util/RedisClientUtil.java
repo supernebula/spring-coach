@@ -200,10 +200,13 @@ public class RedisClientUtil {
      * @return
      */
     public <T> T getByKey(final String key) {
-        Object result = null;
-        ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
-        result = operations.get(key);
-        return (T) result;
+        Set<Object> result = null;
+        SetOperations<String, Object> operations = redisTemplate.opsForSet();
+        result = operations.members(key);
+        if(!result.isEmpty()){
+            return (T) result.toArray()[0];
+        }
+        return null;
     }
 
 //    /**

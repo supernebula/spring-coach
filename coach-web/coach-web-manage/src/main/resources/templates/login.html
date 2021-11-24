@@ -87,7 +87,7 @@
 
 
     function login(_this) {
-        var loginApiUrl = "http://localhost:8090/api-auth/login";
+        var loginApiUrl = "http://localhost:8090/login";
         var loginName = $("#loginName").val();
         var password = $("#password").val();
 
@@ -99,8 +99,10 @@
 
                 if(response.code == 0)
                 {
-                    var token = response.data;
-                    window.sessionStorage.setItem("token", token);
+                    var user = response.data;
+                    window.sessionStorage.setItem("token", user.token);
+                    window.sessionStorage.setItem("loginName", user.loginName);
+                    window.sessionStorage.setItem("realName", user.realName);
                     console.log(response.data);
                     window.location.href = "/home/index";
                 }

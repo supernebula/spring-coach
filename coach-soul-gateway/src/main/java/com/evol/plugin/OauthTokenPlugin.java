@@ -1,10 +1,14 @@
 package com.evol.plugin;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.evol.domain.LoginUser;
 import com.evol.enums.ApiResponseEnum;
 import com.evol.plugin.pojo.CustomLogRuleDTO;
+import com.evol.plugin.pojo.OauthTokenRuleDTO;
 import com.evol.util.RedisClientUtil;
 import com.evol.web.ApiResponse;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.dromara.soul.common.dto.RuleData;
@@ -13,6 +17,8 @@ import org.dromara.soul.common.enums.PluginEnum;
 import org.dromara.soul.plugin.api.SoulPluginChain;
 import org.dromara.soul.plugin.base.AbstractSoulPlugin;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -20,6 +26,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import com.evol.constant.Constants;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,17 +39,17 @@ public class OauthTokenPlugin extends AbstractSoulPlugin {
 
     @Override
     public int getOrder() {
-        return PluginEnum.SPRING_CLOUD.getCode()-2;
+        return PluginEnum.SPRING_CLOUD.getCode()-3;
     }
 
     @Override
     public String named(){
-        return "customLog";
+        return "oauthToken";
     }
+
 
     @Override
     public Boolean skip(final ServerWebExchange exchange){
-
         return false;
     }
 
@@ -53,38 +60,33 @@ public class OauthTokenPlugin extends AbstractSoulPlugin {
         ServerHttpResponse response = Objects.requireNonNull(exchange).getResponse();
         List<String> authHeaders = request.getHeaders().get("Authorization");
         String token = authHeaders.size() == 0 ? null : authHeaders.get(0);
+
+        String ruleHandle = rule.getHandle();
+
+        final OauthTokenRuleDTO ruleDto = JSON.toJavaObject(JSON.parseObject(ruleHandle), OauthTokenRuleDTO.class);
+
+        //todo：忽略token验证的url，直接放行
+
+        //无token，返回无授权
         if(StringUtils.isBlank(token)){
-
-            ServerHttpResponse newResponse =
-            return ApiResponse.fail(ApiResponseEnum.ACCESS_TOKEN_INVALID);
-            response.
-            response.setStatusCode()
+            unauthResponse(response, exchange, chain);
         }
 
-
-        Boolean isExist = redisClientUtil.exists(key);
-
-
-        String token = exchange.getRequest() .getHeader("Authorization");
-        log.debug("--function OauthTokenPlugin plugin start--");
-        final String ruleHandle = rule.getHandle();
-        log.info(ruleHandle);
-        CustomLogRuleDTO ruleDTO = JSONObject.parseObject(ruleHandle, CustomLogRuleDTO.class);
-        log.debug("ignorePath:" + ruleDTO.getIgnorePath());
-        log.debug("path:" + ruleDTO.getPath());
-        //final Test test =  GsonUtils.getInstance().fromJson(ruleHandle, Test.class);
-
-        String currentPath = exchange.getRequest().getPath().pathWithinApplication().value();
-        if(ruleDTO == null || ruleDTO.getIgnorePath().equals(currentPath)){
-            return chain.execute(exchange);
+        //
+        String key = Constants.TOKEN + token;
+        LoginUser loginUser = redisClientUtil.getByKey(key);
+        if(loginUser == null){
+            unauthResponse(response, exchange, chain);
         }
 
-        //todo: 如果忽略的path，执行业务逻辑
-        // 业务逻辑
-        log.debug("执行业务逻辑");
+        return chain.execute(exchange);
+    }
 
-
-        //log.debug(test.toString());
+    private Mono<Void> unauthResponse(ServerHttpResponse response, ServerWebExchange exchange, SoulPluginChain chain){
+        ApiResponse apiResponse = ApiResponse.fail(ApiResponseEnum.ACCESS_TOKEN_INVALID, "无效的访问token");
+        response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
+        response.writeWith(Mono.just(response.bufferFactory().wrap(JSON.toJSONString(apiResponse).getBytes(StandardCharsets.UTF_8))));
+        response.setStatusCode(HttpStatus.UNAUTHORIZED);
         return chain.execute(exchange);
     }
 

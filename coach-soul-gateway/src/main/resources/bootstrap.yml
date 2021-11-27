@@ -6,6 +6,10 @@ spring:
     allow-bean-definition-overriding: true
   application:
     name: coach-soul-gateway
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
 #  redis:
 #    database: 0
 #    password: changchong#
@@ -64,6 +68,8 @@ logging:
     org.springframework.http.server.reactive: info
     org.springframework.web.reactive: info
     reactor.ipc.netty: info
+
+
 
 
 

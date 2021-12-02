@@ -1,6 +1,6 @@
 package com.evol.plugin.pojo;
 
-import lombok.Data;
+        import lombok.Data;
 
 @Data
 public class CustomLogRuleDTO {

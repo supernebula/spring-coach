@@ -59,13 +59,17 @@ public class OauthTokenPlugin extends AbstractSoulPlugin {
         ServerHttpRequest request = Objects.requireNonNull(exchange).getRequest();
         ServerHttpResponse response = Objects.requireNonNull(exchange).getResponse();
         List<String> authHeaders = request.getHeaders().get("Authorization");
-        String token = authHeaders.size() == 0 ? null : authHeaders.get(0);
+        String token = (authHeaders != null && authHeaders.size() != 0) ? authHeaders.get(0) : null;
 
         String ruleHandle = rule.getHandle();
 
         final OauthTokenRuleDTO ruleDto = JSON.toJavaObject(JSON.parseObject(ruleHandle), OauthTokenRuleDTO.class);
+        String path = request.getPath().toString();
 
         //todo：忽略token验证的url，直接放行
+        if(path.equals(ruleDto.getIgnorePath())){
+            return chain.execute(exchange);
+        }
 
         //无token，返回无授权
         if(StringUtils.isBlank(token)){
@@ -76,18 +80,19 @@ public class OauthTokenPlugin extends AbstractSoulPlugin {
         String key = Constants.TOKEN + token;
         LoginUser loginUser = redisClientUtil.getByKey(key);
         if(loginUser == null){
-            unauthResponse(response, exchange, chain);
+
+            return unauthResponse(response, exchange, chain);
         }
 
         return chain.execute(exchange);
     }
 
     private Mono<Void> unauthResponse(ServerHttpResponse response, ServerWebExchange exchange, SoulPluginChain chain){
+
         ApiResponse apiResponse = ApiResponse.fail(ApiResponseEnum.ACCESS_TOKEN_INVALID, "无效的访问token");
         response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
-        response.writeWith(Mono.just(response.bufferFactory().wrap(JSON.toJSONString(apiResponse).getBytes(StandardCharsets.UTF_8))));
         response.setStatusCode(HttpStatus.UNAUTHORIZED);
-        return chain.execute(exchange);
+        return response.writeWith(Mono.just(response.bufferFactory().wrap(JSON.toJSONString(apiResponse).getBytes(StandardCharsets.UTF_8))));
     }
 
 }

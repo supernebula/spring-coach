@@ -83,8 +83,10 @@
 
         var staffId = getQueryString("staffId");
 
-        var apiDetailUrl = "http://localhost:8088/web/staff/get?staffId=" + staffId;
-        var apiEditUrl = "http://localhost:8088/web/staff/update?staffId=" + staffId;
+        //var apiDetailUrl = "http://localhost:8088/web/staff/get?staffId=" + staffId;
+        //var apiEditUrl = "http://localhost:8088/web/staff/update?staffId=" + staffId;
+        var apiDetailUrl = config.businessBaseUrl + "/web/staff/get?staffId=" + staffId;
+        var apiEditUrl = config.businessBaseUrl + "/web/staff/update?staffId=" + staffId;
         $(document).ready(function() {
             $.getJSON(apiDetailUrl, null, function (response) {
                 if(!response.code === 0)

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Api("用户端订单API")
 @RestController
 @RequestMapping("/client/netOrder")
-@CrossOrigin
+//@CrossOrigin
 public class NetOrderClientController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class NetOrderClientController {
     @Autowired
     FeignUserClient feignUserClient;
 
-    @CrossOrigin(value = "http://localhost:8090")
+    //@CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "查询我的订单", response = ApiResponse.class)
     @GetMapping("/query")
     public ApiResponse query(NetOrderQueryRequest netOrderQueryRequest){
@@ -38,7 +38,7 @@ public class NetOrderClientController {
         return ApiResponse.success(pageResult);
     }
 
-    @CrossOrigin(value = "http://localhost:8090")
+    //@CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "根据订单获取网络订单", response = ApiResponse.class)
     @GetMapping("get")
     public ApiResponse get(Integer orderId){
@@ -46,7 +46,7 @@ public class NetOrderClientController {
         return ApiResponse.success(item);
     }
 
-    @CrossOrigin(value = "http://localhost:8090")
+    //@CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "下单", response = ApiResponse.class)
     @PostMapping("buy")
     public ApiResponse buy(@RequestParam Integer movieId, @RequestParam Integer userId){

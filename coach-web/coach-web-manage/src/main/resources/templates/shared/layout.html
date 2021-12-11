@@ -531,12 +531,13 @@
 <!-- AdminLTE for demo purposes -->
 <script th:src="@{/dist/js/demo.js}"></script>
 <script th:src="@{/site/func.js}"></script>
+<script th:src="@{/site/config.js}"></script>
 
 <script>
 
-    var apiCurrentUserUrl = "/api/login/currentUser";
+    var apiCurrentUserUrl = config.authBaseUrl + "/userInfo";
 
-    var authVerifyUrl = "http://localhost:8090/auth/verify";
+    var authVerifyUrl = config.authBaseUrl + "/auth/verify";
 
     $(document).ready(function() {
         var token = window.sessionStorage.getItem("token");
@@ -561,7 +562,7 @@
         $.getJSON(apiCurrentUserUrl, function (response) {
             if(response.success)
             {
-                $(".current-login-user").html(response.data.username);
+                $(".current-login-user").html(response.data.loginName + " / " + response.data.realName);
             }else{
 
             }

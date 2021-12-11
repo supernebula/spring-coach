@@ -47,7 +47,6 @@ public class OauthTokenPlugin extends AbstractSoulPlugin {
         return "oauthToken";
     }
 
-
     @Override
     public Boolean skip(final ServerWebExchange exchange){
         return false;
@@ -66,8 +65,8 @@ public class OauthTokenPlugin extends AbstractSoulPlugin {
         final OauthTokenRuleDTO ruleDto = JSON.toJavaObject(JSON.parseObject(ruleHandle), OauthTokenRuleDTO.class);
         String path = request.getPath().toString();
 
-        //todo：忽略token验证的url，直接放行
-        if(path.equals(ruleDto.getIgnorePath())){
+        //忽略token验证的url，直接放行
+        if(ruleDto.getIgnorePathList().contains(path)){
             return chain.execute(exchange);
         }
 
@@ -76,14 +75,11 @@ public class OauthTokenPlugin extends AbstractSoulPlugin {
             unauthResponse(response, exchange, chain);
         }
 
-        //
         String key = Constants.TOKEN + token;
         LoginUser loginUser = redisClientUtil.getByKey(key);
         if(loginUser == null){
-
             return unauthResponse(response, exchange, chain);
         }
-
         return chain.execute(exchange);
     }
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api("订单管理")
 @RestController
 @RequestMapping("/web/netOrder")
-@CrossOrigin
+//@CrossOrigin
 public class NetOrderWebController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class NetOrderWebController {
 
     @ApiOperation(value = "分页查询", response = ApiResponse.class)
     @GetMapping("/query")
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     public ApiResponse query(NetOrderQueryRequest netOrderQueryRequest){
         //分页查询
         PageBase<NetOrder> pageResult = netOrderService.queryNetOrder(netOrderQueryRequest);
@@ -38,7 +38,7 @@ public class NetOrderWebController {
 
     @ApiOperation(value = "根据ID获取网络订单", response = ApiResponse.class)
     @GetMapping("get")
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     public ApiResponse get(Integer orderId){
         NetOrder item = netOrderService.getNetOrderById(orderId);
         return ApiResponse.success(item);
@@ -46,7 +46,7 @@ public class NetOrderWebController {
 
     @ApiOperation(value = "退款", response = ApiResponse.class)
     @GetMapping("refund")
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     public ApiResponse refund(Integer orderId){
         NetOrder netOrder = netOrderService.getNetOrderById(orderId);
         return ApiResponse.success(netOrder);

@@ -72,8 +72,11 @@
             };
         }
 
-        var queryApiUrl = "http://localhost:8088/web/movie/query";
-        var deleteApiUrl = "http://localhost:8088/web/movie/delete";
+        //var queryApiUrl = "http://localhost:8088/web/movie/query";
+        //var deleteApiUrl = "http://localhost:8088/web/movie/delete";
+
+        var queryApiUrl = config.businessBaseUrl + "/web/movie/query";
+        var deleteApiUrl = config.businessBaseUrl + "/web/movie/delete";
 
 
         $(document).ready(function() {

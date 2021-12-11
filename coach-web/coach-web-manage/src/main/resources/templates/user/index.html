@@ -77,7 +77,8 @@
             };
         }
 
-        var queryApiUrl = "http://localhost:8089/web/user/query";
+        //var queryApiUrl = "http://localhost:8089/web/user/query";
+        var queryApiUrl = config.userBaseUrl + "/web/user/query";
 
 
         $(document).ready(function() {
@@ -89,10 +90,12 @@
                             url: queryApiUrl,
                             contentType: "application/json",
                             success: function(result) {
+                                handResponseStatus(result.code);
                                 // notify the data source that the request succeeded
                                 options.success(result.data.records);
                             },
                             error: function(result) {
+                                handResponseStatus(result.code);
                                 // notify the data source that the request failed
                                 console.log("错误，code:" + result.code + ", messge:" + result.message);
                                 options.error(result);
@@ -221,6 +224,7 @@
                 success: function(response){
                     if(response.code == 0)
                     {
+                        handResponseStatus(response.code);
                         console.log(response.msg);
                         querySearch();
                         //window.location.reload();

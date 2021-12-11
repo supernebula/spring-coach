@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "用户管理")
 @RequestMapping("/web/user")
 @RestController
-@CrossOrigin
+//@CrossOrigin
 public class UserWebController {
 
     @Autowired
     UserService userService;
 
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "查询用户", response = ApiResponse.class)
     @GetMapping("query")
     public ApiResponse Query(UserQueryRequest userQueryRequest){
@@ -29,7 +29,7 @@ public class UserWebController {
         return ApiResponse.success(pageList);
     }
 
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "添加用户", response = ApiResponse.class)
     @PostMapping("create")
     public ApiResponse Add(UserAddDto userAddDto){
@@ -37,7 +37,7 @@ public class UserWebController {
         return ApiResponse.success(id);
     }
 
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "修改用户", response = ApiResponse.class)
     @PostMapping("update")
     public ApiResponse Update(UserModifyDto userModifyDto){
@@ -45,7 +45,7 @@ public class UserWebController {
         return ApiResponse.success(id);
     }
 
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "获取用户", response = ApiResponse.class)
     @GetMapping("get")
     public ApiResponse getUser(Integer userId){
@@ -53,7 +53,7 @@ public class UserWebController {
         return ApiResponse.success(user);
     }
 
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "删除用户", response = ApiResponse.class)
     @DeleteMapping("delete")
     public ApiResponse deleteUser(Integer userId){

@@ -130,7 +130,8 @@
             var description =$("#item-form input#description").val();
             var language =$("#item-form input#language").val();
 
-            var createUrl = "http://localhost:8088/web/movie/create";
+            //var createUrl = "http://localhost:8088/web/movie/create";
+            var createUrl = config.businessBaseUrl + "/web/movie/create";
             var detailUrl = "/movie/detail";
             var indexUrl = "/movie/index";
 

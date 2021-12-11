@@ -18,7 +18,7 @@ public class AuthController {
      * 判断当前token是否存在（token是否存在）
      * @return
      */
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @GetMapping("/verify")
     public ApiResponse verify(ServletWebRequest request){
         String token = request.getHeader("Authorization");

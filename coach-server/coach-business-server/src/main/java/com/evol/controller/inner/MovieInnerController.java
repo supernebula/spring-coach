@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "内部电影接口")
 @RestController
 @RequestMapping("/inner/movie")
-@CrossOrigin
+//@CrossOrigin
 public class MovieInnerController {
 
     @Autowired
     private MovieService movieService;
 
 
-    @CrossOrigin(value = "http://localhost:8090")
+    //@CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "获取电影信息", response = ApiResponse.class)
     @GetMapping("/get")
     public ApiResponse get(@RequestParam(name = "movieId")  Integer movieId){
@@ -26,7 +26,7 @@ public class MovieInnerController {
         return ApiResponse.success(movie);
     }
 
-    @CrossOrigin(value = "http://localhost:8090")
+    //@CrossOrigin(value = "http://localhost:8090")
     @ApiOperation(value = "获取电影信息", response = ApiResponse.class)
     @GetMapping("/get2")
     public ApiResponse get2(){

@@ -10,6 +10,7 @@ import com.evol.web.ApiResponse;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,22 +27,22 @@ public class LoginController {
     private StaffService staffService;
 
 
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @PostMapping("/login")
     public ApiResponse<LoginUser> login(LoginParam param){
         return staffService.login(param);
     }
 
 
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @PostMapping("/logout")
     public ApiResponse logout(String token){
         redisClientUtil.deleteByKeys(Constants.TOKEN + token);
         return ApiResponse.success(0);
     }
 
-    @CrossOrigin(value = "http://localhost:8080")
-    @PostMapping("/userInfo")
+    //@CrossOrigin(value = "http://localhost:8080")
+    @GetMapping("/userInfo")
     public ApiResponse<LoginUser> userInfo(String token){
         Claims claims = jwtUtil.getClaimsByToken(token);
         String subject = claims.getSubject();

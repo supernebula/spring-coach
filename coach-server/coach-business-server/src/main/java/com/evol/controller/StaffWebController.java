@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "员工管理")
 @RestController
 @RequestMapping("/web/staff")
-@CrossOrigin
+//@CrossOrigin
 public class StaffWebController {
 
     @Autowired
     private StaffService staffService;
 
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "添加员工", response = ApiResponse.class)
     @PostMapping("/create")
     public ApiResponse createStaff(StaffUpsertDto param){
@@ -29,7 +29,7 @@ public class StaffWebController {
         return ApiResponse.success(id);
     }
 
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "删除员工", response = ApiResponse.class)
     @DeleteMapping("/delete")
     public ApiResponse deleteStaff(Integer staffId){
@@ -45,7 +45,7 @@ public class StaffWebController {
         return ApiResponse.success(id);
     }
 
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "修改员工", response = ApiResponse.class)
     @PostMapping("/changePwd")
     public ApiResponse changePwd(Integer staffId, StaffChangePwdDto staffChangePwdDto){
@@ -53,7 +53,7 @@ public class StaffWebController {
         return ApiResponse.success(id);
     }
 
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "查询员工记录", response = ApiResponse.class)
     @GetMapping("/query")
     public ApiResponse queryStaff(StaffQueryRequest reqParam){
@@ -61,7 +61,7 @@ public class StaffWebController {
         return ApiResponse.success(pageList);
     }
 
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "获取员工", response = ApiResponse.class)
     @GetMapping("/get")
     public ApiResponse getStaff(Integer staffId){

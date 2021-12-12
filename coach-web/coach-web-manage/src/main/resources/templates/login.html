@@ -75,6 +75,7 @@
 <script th:src="@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
 <!-- iCheck -->
 <script th:src="@{/plugins/iCheck/icheck.min.js}"></script>
+<script th:src="@{/site/config.js}"></script>
 <script>
     $(function () {
         $('input').iCheck({
@@ -87,7 +88,7 @@
 
 
     function login(_this) {
-        var loginApiUrl = "http://localhost:8090/login";
+        var loginApiUrl = config.authBaseUrl + "/login";
         var loginName = $("#loginName").val();
         var password = $("#password").val();
 

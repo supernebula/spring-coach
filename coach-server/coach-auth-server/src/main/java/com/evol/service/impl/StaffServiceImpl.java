@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class StaffServiceImpl implements StaffService {
@@ -54,7 +55,9 @@ public class StaffServiceImpl implements StaffService {
         loginUser.setLoginName(staff.getLoginName());
         loginUser.setRealName(staff.getRealName());
         String token = jwtUtil.generateToken(UserType.STAFF.getCode() + "_" + loginUser.getId());
-        redisClientUtil.add(Constants.TOKEN + token, loginUser);
+        String key = Constants.TOKEN + token;
+        redisClientUtil.add(key , loginUser);
+        redisClientUtil.expire(key, 1, TimeUnit.HOURS);
         loginUser.setToken(token);
         return ApiResponse.success(loginUser);
     }

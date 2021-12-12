@@ -3,7 +3,9 @@ package com.evol.controller;
 import com.evol.constant.Constants;
 import com.evol.util.RedisClientUtil;
 import com.evol.web.ApiResponse;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.feed.AtomFeedHttpMessageConverter;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -22,6 +24,9 @@ public class AuthController {
     @GetMapping("/verify")
     public ApiResponse verify(ServletWebRequest request){
         String token = request.getHeader("Authorization");
+        if(StringUtils.isBlank(token)){
+            token = request.getParameter("token");
+        }
         String key = Constants.TOKEN + token;
         Boolean isExist = redisClientUtil.exists(key);
         return ApiResponse.success(isExist);

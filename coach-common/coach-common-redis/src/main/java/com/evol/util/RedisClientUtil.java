@@ -302,6 +302,16 @@ public class RedisClientUtil {
         SetOperations<String, Object> set = redisTemplate.opsForSet();
         set.add(key, value);
     }
+
+    /**
+     * 设置过期时间
+     * @param key
+     * @param time
+     * @param timeUnit
+     */
+    public void expire(String key, long time, TimeUnit timeUnit){
+        redisTemplate.expire(key, time, timeUnit);
+    }
 //
 //    /**
 //     * 集合获取

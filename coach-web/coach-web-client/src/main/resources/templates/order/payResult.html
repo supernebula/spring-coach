@@ -190,7 +190,7 @@
 
     var orderId = getQueryString("orderId");
     $(document).ready(function() {
-        var apiUrl = "http://localhost:8084/client/netOrder/get?orderId=" + orderId;
+        var apiUrl = config.orderBaseUrl + "/client/netOrder/get?orderId=" + orderId;
         $.getJSON( apiUrl, function( resp ) {
             console.log(resp);
             var order = resp.data;

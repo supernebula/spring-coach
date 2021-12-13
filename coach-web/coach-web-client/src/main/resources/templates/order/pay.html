@@ -206,7 +206,8 @@
     var userId = getQueryString("userId");
     var orderId = getQueryString("orderId");
     $(document).ready(function() {
-        var apiUrl = "http://localhost:8084/client/netOrder/get?orderId=" + orderId;
+        //var apiUrl = "http://localhost:8084/client/netOrder/get?orderId=" + orderId;
+        var apiUrl = config.orderBaseUrl + "/client/netOrder/get?orderId=" + orderId;
         $.getJSON( apiUrl, function( resp ) {
             console.log(resp);
             var order = resp.data;
@@ -219,7 +220,7 @@
 
         var param = { orderId: orderId, userId: userId};
 
-        $.post("http://localhost:8084/pay/balance", param,
+        $.post(config.orderBaseUrl + "/pay/balance", param,
             function(resp){
                 if(resp.code != 0 || resp.subCode != 0){
                     console.log(resp.code);

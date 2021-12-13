@@ -65,12 +65,14 @@
         function placeOrder() {
 
             //查商品
-            var apiUrl = "http://localhost:8088/client/movie/get?movieId=" + movieId;
+            //var apiUrl = "http://localhost:8088/client/movie/get?movieId=" + movieId;
+            var apiUrl = config.businessBaseUrl + "/client/movie/get?movieId=" + movieId;
             $.getJSON( apiUrl, function( resp ) {
                 console.log(resp);
                 movieItem = resp.data;
 
-                var buyUrl = "http://localhost:8084/client/netOrder/buy?userId=1&movieId=" + movieId;
+                //var buyUrl = "http://localhost:8084/client/netOrder/buy?userId=1&movieId=" + movieId;
+                var buyUrl = config.orderBaseUrl + "/client/netOrder/buy?userId=1&movieId=" + movieId;
                 $.post(buyUrl, { movieId: movieId, userId: $("#userId").val()},
                     function(resp){
                         if(resp.code != 0 || resp.subCode != 0){
@@ -102,7 +104,8 @@
 
         $(document).ready(function() {
 
-            var apiUrl = "http://localhost:8088/client/movie/get?movieId=" + movieId;
+            //var apiUrl = "http://localhost:8088/client/movie/get?movieId=" + movieId;
+            var apiUrl = config.businessBaseUrl + "/client/movie/get?movieId=" + movieId;
             var payUrl = "/order/pay?movieId=" + movieId;
             $("#pay-link").attr("href", payUrl);
             $.getJSON( apiUrl, function( resp ) {

@@ -75,7 +75,8 @@
             list.push(item2);
 
             //var apiUrl = "http://localhost:7000/api-business/client/movie/query";
-            var apiUrl = "http://localhost:8088/client/movie/query";
+            //var apiUrl = "http://localhost:8088/client/movie/query";
+            var apiUrl = config.businessBaseUrl + "/client/movie/query";
             $(document).ready(function() {
                 $.post(apiUrl, {name : "", pageNo : 1, pageSize :30} ,function(resp){
                     console.log(resp);

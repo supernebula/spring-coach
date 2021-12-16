@@ -17,33 +17,40 @@ spring:
           uri: https://blog.csdn.net
           predicates:
             - Path=/csdn
-        - id: coach-user-server
-          uri: lb://coach-user-server
+        - id: coach-auth-server
+          uri: lb://coach-auth-server
           predicates:
-            - Path=/api-user/**
+            - Path=/api-auth/**
           filters:
-          - name: RequestRateLimiter
-            args:
-              redis-rate-limiter.replenishRate: 1500000
-              redis-rate-limiter.burstCapacity: 2000000
-              key-resolver: "#{@remoteUrlPathKeyResolver}"
-          - TokenDecoderFilter
-          - StripPrefix=1
+            - StripPrefix=1
+
         - id: coach-business-server
           uri: lb://coach-business-server
           predicates:
             - Path=/api-business/**
           filters:
               - StripPrefix=1
-        - id: coach-pay-server
-          uri: lb://coach-pay-server
+        - id: coach-order-server
+          uri: lb://coach-order-server
           predicates:
-            - Path=/api-pay/**
+            - Path=/api-order/**
           filters:
+            - StripPrefix=1
+        - id: coach-user-server
+          uri: lb://coach-user-server
+          predicates:
+            - Path=/api-user/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1500000
+                redis-rate-limiter.burstCapacity: 2000000
+                key-resolver: "#{@remoteUrlPathKeyResolver}"
+            - TokenDecoderFilter
             - StripPrefix=1
 
 server:
-  port: 9001
+  port: 9000
 eureka:
   client:
     service-url:

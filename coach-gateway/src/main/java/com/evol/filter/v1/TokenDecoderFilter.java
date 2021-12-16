@@ -1,4 +1,4 @@
-package com.evol.filter;
+package com.evol.filter.v1;
 import groovy.util.logging.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;

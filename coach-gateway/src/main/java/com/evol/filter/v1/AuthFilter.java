@@ -1,4 +1,4 @@
-package com.evol.filter;
+package com.evol.filter.v1;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -54,7 +54,6 @@ public class AuthFilter implements GlobalFilter, Ordered{
         }
 
         //String userStr = ops.get(Constants.ACCESS_TOKEN + token);
-        //String userStr = ops.get(Constants.ACCESS_TOKEN + token);
         LoginUser loignUser = redisClientUtil.getByKey(Constants.TOKEN + token);
         if (loignUser == null)
         {
@@ -84,7 +83,6 @@ public class AuthFilter implements GlobalFilter, Ordered{
         byte[] response = null;
         try
         {
-            //response = JSON.toJSONString(R.error(401, msg)).getBytes(Constants.UTF8);
             response = JSON.toJSONString(ApiResponse.fail(ApiResponseEnum.NOT_FOUND)).getBytes(Constants.UTF8);
         }
         catch (UnsupportedEncodingException e)
@@ -95,7 +93,7 @@ public class AuthFilter implements GlobalFilter, Ordered{
         return originalResponse.writeWith(Flux.just(buffer));
     }
 
-    //@Override //override
+    @Override
     public int getOrder()
     {
         return -200;

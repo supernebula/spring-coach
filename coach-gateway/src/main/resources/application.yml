@@ -5,6 +5,7 @@ spring:
     host: 127.0.0.1
     port: 6379
     password:
+    database: 0
   redisson:
     host: true
     master-name: false
@@ -12,6 +13,13 @@ spring:
       nodes: false
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
       routes:
         - id: url-proxy-1
           uri: https://blog.csdn.net

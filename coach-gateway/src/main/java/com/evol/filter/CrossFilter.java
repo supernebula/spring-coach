@@ -1,5 +1,8 @@
 package com.evol.filter;
 
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -9,14 +12,12 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.cors.reactive.CorsUtils;
 import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.WebFilter;
-import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 
 @Component
 @Order(-99)
-public class CrossFilter implements WebFilter {
+public class CrossFilter implements GlobalFilter, Ordered {
 
     private static final String ALLOWED_HEADERS = "x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN,token,username,client";
 
@@ -29,8 +30,7 @@ public class CrossFilter implements WebFilter {
     private static final String MAX_AGE = "18000";
 
     @Override
-    @SuppressWarnings("all")
-    public Mono<Void> filter(final ServerWebExchange exchange, final WebFilterChain chain) {
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         if (CorsUtils.isCorsRequest(request)) {
             ServerHttpResponse response = exchange.getResponse();
@@ -47,5 +47,11 @@ public class CrossFilter implements WebFilter {
             }
         }
         return chain.filter(exchange);
+    }
+
+    @Override
+    public int getOrder() {
+
+        return -99;
     }
 }

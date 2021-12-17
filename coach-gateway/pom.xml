@@ -75,12 +75,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.evol</groupId>
-            <artifactId>coach-common-redis</artifactId>
-            <version>0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.evol</groupId>-->
+<!--            <artifactId>coach-common-redis</artifactId>-->
+<!--            <version>0.1-SNAPSHOT</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.evol</groupId>
             <artifactId>coach-common-core</artifactId>

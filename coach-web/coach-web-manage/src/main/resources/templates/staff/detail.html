@@ -95,7 +95,6 @@
     <script th:inline="javascript">
 
         var staffId = getQueryString("staffId");
-        //var apiUrl = "http://localhost:8088/web/staff/get?staffId=" + staffId;
         var apiUrl = config.businessBaseUrl + "/web/staff/get?staffId=" + staffId;
         $(document).ready(function() {
             $.getJSON(apiUrl, null, function (response) {
@@ -103,7 +102,6 @@
                 {
                     $("#item-detail #name").html(response.message);
                 }
-
                 var item = response.data;
                 $("#item-detail #loginName").html(item.loginName);
                 $("#item-detail #realName").html(item.realName);

@@ -130,12 +130,40 @@
             var description =$("#item-form input#description").val();
             var language =$("#item-form input#language").val();
 
-            //var createUrl = "http://localhost:8088/web/movie/create";
             var createUrl = config.businessBaseUrl + "/web/movie/create";
             var detailUrl = "/movie/detail";
-            var indexUrl = "/movie/index";
 
-            $.post(createUrl, { name: name,
+
+            // $.post(createUrl, { name: name,
+            //         foreignName: foreignName,
+            //         releaseDate: releaseDate,
+            //         minutes : minutes,
+            //         discountPrice : discountPrice,
+            //         releaseRegion : releaseRegion,
+            //         spaceType : spaceType,
+            //         coverUri : coverUri,
+            //         description : description,
+            //         language : language
+            //     },
+            //     function(response){
+            //         $("#validate-message-ok").html("");
+            //         $("#validate-message-error").html("");
+            //         if(response.code == 0)
+            //         {
+            //             $("#validate-message-ok").html(response.message);
+            //             window.location.href = detailUrl + "?movieId=" + response.data;
+            //             return;
+            //         }
+            //
+            //         $("#validate-message-error").html(response.message);
+            //         $("#submitButton").removeAttr("disabled");
+            //
+            //     }, "json");
+
+
+            $.ajax(createUrl, {
+                method : "POST",
+                data: { name: name,
                     foreignName: foreignName,
                     releaseDate: releaseDate,
                     minutes : minutes,
@@ -146,7 +174,10 @@
                     description : description,
                     language : language
                 },
-                function(response){
+                headers:{
+                    "Authorization" :  window.sessionStorage.getItem("token")
+                },
+                success : function (response){
                     $("#validate-message-ok").html("");
                     $("#validate-message-error").html("");
                     if(response.code == 0)
@@ -159,7 +190,9 @@
                     $("#validate-message-error").html(response.message);
                     $("#submitButton").removeAttr("disabled");
 
-                }, "json");
+                }});
+
+
             return false;
         }
     </script>

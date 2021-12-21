@@ -90,6 +90,9 @@
                         read:{
                             url: queryApiUrl,
                             contentType: "application/json",
+                            beforeSend: function(req) {
+                                req.setRequestHeader('Authorization', window.sessionStorage.getItem("token"));
+                            },
                             success: function(result) {
                                 // notify the data source that the request succeeded
                                 options.success(result.data.records);
@@ -250,6 +253,9 @@
                 type: "DELETE",
                 url: apiDeleteUrl,
                 dataType: "json",
+                headers:{
+                    "Authorization" :  window.sessionStorage.getItem("token")
+                },
                 success: function(response){
                     if(response.code == 0)
                     {

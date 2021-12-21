@@ -9,6 +9,8 @@ import org.springframework.http.converter.feed.AtomFeedHttpMessageConverter;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.ServletWebRequest;
 
+import java.util.concurrent.TimeUnit;
+
 @RequestMapping("auth")
 @RestController
 public class AuthController {
@@ -28,7 +30,11 @@ public class AuthController {
             token = request.getParameter("token");
         }
         String key = Constants.TOKEN + token;
+
         Boolean isExist = redisClientUtil.exists(key);
+        if(isExist){
+            redisClientUtil.expire(key, 1, TimeUnit.HOURS);
+        }
         return ApiResponse.success(isExist);
     }
 }

@@ -76,11 +76,7 @@
                 "mobile" : $("#mobile").val().trim()
             };
         }
-
-        //var queryApiUrl = "http://localhost:8089/web/user/query";
         var queryApiUrl = config.userBaseUrl + "/web/user/query";
-
-
         $(document).ready(function() {
             var token = window.sessionStorage.getItem("token");
             window.roleGrid = $("#data-grid").kendoGrid({
@@ -91,7 +87,7 @@
                             url: queryApiUrl,
                             contentType: "application/json",
                             beforeSend: function(req) {
-                                req.setRequestHeader('Authorization', token);
+                                req.setRequestHeader('Authorization', window.sessionStorage.getItem("token"));
                             },
                             success: function(result) {
                                 handResponseStatus(result.code);
@@ -225,6 +221,9 @@
                 type: "DELETE",
                 url: apiDeleteUrl,
                 dataType: "json",
+                headers:{
+                    "Authorization" :  window.sessionStorage.getItem("token")
+                },
                 success: function(response){
                     if(response.code == 0)
                     {

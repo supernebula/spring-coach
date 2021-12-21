@@ -536,8 +536,7 @@
 <script>
 
     function sigOut() {
-        var token = window.sessionStorage.getItem("token");
-        var apiLogoutUrl = config.authBaseUrl + "/logout?token=" + token;
+        var apiLogoutUrl = config.authBaseUrl + "/logout?token=" + window.sessionStorage.getItem("token");
         $.post(apiLogoutUrl, function (resposne) {
             if(resposne.code == 0){
                 window.sessionStorage.removeItem("token");
@@ -549,29 +548,29 @@
         return false;
     }
 
-    var apiCurrentUserUrl = config.authBaseUrl + "/userInfo?token=" + window.sessionStorage.getItem("token");
+
 
 
 
     $(document).ready(function() {
-        var token = window.sessionStorage.getItem("token");
-        $.ajax(apiCurrentUserUrl, {
-            headers:{
-                "Authorization" : token
-            }
-        ,
-        type: "POST",
-        contentType:"application/x-www-form-urlencoded",
-        success : function(response) {
-            if(response.code == 0)
-            {
-                var isExist = response.data;
-                if(!isExist){
-                    window.sessionStorage.removeItem("token");
-                    window.location.href = "/login";
-                }
-            }
-        }});
+        // var apiCurrentUserUrl = config.authBaseUrl + "/userInfo;
+        // $.ajax(apiCurrentUserUrl, {
+        //     headers:{
+        //         "Authorization" : window.sessionStorage.getItem("token")
+        //     }
+        // ,
+        // type: "GET",
+        // contentType:"application/x-www-form-urlencoded",
+        // success : function(response) {
+        //     if(response.code == 0)
+        //     {
+        //         var isExist = response.data;
+        //         if(!isExist){
+        //             window.sessionStorage.removeItem("token");
+        //             window.location.href = "/login";
+        //         }
+        //     }
+        // }});
 
         var loginName = window.sessionStorage.getItem("loginName");
         var realName = window.sessionStorage.getItem("realName");

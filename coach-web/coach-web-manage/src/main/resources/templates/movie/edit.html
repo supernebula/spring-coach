@@ -117,13 +117,7 @@
 <th:block layout:fragment="scriptsblock">
     <script th:src="@{/site/func.js}"></script>
     <script th:inline="javascript">
-
         var movieId = getQueryString("movieId");
-
-
-        //var apiDetailUrl = "http://localhost:8088/web/movie/get?movieId=" + movieId;
-        //var apiEditUrl = "http://localhost:8088/web/movie/update?movieId=" + movieId;
-
         var apiDetailUrl = config.businessBaseUrl + "/web/movie/get?movieId=" + movieId;
         var apiEditUrl = config.businessBaseUrl + "/web/movie/update?movieId=" + movieId;
 

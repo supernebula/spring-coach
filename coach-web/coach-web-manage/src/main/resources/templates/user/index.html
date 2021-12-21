@@ -82,6 +82,7 @@
 
 
         $(document).ready(function() {
+            var token = window.sessionStorage.getItem("token");
             window.roleGrid = $("#data-grid").kendoGrid({
                 theme: "bootstrap",
                 dataSource: {
@@ -89,6 +90,9 @@
                         read:{
                             url: queryApiUrl,
                             contentType: "application/json",
+                            beforeSend: function(req) {
+                                req.setRequestHeader('Authorization', token);
+                            },
                             success: function(result) {
                                 handResponseStatus(result.code);
                                 // notify the data source that the request succeeded

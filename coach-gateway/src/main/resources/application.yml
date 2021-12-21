@@ -6,20 +6,19 @@ spring:
     port: 6379
     password:
     database: 0
-  redisson:
-    host: true
-    master-name: false
-    cluster:
-      nodes: false
+#  redisson:
+#    host: true
+#    master-name: false
+#    cluster:
+#      nodes: false
   cloud:
     gateway:
       globalcors:
         cors-configurations:
           '[/**]':
             allowedOrigins: "*"
-            allowedMethods:
-              - GET
-              - POST
+            allowedMethods: "*"
+            allowedHeaders: "*"
       routes:
         - id: url-proxy-1
           uri: https://blog.csdn.net
@@ -53,8 +52,7 @@ spring:
               args:
                 redis-rate-limiter.replenishRate: 1500000
                 redis-rate-limiter.burstCapacity: 2000000
-                key-resolver: "#{@remoteUrlPathKeyResolver}"
-            - TokenDecoderFilter
+            #- TokenDecoderFilter
             - StripPrefix=1
 
 server:

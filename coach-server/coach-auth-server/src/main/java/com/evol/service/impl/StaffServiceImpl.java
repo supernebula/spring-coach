@@ -2,7 +2,8 @@ package com.evol.service.impl;
 
 import com.evol.constant.Constants;
 import com.evol.domain.dto.LoginParam;
-import com.evol.domain.dto.LoginUser;
+import com.evol.domain.LoginUser;
+import com.evol.domain.dto.LoginUserDTO;
 import com.evol.domain.model.Staff;
 import com.evol.domain.model.StaffExample;
 import com.evol.enums.ApiResponseEnum;
@@ -34,7 +35,7 @@ public class StaffServiceImpl implements StaffService {
     private StaffMapper staffMapper;
 
     @Override
-    public ApiResponse<LoginUser> login(LoginParam param) {
+    public ApiResponse<LoginUserDTO> login(LoginParam param) {
 
         StaffExample staffExample = new StaffExample();
         staffExample.createCriteria().andLoginNameEqualTo(param.getLoginName());
@@ -56,9 +57,14 @@ public class StaffServiceImpl implements StaffService {
         loginUser.setRealName(staff.getRealName());
         String token = jwtUtil.generateToken(UserType.STAFF.getCode() + "_" + loginUser.getId());
         String key = Constants.TOKEN + token;
-        redisClientUtil.add(key , loginUser);
+        //redisClientUtil.add(key , loginUser);
+        redisClientUtil.setObjByKey(key , loginUser);
         redisClientUtil.expire(key, 1, TimeUnit.HOURS);
-        loginUser.setToken(token);
-        return ApiResponse.success(loginUser);
+        LoginUserDTO loginUserDTO = new LoginUserDTO();
+        loginUserDTO.setId(loginUser.getId());
+        loginUserDTO.setLoginName(loginUser.getLoginName());
+        loginUserDTO.setRealName(loginUser.getRealName());
+        loginUserDTO.setToken(token);
+        return ApiResponse.success(loginUserDTO);
     }
 }

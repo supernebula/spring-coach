@@ -555,7 +555,7 @@
 
     $(document).ready(function() {
         var token = window.sessionStorage.getItem("token");
-        $.ajax({
+        $.ajax(apiCurrentUserUrl, {
             headers:{
                 "Authorization" : token
             }
@@ -579,16 +579,21 @@
         $(".user-header p").html(loginName + " / " + realName);
 
 
-        var authVerifyUrl = config.authBaseUrl + "/auth/verify?token=" + window.sessionStorage.getItem("token");
-        $.getJSON(authVerifyUrl, function (response) {
-            if(response.code != 0 || response.data == false)
-            {
-                window.sessionStorage.removeItem("token");
-                window.sessionStorage.removeItem("loginName");
-                window.sessionStorage.removeItem("realName");
-                window.location.href = "/login";
-            }
-        })
+        var authVerifyUrl = config.authBaseUrl + "/auth/verify"; //?token=" + window.sessionStorage.getItem("token");
+        $.ajax(authVerifyUrl, {
+                headers:{
+                    "Authorization" :  window.sessionStorage.getItem("token")
+                },
+                success : function (response) {
+                    if(response.code != 0 || response.data == false)
+                    {
+                        window.sessionStorage.removeItem("token");
+                        window.sessionStorage.removeItem("loginName");
+                        window.sessionStorage.removeItem("realName");
+                        window.location.href = "/login";
+                    }
+                }
+            });
     });
 
 </script>

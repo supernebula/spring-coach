@@ -8,9 +8,10 @@ import org.springframework.stereotype.Component;
 /**
  * token解析工具类
  */
-@Component
+//@Component
 @Order(-1)
 @Slf4j
+@Deprecated
 public class TokenDecoderFilter extends AbstractGatewayFilterFactory {
 
 

@@ -2,7 +2,8 @@ package com.evol.controller;
 
 import com.evol.constant.Constants;
 import com.evol.domain.dto.LoginParam;
-import com.evol.domain.dto.LoginUser;
+import com.evol.domain.LoginUser;
+import com.evol.domain.dto.LoginUserDTO;
 import com.evol.enums.ApiResponseEnum;
 import com.evol.service.StaffService;
 import com.evol.util.JwtUtil;
@@ -28,7 +29,7 @@ public class LoginController {
 
     //@CrossOrigin(value = "http://localhost:8080")
     @PostMapping("/login")
-    public ApiResponse<LoginUser> login(LoginParam param){
+    public ApiResponse<LoginUserDTO> login(LoginParam param){
 
         return staffService.login(param);
     }
@@ -49,7 +50,7 @@ public class LoginController {
             return ApiResponse.fail(ApiResponseEnum.AUTH_CODE_ERROR);
         }
         String subject = claims.getSubject();
-        LoginUser loginUser = redisClientUtil.getByKey(Constants.TOKEN + token);
+        LoginUser loginUser = redisClientUtil.getObjByKey(Constants.TOKEN + token);
         return ApiResponse.success(loginUser);
     }
 }

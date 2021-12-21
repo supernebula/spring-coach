@@ -202,6 +202,23 @@ public class RedisClientUtil {
         return null;
     }
 
+    public <T> void setObjByKey(String key, T obj){
+        Set<Object> result = null;
+        ValueOperations<String, Object> operations = redisTemplate.opsForValue();
+        operations.set(key, obj);
+    }
+
+    public <T> T getObjByKey(String key){
+        Set<Object> result = null;
+        ValueOperations<String, Object> operations = redisTemplate.opsForValue();
+        T obj = (T)operations.get(key);
+        return obj;
+    }
+
+    public boolean ExistsObjByKey(String key){
+        return  redisTemplate.hasKey(key);
+    }
+
 //    /**
 //     * 哈希 添加
 //     *

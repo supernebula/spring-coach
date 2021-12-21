@@ -29,7 +29,7 @@ import java.util.Objects;
 @Slf4j
 public class OauthTokenPluginFilter implements GlobalFilter, Ordered {
 
-    private final String ignorePath = "/login";
+    private final String ignorePath = "/api-auth/login;/api-auth/logout";
 
     private final boolean skip = false;
 
@@ -52,6 +52,9 @@ public class OauthTokenPluginFilter implements GlobalFilter, Ordered {
         ServerHttpResponse response = Objects.requireNonNull(exchange).getResponse();
         List<String> authHeaders = request.getHeaders().get("Authorization");
         String token = (authHeaders != null && authHeaders.size() != 0) ? authHeaders.get(0) : null;
+        if("undefined".equals(token)){
+            token = null;
+        }
         String path = request.getPath().toString();
 
         //忽略token验证的url，直接放行
@@ -65,7 +68,7 @@ public class OauthTokenPluginFilter implements GlobalFilter, Ordered {
         }
 
         String key = Constants.TOKEN + token;
-        LoginUser loginUser = redisClientUtil.getByKey(key);
+        LoginUser loginUser = redisClientUtil.getObjByKey(key);
         if(loginUser == null){
             return unauthResponse(response, exchange, chain);
         }

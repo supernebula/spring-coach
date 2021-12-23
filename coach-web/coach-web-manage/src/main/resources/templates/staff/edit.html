@@ -84,33 +84,63 @@
         var apiDetailUrl = config.businessBaseUrl + "/web/staff/get?staffId=" + staffId;
         var apiEditUrl = config.businessBaseUrl + "/web/staff/update?staffId=" + staffId;
         $(document).ready(function() {
-            $.getJSON(apiDetailUrl, null, function (response) {
-                if(!response.code === 0)
-                {
-                    $("#validate-message-error").html(response.message);
-                    return;
-                }
 
-                var item = response.data;
-                $("#item-form input#id").val(item.id);
-                $("#item-form #loginName").val(item.loginName);
-                $("#item-form #realName").val(item.realName);
-                $("#item-form #mobile").val(item.mobile);
-                $("#item-form #status").val(item.status);
+
+            $.ajax({
+                type: "GET",
+                url: apiDetailUrl,
+                headers: { "Authorization" :  window.sessionStorage.getItem("token")},
+                dataType: "json",
+                success: function(response){
+                    if(!response.code === 0)
+                    {
+                        $("#validate-message-error").html(response.message);
+                        return;
+                    }
+
+                    var item = response.data;
+                    $("#item-form input#id").val(item.id);
+                    $("#item-form #loginName").val(item.loginName);
+                    $("#item-form #realName").val(item.realName);
+                    $("#item-form #mobile").val(item.mobile);
+                    $("#item-form #status").val(item.status);
+                },
+                error  : function (response) {
+                    handResponseStatus(response);
+                }
             });
+
+            // $.getJSON(apiDetailUrl, null, function (response) {
+            //     if(!response.code === 0)
+            //     {
+            //         $("#validate-message-error").html(response.message);
+            //         return;
+            //     }
+            //
+            //     var item = response.data;
+            //     $("#item-form input#id").val(item.id);
+            //     $("#item-form #loginName").val(item.loginName);
+            //     $("#item-form #realName").val(item.realName);
+            //     $("#item-form #mobile").val(item.mobile);
+            //     $("#item-form #status").val(item.status);
+            // });
 
         });
 
         function editSubmit() {
-
             $("#submitButton").attr({"disabled":"disabled"});
-
             var loginName =$("#item-form input#loginName").val();
             var realName =$("#item-form input#realName").val();
             var mobile =$("#item-form input#mobile").val();
+            var status =$("#item-form input#status").val();
 
-            $.post(apiEditUrl, { loginName: loginName, realName : realName, mobile: mobile },
-                function(response){
+            $.ajax({
+                type: "POST",
+                url: apiEditUrl,
+                headers: { "Authorization" :  window.sessionStorage.getItem("token")},
+                data: { status : status, loginName: loginName, realName : realName, mobile: mobile },
+                dataType: "json",
+                success: function(response){
                     $("#validate-message-ok").html("");
                     $("#validate-message-error").html("");
                     if(response.code == 0)
@@ -120,9 +150,12 @@
                         $("#validate-message-error").html(response.message);
                     }
                     $("#submitButton").removeAttr("disabled");
-
-                }, "json");
-
+                },
+                error  : function (response) {
+                    handResponseStatus(response);
+                    $("#submitButton").removeAttr("disabled");
+                }
+            });
         }
     </script>
 </th:block>

@@ -111,8 +111,13 @@
                 $("#submitButton").removeAttr("disabled");
             }
 
-            $.post(apiChangePwdUrl, { password: password, newPassword : newPassword, confirmPassword : confirmPassword },
-                function(response){
+            $.ajax({
+                type: "POST",
+                url: apiChangePwdUrl,
+                headers: { "Authorization" :  window.sessionStorage.getItem("token")},
+                data: { password: password, newPassword : newPassword, confirmPassword : confirmPassword },
+                dataType: "json",
+                success: function(response){
                     $("#validate-message-ok").html("");
                     $("#validate-message-error").html("");
                     if(!response.success)
@@ -124,8 +129,12 @@
                     }
 
                     $("#submitButton").removeAttr("disabled");
-
-                }, "json");
+                },
+                error  : function (response) {
+                    handResponseStatus(response);
+                    $("#submitButton").removeAttr("disabled");
+                }
+            });
 
 
 

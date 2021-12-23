@@ -535,6 +535,20 @@
 
 <script>
 
+    var authVerifyUrl = config.authBaseUrl + "/auth/verify"; //?token=" + window.sessionStorage.getItem("token");
+
+    $.ajax({
+        type: "GET",
+        url: authVerifyUrl,
+        headers: { "Authorization" :  window.sessionStorage.getItem("token")},
+        dataType: "json",
+        success: function(response){
+        },
+        error  : function (response) {
+            handResponseStatus(response);
+        }
+    });
+
     function sigOut() {
         var apiLogoutUrl = config.authBaseUrl + "/logout?token=" + window.sessionStorage.getItem("token");
         $.post(apiLogoutUrl, function (resposne) {
@@ -553,24 +567,6 @@
 
 
     $(document).ready(function() {
-        // var apiCurrentUserUrl = config.authBaseUrl + "/userInfo;
-        // $.ajax(apiCurrentUserUrl, {
-        //     headers:{
-        //         "Authorization" : window.sessionStorage.getItem("token")
-        //     }
-        // ,
-        // type: "GET",
-        // contentType:"application/x-www-form-urlencoded",
-        // success : function(response) {
-        //     if(response.code == 0)
-        //     {
-        //         var isExist = response.data;
-        //         if(!isExist){
-        //             window.sessionStorage.removeItem("token");
-        //             window.location.href = "/login";
-        //         }
-        //     }
-        // }});
 
         var loginName = window.sessionStorage.getItem("loginName");
         var realName = window.sessionStorage.getItem("realName");
@@ -578,49 +574,6 @@
         $(".user-header p").html(loginName + " / " + realName);
 
 
-        var authVerifyUrl = config.authBaseUrl + "/auth/verify"; //?token=" + window.sessionStorage.getItem("token");
-        // $.ajax({
-        //     type: "GET",
-        //     url: authVerifyUrl,
-        //     headers:{
-        //             "Authorization" :  window.sessionStorage.getItem("token")
-        //         },
-        //     success : function (response) {
-        //             if(response.code != 0 || response.data == false)
-        //             {
-        //                 window.sessionStorage.removeItem("token");
-        //                 window.sessionStorage.removeItem("loginName");
-        //                 window.sessionStorage.removeItem("realName");
-        //                 window.location.href = "/login";
-        //             }
-        //     },
-        //     error  : function (ex) {
-        //         console.log(ex);
-        //     }
-        // });
-
-
-        $.ajax({
-            type: "GET",
-            url: authVerifyUrl,
-            headers: { "Authorization" :  window.sessionStorage.getItem("token")},
-            dataType: "json",
-            success: function(response){
-                if(response.code != 0 || response.data == false)
-                {
-                    window.sessionStorage.removeItem("token");
-                    window.sessionStorage.removeItem("loginName");
-                    window.sessionStorage.removeItem("realName");
-                    window.location.href = "/login";
-                }
-            },
-            error  : function (response) {
-                window.sessionStorage.removeItem("token");
-                window.sessionStorage.removeItem("loginName");
-                window.sessionStorage.removeItem("realName");
-                window.location.href = "/login";
-            }
-        });
 
     });
 

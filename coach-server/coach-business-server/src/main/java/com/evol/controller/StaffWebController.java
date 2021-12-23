@@ -37,7 +37,7 @@ public class StaffWebController {
         return ApiResponse.success(num);
     }
 
-    @CrossOrigin(value = "http://localhost:8080")
+    //@CrossOrigin(value = "http://localhost:8080")
     @ApiOperation(value = "修改员工", response = ApiResponse.class)
     @PostMapping("/update")
     public ApiResponse updateStaff(Integer staffId, StaffUpsertDto param){

@@ -59,19 +59,23 @@ public class MovieServiceImpl implements MovieService {
         }
         movie.setName(dto.getName());
         movie.setForeignName(dto.getForeignName());
-        Date releaseDate =
-                Date.from(LocalDate.parse(dto.getReleaseDate()).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date releaseDate = new Date();
+        if(!org.apache.commons.lang3.StringUtils.isBlank(dto.getReleaseDate())){
+            releaseDate =
+                    Date.from(LocalDate.parse(dto.getReleaseDate()).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
+
         movie.setReleaseDate(releaseDate);
         movie.setMinutes(dto.getMinutes());
-        movie.setDiscountCount(dto.getDiscountCount());
+        movie.setDiscountCount(dto.getDiscountCount() == null ? 0 : dto.getDiscountCount());
         movie.setDiscountPrice(dto.getDiscountPrice());
-        movie.setReleaseRegion(dto.getReleaseRegion());
+        movie.setReleaseRegion(dto.getReleaseRegion() + "");
         movie.setSpaceType(dto.getSpaceType());
-        movie.setCoverUri(dto.getCoverUri());
-        movie.setImages(dto.getImages());
-        movie.setDescription(dto.getDescription());
-        movie.setRatings(dto.getRatings());
-        movie.setLanguage(dto.getLanguage());
+        movie.setCoverUri(dto.getCoverUri() + "");
+        movie.setImages(dto.getImages() + "");
+        movie.setDescription(dto.getDescription() + "");
+        movie.setRatings(dto.getRatings() == null ? 0 : dto.getRatings());
+        movie.setLanguage(dto.getLanguage() + "");
         movie.setUpdateTime(new Date());
 
         return movieMapper.updateByPrimaryKey(movie);

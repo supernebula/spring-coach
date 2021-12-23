@@ -8,12 +8,14 @@ function getQueryString(name) {
     return null;
 }
 
-function handResponseStatus(statusCode){
+function handResponseStatus(response){
+    var statusCode = response.status;
     if(statusCode == 200) return;
     //token无效，退出登录
-    if(statusCode == 428) {
-        window.localStorage.removeItem("token");
+    if(statusCode == 401 || response.responseJSON.code == 428) {
         window.sessionStorage.removeItem("token");
+        window.sessionStorage.removeItem("loginName");
+        window.sessionStorage.removeItem("realName");
         window.location.href = "/login";
     }
 }

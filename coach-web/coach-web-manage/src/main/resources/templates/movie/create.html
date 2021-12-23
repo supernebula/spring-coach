@@ -190,7 +190,10 @@
                     $("#validate-message-error").html(response.message);
                     $("#submitButton").removeAttr("disabled");
 
-                }});
+                },
+                error  : function (response) {
+                    handResponseStatus(response);
+            }});
 
 
             return false;

@@ -232,6 +232,10 @@
                         querySearch();
                         //window.location.reload();
                     }
+                },
+                error : function(response){
+                    console.log("删除失败");
+                    handResponseStatus(response.code);
                 }
             });
 

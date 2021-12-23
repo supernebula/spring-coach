@@ -92,7 +92,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">payModeType</label>
                             <div class="col-sm-10">
-                                <span id="pay_mode_type" class="checkbox"></span>
+                                <span id="payModeType" class="checkbox"></span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -104,7 +104,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">updateTime</label>
                             <div class="col-sm-10">
-                                <span id="updateTime" class="checkbox"></span>
+                                <span id="udpateTime" class="checkbox"></span>
                             </div>
                         </div>
 
@@ -126,27 +126,37 @@
         var orderId = getQueryString("orderId");
         var apiUrl = config.orderBaseUrl + "/web/netOrder/get?orderId=" + orderId;
         $(document).ready(function() {
-            $.getJSON(apiUrl, null, function (response) {
-                if(!response.success)
-                {
-                    $("#item-detail #name").html(response.message);
-                }
+            $.ajax({
+                type: "GET",
+                url: apiUrl,
+                headers: { "Authorization" :  window.sessionStorage.getItem("token")},
+                dataType: "json",
+                success: function(response){
+                    if(!response.success)
+                    {
+                        $("#item-detail #name").html(response.message);
+                    }
 
-                var item = response.data;
-                $("#item-detail #orderNo").html(item.orderNo);
-                $("#item-detail #username").html(item.username);
-                $("#item-detail #movieName").html(item.movieName);
-                $("#item-detail #paidAmount").html(item.paidAmount);
-                $("#item-detail #amount").html(item.amount);
-                $("#item-detail #status").html(item.status);
-                $("#item-detail #payOrderNo").html(item.payOrderNo);
-                $("#item-detail #payTime").html(item.payTime);
-                $("#item-detail #refundOrderNo").html(item.refundOrderNo);
-                $("#item-detail #refundTime").attr("src", item.refundTime);
-                $("#item-detail #payModeType").html(item.payModeType);
-                $("#item-detail #createTime").html(item.createTime);
-                $("#item-detail #udpateTime").html(item.udpateTime);
+                    var item = response.data;
+                    $("#item-detail #orderNo").html(item.orderNo);
+                    $("#item-detail #username").html(item.username);
+                    $("#item-detail #movieName").html(item.movieName);
+                    $("#item-detail #paidAmount").html(item.paidAmount);
+                    $("#item-detail #amount").html(item.amount);
+                    $("#item-detail #status").html(item.status);
+                    $("#item-detail #payOrderNo").html(item.payOrderNo);
+                    $("#item-detail #payTime").html(item.payTime);
+                    $("#item-detail #refundOrderNo").html(item.refundOrderNo);
+                    $("#item-detail #refundTime").html(item.refundTime);
+                    $("#item-detail #payModeType").html(item.payModeType);
+                    $("#item-detail #createTime").html(item.createTime);
+                    $("#item-detail #udpateTime").html(item.udpateTime);
+                },
+                error  : function (response) {
+                    handResponseStatus(response);
+                }
             });
+
 
         });
     </script>

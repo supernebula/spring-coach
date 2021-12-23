@@ -122,39 +122,75 @@
         var apiEditUrl = config.businessBaseUrl + "/web/movie/update?movieId=" + movieId;
 
         $(document).ready(function() {
-            $.getJSON(apiDetailUrl, null, function (response) {
-                if(!response.code === 0)
-                {
-                    $("#validate-message-error").html(response.message);
-                    return;
-                }
 
-                var item = response.data;
-                $("#item-form input#id").val(item.id);
-                $("#item-form #name").val(item.name);
-                $("#item-form #foreignName").val(item.foreignName);
-                $("#item-form #releaseDate").val(item.releaseDate);
-                $("#item-form #minutes").val(item.minutes);
-                $("#item-form #discountPrice").val(item.discountPrice);
-                $("#item-form #releaseRegion").val(item.releaseRegion);
-                $("#item-form #spaceType").val(item.spaceType);
-                $("#item-form #coverUri").val(item.coverUri);
-                $("#item-form #description").val(item.description);
-                $("#item-form #language").val(item.language);
+            $.ajax({
+                type: "GET",
+                url: apiDetailUrl,
+                headers: { "Authorization" :  window.sessionStorage.getItem("token")},
+                dataType: "json",
+                success: function(response){
+                    if(!response.code === 0)
+                    {
+                        $("#validate-message-error").html(response.message);
+                        return;
+                    }
+
+                    var item = response.data;
+                    $("#item-form input#id").val(item.id);
+                    $("#item-form #name").val(item.name);
+                    $("#item-form #foreignName").val(item.foreignName);
+                    $("#item-form #releaseDate").val(item.releaseDate);
+                    $("#item-form #minutes").val(item.minutes);
+                    $("#item-form #discountPrice").val(item.discountPrice);
+                    $("#item-form #releaseRegion").val(item.releaseRegion);
+                    $("#item-form #spaceType").val(item.spaceType);
+                    $("#item-form #coverUri").val(item.coverUri);
+                    $("#item-form #description").val(item.description);
+                    $("#item-form #language").val(item.language);
+                },
+                error  : function (response) {
+                    handResponseStatus(response);
+                }
             });
+
 
         });
 
         function editSubmit() {
 
+
+            var name =$("#item-form input#name").val();
+            var foreignName =$("#item-form input#foreignName").val();
+            var releaseDate =$("#item-form input#releaseDate").val();
+            var minutes =$("#item-form input#minutes").val();
+            var discountPrice =$("#item-form input#discountPrice").val();
+            var releaseRegion =$("#item-form input#releaseRegion").val();
+            var spaceType =$("#item-form input#spaceType").val();
+            var coverUri =$("#item-form input#coverUri").val();
+            var description =$("#item-form input#description").val();
+            var language =$("#item-form input#language").val();
+
             $("#submitButton").attr({"disabled":"disabled"});
 
             var name =$("#item-form input#name").val();
             var description =$("#item-form input#description").val();
-            var available =$("#item-form input#available").val();
 
-            $.post(apiEditUrl, { name: name, description : description, available: available },
-                function(response){
+            $.ajax({
+                type: "POST",
+                url: apiEditUrl,
+                headers: { "Authorization" :  window.sessionStorage.getItem("token")},
+                data: { name: name,
+                    foreignName : foreignName,
+                    releaseDate: releaseDate,
+                    minutes: minutes,
+                    discountPrice: discountPrice,
+                    releaseRegion: releaseRegion,
+                    spaceType: spaceType,
+                    coverUri: coverUri,
+                    description: description,
+                    language: language},
+                dataType: "json",
+                success: function(response){
                     $("#validate-message-ok").html("");
                     $("#validate-message-error").html("");
                     if(response.success)
@@ -164,8 +200,27 @@
                         $("#validate-message-error").html(response.message);
                     }
                     $("#submitButton").removeAttr("disabled");
+                },
+                error  : function (response) {
+                    handResponseStatus(response);
+                    $("#submitButton").removeAttr("disabled");
+                }
+            });
 
-                }, "json");
+
+            // $.post(apiEditUrl, { name: name, description : description, available: available },
+            //     function(response){
+            //         $("#validate-message-ok").html("");
+            //         $("#validate-message-error").html("");
+            //         if(response.success)
+            //         {
+            //             $("#validate-message-ok").html(response.message);
+            //         }else{
+            //             $("#validate-message-error").html(response.message);
+            //         }
+            //         $("#submitButton").removeAttr("disabled");
+            //
+            //     }, "json");
 
         }
     </script>

@@ -24,6 +24,11 @@ Spring Cloud Eureka整合使用和配置
 
 https://www.imooc.com/article/293962
 
+
+## nacos 注册发现 （替换eureka）
+
+https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html
+
 ## Gateway
 
 https://developer.aliyun.com/article/766417

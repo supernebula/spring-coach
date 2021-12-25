@@ -5,13 +5,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+//import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @ServletComponentScan
 @SpringBootApplication
-@EnableEurekaClient
+//@EnableEurekaClient  //nacos 和 eureka 注册中心二选一
+@EnableDiscoveryClient
 @ConditionalOnClass(CoachBusinessServerApplication.class)
 @MapperScan("com.evol.mapper")
 public class CoachBusinessServerApplication implements WebMvcConfigurer {

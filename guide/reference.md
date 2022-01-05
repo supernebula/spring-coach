@@ -262,6 +262,8 @@ https://segmentfault.com/a/1190000021823564
 
 ## MQ
 
+### rabbitmq
+
 1. rabbitmq 延迟消息
 
 RabbitMQ安装延迟队列插件(docker)
@@ -271,6 +273,15 @@ RabbitMQ实战：界面管理和监控
 https://www.jianshu.com/p/78354a3e35d0
 
 https://juejin.cn/post/6844903591174471688
+
+### rocketmq
+
+使用 rocketmq-spring-boot-starter
+
+使用指南
+https://github.com/apache/rocketmq-spring/wiki
+
+
 
 
 ## Thymeleaf3语法详解和实战

@@ -27,11 +27,15 @@ import com.github.pagehelper.PageHelper;
 import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.client.producer.SendStatus;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import com.evol.contant.RabbitContants;
@@ -49,6 +53,9 @@ public class NetOrderServiceImpl implements NetOrderService {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
 
     @Autowired
     FeignMovieClient feignMovieClient;
@@ -226,6 +233,12 @@ public class NetOrderServiceImpl implements NetOrderService {
     }
 
 
+    /**
+     * MQ消息，更新用户余额
+     * @param userId
+     * @param money
+     * @param orderNo
+     */
     public void updateUserBalance(Integer userId, Integer money, String orderNo){
         UpdateUserBalanceParam param = new UpdateUserBalanceParam();
         param.setUserId(userId);
@@ -233,9 +246,20 @@ public class NetOrderServiceImpl implements NetOrderService {
         param.setMoneyInOutType(MoneyInOutTypeEnum.CONSUME.getCode());
         param.setTradeNo(orderNo);
         String jsonStr = JsonUtil.ParseString(param);
-        rabbitTemplate.convertAndSend(RabbitContants.USER_BALANCE_EXCHANGE, RabbitContants.USER_BALANCE_ROUTING_KEY, jsonStr);
+        //rabbitTemplate.convertAndSend(RabbitContants.USER_BALANCE_EXCHANGE, RabbitContants.USER_BALANCE_ROUTING_KEY, jsonStr);
+        rocketMQTemplate.convertAndSend("test-topic-1", jsonStr);
     }
 
+
+
+
+
+    /**
+     * 延迟消息，取消30分钟未支付的订单
+     * @param orderId
+     * @param orderNo
+     * @param createTime
+     */
     @Override
     public void cancelDelayNotPaidOrder(Integer orderId, String orderNo, Date createTime){
         OrderCancelParam param = new OrderCancelParam();
@@ -244,11 +268,22 @@ public class NetOrderServiceImpl implements NetOrderService {
         param.setCreateTime(createTime);
         String jsonStr = JsonUtil.ParseString(param);
 
-        rabbitTemplate.convertAndSend(RabbitContants.ORDER_DELAY_CANCEL_EXCHANGE, RabbitContants.ORDER_DELAY_CANCEL_ROUTING_KEY, jsonStr, message ->{
-            message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);  //消息持久化
-            message.getMessageProperties().setDelay(30 * 60 * 1000);   // 单位为毫秒, 30分钟定时取消
-            return message;
-        });
-        log.info("send delay message orderId:{}",orderId);
+        //rabbitMQ 发送
+//        rabbitTemplate.convertAndSend(RabbitContants.ORDER_DELAY_CANCEL_EXCHANGE, RabbitContants.ORDER_DELAY_CANCEL_ROUTING_KEY, jsonStr, message ->{
+//            message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);  //消息持久化
+//            message.getMessageProperties().setDelay(30 * 60 * 1000);   // 单位为毫秒, 30分钟定时取消
+//            return message;
+//        });
+
+        //rocketMQ 发送
+        // delayLevel=1  2  3   4   5  6  7  8  9  10 11 12 13 14  15  16  17 18
+        // delayTime =1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
+        // 设置延迟延迟级别延迟30s
+        SendResult sendResult = rocketMQTemplate.syncSend("test-topic-1", MessageBuilder.withPayload(jsonStr).build(),
+                1000, 4);
+        if(!sendResult.getSendStatus().equals(SendStatus.SEND_OK)){
+            log.error("延迟消息发送失败：{0}" , sendResult.getSendStatus().toString());
+            throw new RuntimeException("延迟消息发送失败：" +sendResult.getSendStatus().toString());
+        }
     }
 }

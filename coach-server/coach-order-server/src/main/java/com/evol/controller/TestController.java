@@ -4,10 +4,15 @@ import com.evol.contant.RabbitContants;
 import com.evol.domain.request.OrderCancelParam;
 import com.evol.service.NetOrderService;
 import com.evol.util.RedisCommonUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.client.producer.SendStatus;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +22,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/test")
+@Slf4j
 public class TestController {
 
     private static final Logger logger = LoggerFactory.getLogger(TestController.class);
@@ -29,6 +35,9 @@ public class TestController {
 
     @Autowired
     private NetOrderService netOrderService;
+
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
 
     @PostMapping("/testMqUser")
     public String testMqUser(String message){
@@ -68,4 +77,29 @@ public class TestController {
         netOrderService.cancelDelayNotPaidOrder(1, "232342323", new Date());
         return "cancelDelayOrderTest";
     }
+
+    @GetMapping("/testRocketmqDelay")
+    public String rocketMQDelayTest(){
+        //rocketMQ 发送
+        // delayLevel=1  2  3   4   5  6  7  8  9  10 11 12 13 14  15  16  17 18
+        // delayTime =1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
+        // 设置延迟延迟级别延迟30s
+        String jsonStr = "{id:1, name:\"zhangSan-delay\"}";
+        SendResult sendResult = rocketMQTemplate.syncSend("test-topic-1", MessageBuilder.withPayload(jsonStr).build(),
+                1000, 2);
+        if(!sendResult.getSendStatus().equals(SendStatus.SEND_OK)){
+            log.error("延迟消息发送失败：{0}" , sendResult.getSendStatus().toString());
+            throw new RuntimeException("延迟消息发送失败：" +sendResult.getSendStatus().toString());
+        }
+        return sendResult.getSendStatus().toString();
+    }
+
+    @GetMapping("/testRocketmq")
+    public String rocketMQTest(){
+        String jsonStr = "{id:1, name:\"zhangSan\"}";
+        rocketMQTemplate.convertAndSend("test-topic-1", jsonStr);
+        return "ok";
+    }
+
+
 }

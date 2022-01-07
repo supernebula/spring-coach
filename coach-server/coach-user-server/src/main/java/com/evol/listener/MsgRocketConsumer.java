@@ -14,17 +14,16 @@ import org.springframework.stereotype.Service;
  */
 public class MsgRocketConsumer {
 
-    @Slf4j
+
     @Service
     @RocketMQMessageListener(topic = "test-topic-1", consumerGroup = "my-consumer_test-topic-1")
     public class RocketMqStringConsumer implements RocketMQListener<String>{
         @Override
         public void onMessage(String message) {
-            log.info("received message: {}", message);
+            System.out.print("received message: " + message);
         }
     }
 
-    @Slf4j
     @Service
     @RocketMQMessageListener(topic = "test-topic-2", consumerGroup = "my-consumer_test-topic-2")
     public class RocketMqEventConsumer1 implements RocketMQListener<UpdateUserBalanceParam>{
@@ -39,7 +38,7 @@ public class MsgRocketConsumer {
          */
         @Override
         public void onMessage(UpdateUserBalanceParam balanceParam) {
-            log.info("received message: {}", balanceParam );
+            System.out.print("received message:" + balanceParam );
             userService.updateUserBalance(balanceParam);
         }
     }

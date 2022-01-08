@@ -247,7 +247,7 @@ public class NetOrderServiceImpl implements NetOrderService {
         param.setTradeNo(orderNo);
         String jsonStr = JsonUtil.ParseString(param);
         //rabbitTemplate.convertAndSend(RabbitContants.USER_BALANCE_EXCHANGE, RabbitContants.USER_BALANCE_ROUTING_KEY, jsonStr);
-        rocketMQTemplate.convertAndSend("test-topic-1", jsonStr);
+        rocketMQTemplate.convertAndSend("topic-user-balance", jsonStr);
     }
 
 
@@ -279,7 +279,7 @@ public class NetOrderServiceImpl implements NetOrderService {
         // delayLevel=1  2  3   4   5  6  7  8  9  10 11 12 13 14  15  16  17 18
         // delayTime =1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
         // 设置延迟延迟级别延迟30s
-        SendResult sendResult = rocketMQTemplate.syncSend("test-topic-1", MessageBuilder.withPayload(jsonStr).build(),
+        SendResult sendResult = rocketMQTemplate.syncSend("topic-order-cancel", MessageBuilder.withPayload(jsonStr).build(),
                 1000, 4);
         if(!sendResult.getSendStatus().equals(SendStatus.SEND_OK)){
             log.error("延迟消息发送失败：{0}" , sendResult.getSendStatus().toString());

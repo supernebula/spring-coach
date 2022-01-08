@@ -29,6 +29,10 @@ https://www.imooc.com/article/293962
 
 https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html
 
+安装nacos访问地址
+http://127.0.0.1:8848/nacos/#/login
+默认账号密码：nacos
+
 ## Gateway
 
 https://developer.aliyun.com/article/766417
@@ -280,6 +284,10 @@ https://juejin.cn/post/6844903591174471688
 
 使用指南
 https://github.com/apache/rocketmq-spring/wiki
+
+rocketmq控制面板
+https://github.com/apache/rocketmq-dashboard
+
 
 
 

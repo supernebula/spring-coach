@@ -72,6 +72,12 @@ public class TestController {
         return "unlock:" + flag;
     }
 
+    @GetMapping("/testUpdateUserBalance")
+    public String testUpdateUserBalance(){
+        netOrderService.updateUserBalance(1, 100, "OD000011112244450000");
+        return "OK";
+    }
+
     @GetMapping("/testCancelDelayOrder")
     public String cancelDelayOrderTest(){
         netOrderService.cancelDelayNotPaidOrder(1, "232342323", new Date());
@@ -85,7 +91,7 @@ public class TestController {
         // delayTime =1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
         // 设置延迟延迟级别延迟30s
         String jsonStr = "{id:1, name:\"zhangSan-delay\"}";
-        SendResult sendResult = rocketMQTemplate.syncSend("test-topic-1", MessageBuilder.withPayload(jsonStr).build(),
+        SendResult sendResult = rocketMQTemplate.syncSend("test-topic-2", MessageBuilder.withPayload(jsonStr).build(),
                 1000, 2);
         if(!sendResult.getSendStatus().equals(SendStatus.SEND_OK)){
             log.error("延迟消息发送失败：{0}" , sendResult.getSendStatus().toString());
@@ -97,6 +103,7 @@ public class TestController {
     @GetMapping("/testRocketmq")
     public String rocketMQTest(){
         String jsonStr = "{id:1, name:\"zhangSan\"}";
+
         rocketMQTemplate.convertAndSend("test-topic-1", jsonStr);
         return "ok";
     }

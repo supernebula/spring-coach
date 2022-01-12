@@ -31,6 +31,8 @@ public interface NetOrderService {
 
     PaidHandleOrderResult payByBalance(NetOrder netOrder);
 
+    void updateUserBalance(Integer userId, Integer money, String orderNo);
+
     void cancelDelayNotPaidOrder(Integer orderId, String orderNo, Date createTime);
 
 }

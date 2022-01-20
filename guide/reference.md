@@ -289,6 +289,22 @@ rocketmq控制面板
 https://github.com/apache/rocketmq-dashboard
 
 
+### seata
+
+Seata整合SpringBoot和Mybatis
+https://segmentfault.com/a/1190000040730791
+
+
+Spring Cloud实战 | 第十篇 ：Spring Cloud + Nacos整合Seata 1.4.1最新版本实现微服务架构中的分布式事务，进阶之路必须要迈过的槛
+https://www.cnblogs.com/haoxianrui/p/14280184.html
+
+
+
+https://seata.io/zh-cn/docs/user/quickstart.html
+
+
+
+
 
 
 

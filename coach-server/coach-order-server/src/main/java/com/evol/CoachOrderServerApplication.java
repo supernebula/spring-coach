@@ -1,5 +1,6 @@
 package com.evol;
 
+import io.seata.spring.annotation.datasource.EnableAutoDataSourceProxy;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +21,7 @@ import springfox.documentation.spring.web.SpringfoxWebMvcConfiguration;
 //@ConditionalOnClass(CoachOrderServerApplication.class)
 @ConditionalOnClass(SpringfoxWebMvcConfiguration.class)
 @MapperScan("com.evol.mapper")
+@EnableAutoDataSourceProxy //集成seata
 public class CoachOrderServerApplication  implements WebMvcConfigurer {
 
     public static void main(String[] args) {

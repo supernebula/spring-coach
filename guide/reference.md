@@ -302,7 +302,11 @@ https://www.cnblogs.com/haoxianrui/p/14280184.html
 
 https://seata.io/zh-cn/docs/user/quickstart.html
 
+最详细SpringCloud+nacos整合Seata1.4.2 实现分布式事务
+https://blog.csdn.net/weixin_44839328/article/details/122616969
 
+seata file模式引入springboot项目步骤(不使用注册中心)
+https://www.cnblogs.com/PanYuDi/p/15102531.html
 
 
 

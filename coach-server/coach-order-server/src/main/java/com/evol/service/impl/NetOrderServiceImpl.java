@@ -24,6 +24,7 @@ import com.evol.util.JsonUtil;
 import com.evol.web.ApiResponse;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import io.seata.spring.annotation.GlobalTransactional;
 import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -135,6 +136,8 @@ public class NetOrderServiceImpl implements NetOrderService {
         return PaidHandleOrderResult.success(netOrder.getId(), payOrderParam.getOutTradeNo());
     }
 
+    //todo:分布式事务
+    //@GlobalTransactional
     @Override
     public ApiResponse<PaidHandleOrderResult> payByBalance(Integer userId, Integer orderId) {
         NetOrder netOrder = this.getNetOrderById(orderId);

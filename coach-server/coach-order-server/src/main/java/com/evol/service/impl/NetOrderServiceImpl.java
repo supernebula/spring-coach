@@ -136,8 +136,7 @@ public class NetOrderServiceImpl implements NetOrderService {
         return PaidHandleOrderResult.success(netOrder.getId(), payOrderParam.getOutTradeNo());
     }
 
-    //todo:分布式事务
-    //@GlobalTransactional
+
     @Override
     public ApiResponse<PaidHandleOrderResult> payByBalance(Integer userId, Integer orderId) {
         NetOrder netOrder = this.getNetOrderById(orderId);
@@ -159,6 +158,35 @@ public class NetOrderServiceImpl implements NetOrderService {
         netOrderMapper.updateByPrimaryKeySelective(netOrder);
         //余额支付
         this.updateUserBalance(netOrder.getUserId(), netOrder.getAmount(), netOrder.getOrderNo());
+        return ApiResponse.success(PaidHandleOrderResult.success(netOrder.getId(), netOrder.getOrderNo()));
+    }
+
+    /**
+     * 同步余额支付订单（分布式事务）
+     * @param userId
+     * @param orderId
+     * @return
+     */
+    public ApiResponse<PaidHandleOrderResult> payByBalanceSync(Integer userId, Integer orderId) {
+        NetOrder netOrder = this.getNetOrderById(orderId);
+        if(netOrder == null){
+            return new ApiResponse(ApiResponseEnum.NO_RECORD, PaidHandleOrderResult.noOrderRecord("" + orderId));
+        }
+
+        if(NetOrderStatusEnum.EXPIRE_CANCELED.getCode().equals(netOrder.getStatus())){
+            return ApiResponse.fail(ApiResponseEnum.USER_DEFINED_ERROR, "订单未及时支付已过期，请重新下单");
+        }
+
+        if(!netOrder.getUserId().equals(userId)){
+            return ApiResponse.fail(ApiResponseEnum.USER_DEFINED_ERROR, "用户和订单不匹配");
+        }
+
+
+        netOrder.setPayOrderNo("Balance" + netOrder.getId());
+        netOrder.setPayTime(new Date());
+        netOrderMapper.updateByPrimaryKeySelective(netOrder);
+        //余额支付
+        this.updateUserBalanceSync(netOrder.getUserId(), netOrder.getAmount(), netOrder.getOrderNo());
         return ApiResponse.success(PaidHandleOrderResult.success(netOrder.getId(), netOrder.getOrderNo()));
     }
 
@@ -242,6 +270,7 @@ public class NetOrderServiceImpl implements NetOrderService {
      * @param money
      * @param orderNo
      */
+    @Override
     public void updateUserBalance(Integer userId, Integer money, String orderNo){
         UpdateUserBalanceParam param = new UpdateUserBalanceParam();
         param.setUserId(userId);
@@ -251,6 +280,22 @@ public class NetOrderServiceImpl implements NetOrderService {
         String jsonStr = JsonUtil.ParseString(param);
         //rabbitTemplate.convertAndSend(RabbitContants.USER_BALANCE_EXCHANGE, RabbitContants.USER_BALANCE_ROUTING_KEY, jsonStr);
         rocketMQTemplate.convertAndSend("topic-user-balance", jsonStr);
+    }
+
+    /**
+     * 分布式事务，更新用户余额
+     * @param userId
+     * @param money
+     * @param orderNo
+     */
+    @GlobalTransactional
+    public void updateUserBalanceSync(Integer userId, Integer money, String orderNo){
+        UpdateUserBalanceParam param = new UpdateUserBalanceParam();
+        param.setUserId(userId);
+        param.setChangeMoney(money);
+        param.setMoneyInOutType(MoneyInOutTypeEnum.CONSUME.getCode());
+        param.setTradeNo(orderNo);
+        feignUserClient.updateUserBalanceSync(param);
     }
 
 

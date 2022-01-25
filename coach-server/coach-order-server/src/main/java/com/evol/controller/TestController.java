@@ -78,6 +78,11 @@ public class TestController {
         return "OK";
     }
 
+    public String updateUserBalanceSyncTest(){
+        netOrderService.updateUserBalance(1, 100, "OD000011112244450000");
+        return "OK";
+    }
+
     @GetMapping("/testCancelDelayOrder")
     public String cancelDelayOrderTest(){
         netOrderService.cancelDelayNotPaidOrder(1, "232342323", new Date());
@@ -107,6 +112,8 @@ public class TestController {
         rocketMQTemplate.convertAndSend("test-topic-1", jsonStr);
         return "ok";
     }
+
+
 
 
 }

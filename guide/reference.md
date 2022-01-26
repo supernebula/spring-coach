@@ -33,6 +33,14 @@ https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html
 http://127.0.0.1:8848/nacos/#/login
 默认账号密码：nacos
 
+https://nacos.io/zh-cn/docs/quick-start.html
+
+Windows
+启动命令(standalone代表着单机模式运行，非集群模式):
+```shell
+startup.cmd -m standalone
+```
+
 ## Gateway
 
 https://developer.aliyun.com/article/766417
@@ -285,6 +293,19 @@ https://juejin.cn/post/6844903591174471688
 使用指南
 https://github.com/apache/rocketmq-spring/wiki
 
+window启动rocketmq
+
+powershell 添加环境变量
+```shell
+$Env:ROCKETMQ_HOME="D:\rocketmq"
+$Env:NAMESRV_ADDR="localhost:9876"
+```
+
+
+```shell
+.\bin\mqnamesrv.cmd
+```
+
 rocketmq控制面板
 https://github.com/apache/rocketmq-dashboard
 
@@ -309,7 +330,13 @@ seata file模式引入springboot项目步骤(不使用注册中心)
 https://www.cnblogs.com/PanYuDi/p/15102531.html
 
 
+seata 常见问题
 
+https://seata.io/zh-cn/docs/overview/faq.html
+
+问题解决：can not get cluster name in registry config ‘service.vgroupMapping.xx‘, please make sure registry - Cache One
+
+https://cache.one/read/10581911
 
 
 ## Thymeleaf3语法详解和实战

@@ -10,9 +10,9 @@
     <artifactId>coach-server</artifactId>
     <packaging>pom</packaging>
     <modules>
+        <module>coach-auth-server</module>
         <module>coach-business-server</module>
         <module>coach-order-server</module>
-        <module>coach-pay-server</module>
         <module>coach-user-server</module>
         <module>coach-server-common</module>
         <module>coach-log-server</module>

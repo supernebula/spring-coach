@@ -375,4 +375,13 @@ Spring Reactor 入门与实践
 https://www.jianshu.com/p/7ee89f70dfe5
 
 
+问题：
+mvn多模块项目报错：Could not resolve dependencies for project
+https://blog.csdn.net/qq_35279788/article/details/109196050
+
+IDEA中Maven项目父子工程依赖（项目多root解决），以及各子模块之间依赖关系（各模块打包方式以及依赖导入）
+
+https://blog.csdn.net/weixin_42437164/article/details/100577715
+
+
 

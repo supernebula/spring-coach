@@ -383,5 +383,12 @@ IDEA中Maven项目父子工程依赖（项目多root解决），以及各子模�
 
 https://blog.csdn.net/weixin_42437164/article/details/100577715
 
+全部项目打包成功
+出现的问题：
+Could not resolve dependencies  coach-common-data for project， 搜索原因:要先打包coach-common-data bing install ,依然无效；
+后发现idea maven窗口coach-common-data(root)被认定为根项目，但按项目结构它应该是第三层项目。
+排查coach-common发现，<moudles>节点未包含<moudle>coach-common-data</moudle>,添加后解决。所有项目可以打包成功。
+原因：多项目moudle，每层的moudles不能有遗留
+
 
 

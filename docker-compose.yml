@@ -1,0 +1,33 @@
+version: '3'
+services:
+  #网关
+  #自定义的服务名称
+  coach-soul-gateway:
+    build:
+      context: coach-soul-gateway
+      dockerfile: Dockerfile
+    #镜像名称
+    image: coach-soul-gateway:v1
+    #容器名称
+    container_name: coach-soul-gateway
+    #容器down掉后，会自动重启
+    restart: on-failure
+    #映射端口。格式为宿主机端口：容器端口
+    ports:
+      - "9000:9000"
+    #容器启动后，执行的命令
+    command: java -jar /microservice/coach-soul-gateway-1.0.jar
+    #商户服务
+  coach-business-server:
+    build:
+      context: coach-business-server
+    image: coach-business-server:v1
+    container_name: coach-business-server
+    restart: always
+    ports:
+      - "8088:8088"
+    command: java -jar /microservice/coach-business-server-0.1-SNAPSHOT.jar
+    depends_on:
+      - coach-soul-gateway
+    links:
+      - coach-soul-gateway:coach-soul-gateway

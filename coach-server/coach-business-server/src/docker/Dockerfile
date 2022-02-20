@@ -1,4 +1,8 @@
 FROM openjdk:8-jdk-alpine
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+RUN mkdir /microservice
+WORKDIR /microservice
+ARG JAR_FILE=coach-business-server-0.1-SNAPSHOT.jar
+COPY ${JAR_FILE} coach-business-server-0.1-SNAPSHOT.jar
+COPY bootstrap.properties bootstrap.properties
+EXPOSE 8088
+ENTRYPOINT ["java","-jar", "coach-business-server-0.1-SNAPSHOT.jar"]

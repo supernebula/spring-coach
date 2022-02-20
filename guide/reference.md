@@ -44,6 +44,12 @@ Windows
 startup.cmd -m standalone
 ```
 
+Mac 或 Linux 启动
+```shell
+sh startup.sh -m standalone
+```
+
+
 ## Gateway
 
 https://developer.aliyun.com/article/766417

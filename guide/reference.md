@@ -186,6 +186,11 @@ http://zouliming.cn/2019/04/03/docker-%E5%AF%BC%E5%85%A5%E9%95%9C%E5%83%8F%E6%97
 
 https://www.qikqiak.com/k8s-book/docs/5.%E7%A7%81%E6%9C%89%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93.html
 
+
+## Dockerfile
+Dockerfile复制上级目录文件
+https://www.freeaihub.com/post/3094.html
+
 ## k8s
 
 Kubernetes(k8s)中文教程

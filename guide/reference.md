@@ -191,6 +191,27 @@ https://www.qikqiak.com/k8s-book/docs/5.%E7%A7%81%E6%9C%89%E9%95%9C%E5%83%8F%E4%
 Dockerfile复制上级目录文件
 https://www.freeaihub.com/post/3094.html
 
+## docker-compose
+
+编排：构建docker镜像并启动docker
+```shell script
+docker-compose up
+```
+
+指定yml编排：构建docker镜像并启动docker
+```shell script
+docker-compose -f docker-composeWeb.yml up
+```
+
+停止所有docker-compose服务
+```shell script
+docker-compose down
+```
+
+
+
+
+
 ## k8s
 
 Kubernetes(k8s)中文教程

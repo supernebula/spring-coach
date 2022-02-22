@@ -6,4 +6,4 @@ ARG BOOT_FILE=bootstrap.yml
 COPY ${JAR_FILE} coach-soul-gateway-1.0.jar
 COPY ${BOOT_FILE} bootstrap.yml
 EXPOSE 8088
-ENTRYPOINT ["java","-jar", "coach-soul-gateway-1.0.jar"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom" ,"-jar", "coach-soul-gateway-1.0.jar"]

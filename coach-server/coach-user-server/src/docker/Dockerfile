@@ -6,4 +6,4 @@ ARG BOOT_FILE=bootstrap.properties
 COPY ${JAR_FILE} coach-user-server-0.1-SNAPSHOT.jar
 COPY ${BOOT_FILE} bootstrap.properties
 EXPOSE 8088
-ENTRYPOINT ["java","-jar", "coach-user-server-0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "coach-user-server-0.1-SNAPSHOT.jar"]

@@ -1,0 +1,30 @@
+version: '3'
+services:
+  #网关
+  #自定义的服务名称
+  coach-web-client:
+    build:
+      context: coach-web/coach-web-client/src/docker
+      dockerfile: Dockerfile
+    #镜像名称
+    image: coach-web-client:v1
+    #容器名称
+    container_name: coach-web-client
+    #容器down掉后，会自动重启
+    restart: on-failure
+    #映射端口。格式为宿主机端口：容器端口
+    ports:
+      - "8090:8090"
+    #容器启动后，执行的命令
+    command: java -Djava.security.egd=file:/dev/./urandom -jar /microservice/coach-soul-gateway-1.0.jar
+    #授权服务
+  coach-web-manage:
+    build:
+      context: coach-web/coach-web-manage/src/docker
+      dockerfile: Dockerfile
+    image: coach-web-manage:v1
+    container_name: coach-web-manage
+    restart: on-failure
+    ports:
+      - "80:80"
+    command: java -Djava.security.egd=file:/dev/./urandom -jar /microservice/coach-web-manage-0.1-SNAPSHOT.jar

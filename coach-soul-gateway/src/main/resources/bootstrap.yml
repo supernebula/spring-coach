@@ -7,7 +7,7 @@ spring:
   application:
     name: coach-soul-gateway
   redis:
-    host: 127.0.0.1
+    host: 192.168.2.144
     port: 6379
     database: 0
 #  redis:
@@ -29,7 +29,7 @@ spring:
 soul :
   sync:
     websocket :
-      urls: ws://localhost:9095/websocket
+      urls: ws://192.168.2.144:9095/websocket
   httpclient:
     readTimeout: 10000
     writeTimeout: 10000
@@ -38,7 +38,7 @@ soul :
 csp:
   sentinel:
     dashboard:
-      server: localhost:8080
+      server: 192.168.2.144:8080
 
 
 oauth.key: 10$JIv5CH
@@ -46,7 +46,7 @@ oauth.key: 10$JIv5CH
 eureka:
   client:
     service-url:
-      defaultZone: http://admin:admin@localhost:8761/eureka/
+      defaultZone: http://admin:admin@192.168.2.144:8761/eureka/
     enabled: true
     register-with-eureka: true
     fetch-registry: true

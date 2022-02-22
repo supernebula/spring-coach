@@ -63,6 +63,8 @@
 <!--        </dependency>-->
     </dependencies>
 
+
+
     <build>
         <plugins>
             <plugin>
@@ -73,6 +75,9 @@
                         <goals>
                             <goal>repackage</goal>
                         </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/src/docker</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

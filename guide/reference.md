@@ -190,6 +190,12 @@ Dockerfile 及 Docker-compose使用详解
 
 https://blog.nowcoder.net/n/2af1f1d690ec4d4abe62f71d16ce4f36
 
+docker-compose 编排多服务应用入门与调试技巧
+https://zhuanlan.zhihu.com/p/149519595
+
+使用Docker Compose构建一键启动的运行环境
+https://community.apinto.com/d/34058-docker-compose
+
 
 ## Dockerfile
 Dockerfile复制上级目录文件

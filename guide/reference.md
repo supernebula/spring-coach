@@ -325,6 +325,11 @@ Spring系列（8）- 过滤器+监听器+拦截器+AOP 比较
 
 https://segmentfault.com/a/1190000021823564
 
+## Spring Security
+
+SpringBoot集成Spring Security
+https://zhuanlan.zhihu.com/p/156815583
+
 ## MQ
 
 ### rabbitmq

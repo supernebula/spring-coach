@@ -27,7 +27,8 @@ public class StaffUserDetailsServiceImpl implements UserDetailsService {
             return null;
         }
 
-        StaffDetails staffDetails = new StaffDetails(list.get(0));
+        Staff staff = list.get(0);
+        StaffDetails staffDetails = new StaffDetails(staff.getLoginName(), staff.getPassword());
         return staffDetails;
     }
 }

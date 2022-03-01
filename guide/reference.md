@@ -330,6 +330,9 @@ https://segmentfault.com/a/1190000021823564
 SpringBoot集成Spring Security
 https://zhuanlan.zhihu.com/p/156815583
 
+SpringBoot 集成 Security
+https://juejin.cn/post/7037014454067789860
+
 ## MQ
 
 ### rabbitmq

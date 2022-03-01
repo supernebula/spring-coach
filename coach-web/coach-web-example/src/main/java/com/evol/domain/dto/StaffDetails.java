@@ -1,6 +1,5 @@
 package com.evol.domain.dto;
 
-import com.evol.domain.model.Staff;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,8 +7,13 @@ import java.util.Collection;
 
 public class StaffDetails implements UserDetails {
 
-    public StaffDetails(Staff staff){
+    private String username;
 
+    private String password;
+
+    public StaffDetails(String username, String password){
+        this.username = username;
+        this.password = password;
     }
 
     @Override
@@ -19,12 +23,12 @@ public class StaffDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return this.username;
     }
 
     @Override

@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                //.loginPage("/login") //自定义登录页面
                 .permitAll()
                 .and()
                 .logout()

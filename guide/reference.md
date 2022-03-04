@@ -327,11 +327,23 @@ https://segmentfault.com/a/1190000021823564
 
 ## Spring Security
 
+Spring Security中文文档(官方)
+
+https://www.springcloud.cc/spring-security.html#preface
+第二部分。Servlet应用程序
+https://www.springcloud.cc/spring-security.html#servlet-applications
+
 SpringBoot集成Spring Security
 https://zhuanlan.zhihu.com/p/156815583
 
 SpringBoot 集成 Security
 https://juejin.cn/post/7037014454067789860
+
+Spring Boot + Security Hello World Example(2022)
+https://www.codeusingjava.com/boot/sec1
+
+手把手带你入门 Spring Security！ 
+https://www.cnblogs.com/lenve/p/11242055.html
 
 ## MQ
 

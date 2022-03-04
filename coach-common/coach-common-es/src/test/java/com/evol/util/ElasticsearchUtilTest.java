@@ -1,7 +1,7 @@
 package com.evol.util;
 
 import com.evol.model.TestDto;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;

@@ -246,10 +246,10 @@
 <!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
 <!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+<!--        </dependency>-->
 
 
         <!--        eureka 和 nacos 注册中心二选 结束一-->

@@ -327,6 +327,16 @@ https://segmentfault.com/a/1190000021823564
 
 ## Spring Security
 
+Spring Security最简单全面教程（带Demo）
+https://blog.csdn.net/qq_37771475/article/details/86153799
+
+
+Spring Security系列之一 简单介绍和实战
+https://juejin.cn/post/6934503341380599822
+
+SpringSecurity+JWT认证流程解析 | 掘金新人第一弹
+https://juejin.cn/post/6846687598442708999
+
 Spring Security中文文档(官方)
 
 https://www.springcloud.cc/spring-security.html#preface

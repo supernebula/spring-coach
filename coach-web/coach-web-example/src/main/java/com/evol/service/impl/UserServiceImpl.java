@@ -3,7 +3,10 @@ package com.evol.service.impl;
 import com.evol.domain.dto.StaffDetails;
 import com.evol.domain.model.Staff;
 import com.evol.domain.model.StaffExample;
+import com.evol.domain.model.User;
+import com.evol.domain.model.UserExample;
 import com.evol.mapper.StaffMapper;
+import com.evol.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,22 +16,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StaffUserDetailsServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService {
 
     @Autowired
-    private StaffMapper staffMapper;
+    private UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        StaffExample staffExample = new StaffExample();
-        staffExample.createCriteria().andLoginNameEqualTo(s);
-        List<Staff> list = staffMapper.selectByExample(staffExample);
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andUsernameEqualTo(s);
+        List<User> list = userMapper.selectByExample(userExample);
         if(list == null || list.get(0) == null){
             return null;
         }
 
-        Staff staff = list.get(0);
-        StaffDetails staffDetails = new StaffDetails(staff.getLoginName(), staff.getPassword());
-        return staffDetails;
+        User user = list.get(0);
+        UserDetails userDetails = new StaffDetails(user.getUsername(), user.getPassword());
+        return userDetails;
     }
 }

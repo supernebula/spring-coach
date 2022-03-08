@@ -1,6 +1,7 @@
 package com.evol.domain.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class RolePermissionRelation implements Serializable {
     private Integer id;
@@ -8,6 +9,8 @@ public class RolePermissionRelation implements Serializable {
     private Integer roleId;
 
     private Integer permissionId;
+
+    private Date createTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -35,6 +38,14 @@ public class RolePermissionRelation implements Serializable {
         this.permissionId = permissionId;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -44,6 +55,7 @@ public class RolePermissionRelation implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", roleId=").append(roleId);
         sb.append(", permissionId=").append(permissionId);
+        sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

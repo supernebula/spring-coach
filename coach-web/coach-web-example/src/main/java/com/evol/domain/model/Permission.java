@@ -1,6 +1,7 @@
 package com.evol.domain.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Permission implements Serializable {
     private Integer id;
@@ -10,6 +11,8 @@ public class Permission implements Serializable {
     private String code;
 
     private String url;
+
+    private Date createTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -45,6 +48,14 @@ public class Permission implements Serializable {
         this.url = url == null ? null : url.trim();
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -55,6 +66,7 @@ public class Permission implements Serializable {
         sb.append(", title=").append(title);
         sb.append(", code=").append(code);
         sb.append(", url=").append(url);
+        sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

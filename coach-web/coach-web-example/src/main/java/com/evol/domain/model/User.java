@@ -10,7 +10,7 @@ public class User implements Serializable {
 
     private String password;
 
-    private String roleids;
+    private String roleIds;
 
     private Date createTime;
 
@@ -40,12 +40,12 @@ public class User implements Serializable {
         this.password = password == null ? null : password.trim();
     }
 
-    public String getRoleids() {
-        return roleids;
+    public String getRoleIds() {
+        return roleIds;
     }
 
-    public void setRoleids(String roleids) {
-        this.roleids = roleids == null ? null : roleids.trim();
+    public void setRoleIds(String roleIds) {
+        this.roleIds = roleIds == null ? null : roleIds.trim();
     }
 
     public Date getCreateTime() {
@@ -65,7 +65,7 @@ public class User implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", username=").append(username);
         sb.append(", password=").append(password);
-        sb.append(", roleids=").append(roleids);
+        sb.append(", roleIds=").append(roleIds);
         sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

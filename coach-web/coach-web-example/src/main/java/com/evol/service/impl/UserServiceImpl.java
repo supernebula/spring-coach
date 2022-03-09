@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang.StringUtils;
 
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -44,8 +48,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return null;
         }
 
-        BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
-        String pwd1 = pwdEncoder.encode(StringUtils.trim(password));
+        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String pwd1 = passwordEncoder.encode(StringUtils.trim(password));
         log.info("pwd1:" + pwd1);
 
         User user = new User();

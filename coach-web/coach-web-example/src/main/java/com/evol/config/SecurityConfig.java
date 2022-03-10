@@ -55,6 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successForwardUrl("/index")
                 //登录失败后的页面
                 .failureForwardUrl("/failure")
+                .successHandler((req, resp, auth) -> {
+
+                })
+                .failureHandler((req, resp, e) -> {
+
+                })
                 .and()
                 // 设置URL的授权
                 .authorizeRequests()
@@ -70,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .ignoringAntMatchers("/user/add")
                 .and()
                 // 关闭csrf
-                .csrf().disable();
+                .csrf().disable()
 
 
     }

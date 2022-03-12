@@ -4,24 +4,30 @@ import com.evol.domain.model.User;
 import com.evol.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("user")
+@Controller
 @Slf4j
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("add")
+    @PostMapping("user/add")
+    @ResponseBody
     public User addUser(@RequestParam String username, @RequestParam  String password){
         User user = userService.addUser(username, password);
         return user;
     }
 
-    @GetMapping("test")
+    @GetMapping("user/test")
+    @ResponseBody
     public String test(){
         BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
         boolean zhangsanPwdOK = pwdEncoder.matches("123456", "$2a$10$xGMEhlJTF/v2jnqLxE8MausOzoHf3sB7jTNi" +
@@ -34,4 +40,20 @@ public class UserController {
         return "test1";
     }
 
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @RequestMapping("/index")
+    public String index(ModelMap modelMap){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        modelMap.put("user",principal);
+        return "index";
+    }
+    @RequestMapping("/failure")
+    public String failure(){
+        return "failure";
+    }
 }

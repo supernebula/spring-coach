@@ -62,19 +62,25 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
-        <table schema="" tableName="permission" domainObjectName="Permission">
-            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-        </table>
-        <table schema="" tableName="role" domainObjectName="Role">
-            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-        </table>
-        <table schema="" tableName="role_permission_relation" domainObjectName="RolePermissionRelation">
+<!--        <table schema="" tableName="permission" domainObjectName="Permission">-->
+<!--            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="role" domainObjectName="Role">-->
+<!--            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="role_permission_relation" domainObjectName="RolePermissionRelation">-->
+<!--            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+<!--        </table>-->
+
+<!--        <table schema="" tableName="user" domainObjectName="User">-->
+<!--            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+<!--        </table>-->
+
+        <table schema="" tableName="user_role_relation" domainObjectName="UserRoleRelation">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
 
-        <table schema="" tableName="user" domainObjectName="User">
-            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-        </table>
+
 
     </context>
 </generatorConfiguration>

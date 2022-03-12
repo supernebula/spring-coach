@@ -112,6 +112,10 @@ spring-cloud-netflix-eureka-client
 spring-cloud-starter-netflix-eureka-client
 
 ## nacos
+启动命令(standalone代表着单机模式运行，非集群模式):
+```shell script
+sh startup.sh -m standalone
+```
 
 https://www.cnblogs.com/nijunyang/p/14141769.html
 
@@ -355,6 +359,9 @@ https://www.codeusingjava.com/boot/sec1
 手把手带你入门 Spring Security！ 
 https://www.cnblogs.com/lenve/p/11242055.html
 
+权限框架： Sa-Token v1.29.0
+https://sa-token.dev33.cn/doc/index.html#/
+
 ## MQ
 
 ### rabbitmq
@@ -446,6 +453,8 @@ Spring Reactor 入门与实践
 
 https://www.jianshu.com/p/7ee89f70dfe5
 
+## maven
+
 
 问题：
 mvn多模块项目报错：Could not resolve dependencies for project
@@ -461,6 +470,68 @@ Could not resolve dependencies  coach-common-data for project， 搜索原因:�
 后发现idea maven窗口coach-common-data(root)被认定为根项目，但按项目结构它应该是第三层项目。
 排查coach-common发现，<moudles>节点未包含<moudle>coach-common-data</moudle>,添加后解决。所有项目可以打包成功。
 原因：多项目moudle，每层的moudles不能有遗留
+
+
+maven 打包自动上传服务器
+
+https://blog.csdn.net/weixin_42195292/article/details/104271831
+
+## 上传centos，并docker-compose部署
+
+部署步骤：
+1. maven打包到每个moudle的docker目录
+2. docker-out.sh脚本
+2.1 复制每个moudle的docker目录到dockerout目录
+2.2 复制docker-compose-server.yml 到dockerout/docker-compse.yml    (context目录结构调整为centos部署结构)
+2.3 scp整个dockerout目录到服务器的/home/admin/coach-service
+3 登录服务器执行docker-compose启动整个微服务项目，启动完成
+
+### mac 安装 ftp（ftp不用） 
+mac 卡住 Updating Homebrew
+https://learnku.com/articles/18908
+
+https://osxdaily.com/2018/08/07/get-install-ftp-mac-os/
+
+通过编译 inetutils 获取 ftp
+最后，如果您更喜欢这种方法，另一种选择是从源代码编译 inetutils，您可以从 gnu.org 获得。您需要安装 Mac OS 命令行工具，然后解压缩 tarball，运行 configure、make 和 make install：
+
+http://ftp.gnu.org/gnu/inetutils/
+
+```aidl
+tar xvzf inetutils-1.9.4.tar.gz
+cd inetutils-1.9.4
+./configure
+make
+sudo make install
+```
+
+### mac 使用sftp上传文件
+
+https://www.linuxprobe.com/cli-scp.html
+
+### 问题
+1. centos,docker-compose up 报错  Traceback () File "**.py"
+原因 docker未启动，解决办法：启动docker
+https://github.com/prisma/prisma1/issues/5120
+
+上传和下载文件
+```aidl
+scp username@servername:/path/filename /tmp/local_destination
+scp /path/local_filename username@servername:/path
+```
+
+上传和下载文件夹
+```aidl
+scp -r username@servername:remote_dir/ /tmp/local_dir
+scp -r /tmp/local_dir username@servername:remote_dir
+```
+
+或者
+```aidl
+systemctl status docker
+systemctl start docker
+```
+
 
 
 

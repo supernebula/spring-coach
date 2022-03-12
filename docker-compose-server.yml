@@ -1,0 +1,79 @@
+version: '3'
+services:
+  #网关
+  #自定义的服务名称
+  coach-soul-gateway:
+    build:
+      context: coach-soul-gateway
+      dockerfile: Dockerfile
+    #镜像名称
+    image: coach-soul-gateway:v1
+    #容器名称
+    container_name: coach-soul-gateway
+    #容器down掉后，会自动重启
+    restart: on-failure
+    #映射端口。格式为宿主机端口：容器端口
+    ports:
+      - "9000:9000"
+    #容器启动后，执行的命令
+    command: java -Djava.security.egd=file:/dev/./urandom -jar /microservice/coach-soul-gateway-1.0.jar
+    #授权服务
+  coach-auth-server:
+    build:
+      context: coach-auth-server
+      dockerfile: Dockerfile
+    image: coach-auth-server:v1
+    container_name: coach-auth-server
+    restart: always
+    ports:
+      - "8090:8090"
+    command: java -Djava.security.egd=file:/dev/./urandom -jar /microservice/coach-auth-server-0.1-SNAPSHOT.jar
+    depends_on:
+      - coach-soul-gateway
+    links:
+      - coach-soul-gateway:coach-soul-gateway
+    #商户服务
+  coach-business-server:
+    build:
+      context: coach-business-server
+      dockerfile: Dockerfile
+    image: coach-business-server:v1
+    container_name: coach-business-server
+    restart: always
+    ports:
+      - "8088:8088"
+    command: java -Djava.security.egd=file:/dev/./urandom -jar /microservice/coach-business-server-0.1-SNAPSHOT.jar
+    depends_on:
+      - coach-soul-gateway
+    links:
+      - coach-soul-gateway:coach-soul-gateway
+    #订单服务
+  coach-order-server:
+    build:
+      context: coach-order-server
+      dockerfile: Dockerfile
+    image: coach-order-server:v1
+    container_name: coach-order-server
+    restart: always
+    ports:
+      - "8084:8084"
+    command: java -Djava.security.egd=file:/dev/./urandom -jar /microservice/coach-order-server-0.1-SNAPSHOT.jar
+    depends_on:
+      - coach-soul-gateway
+    links:
+      - coach-soul-gateway:coach-soul-gateway
+    #用户服务
+  coach-user-server:
+    build:
+      context: coach-user-server
+      dockerfile: Dockerfile
+    image: coach-user-server:v1
+    container_name: coach-user-server
+    restart: always
+    ports:
+      - "8089:8089"
+    command: java -Djava.security.egd=file:/dev/./urandom -jar /microservice/coach-user-server-0.1-SNAPSHOT.jar
+    depends_on:
+      - coach-soul-gateway
+    links:
+      - coach-soul-gateway:coach-soul-gateway

@@ -46,7 +46,8 @@ startup.cmd -m standalone
 
 Mac 或 Linux 启动
 ```shell
-sh startup.sh -m standalone
+
+
 ```
 
 
@@ -383,7 +384,7 @@ https://juejin.cn/post/6844903591174471688
 使用指南
 https://github.com/apache/rocketmq-spring/wiki
 
-window启动rocketmq
+1. window启动rocketmq
 
 powershell 添加环境变量
 ```shell
@@ -398,6 +399,41 @@ $Env:NAMESRV_ADDR="localhost:9876"
 
 rocketmq控制面板
 https://github.com/apache/rocketmq-dashboard
+
+2. RocketMQ安装Linux/Mac/Window
+
+https://zhuanlan.zhihu.com/p/228235404
+
+下载rocketmq
+https://rocketmq.apache.org/release_notes/release-notes-4.4.0/
+
+rocketmq-all-4.4.0-bin-release.zip
+```aidl
+#unzip rocketmq-all-4.4.0-bin-release.zip
+#cd rocketmq-all-4.4.0-bin-release
+```
+#启动RocketMQ的注册中心
+```aidl
+nohup sh mqnamesrv &
+```
+#启动broker
+```aidl
+nohup sh mqbroker -nlocalhost:9876 &
+```
+启动成功之后使用jps命令查看：
+```aidl
+evoldeMacBook-Pro:bin evol$ jps
+976 
+2753 nacos-server.jar
+9859 NamesrvStartup
+9923 Jps
+2787 nacos-server.jar
+9896 BrokerStartup
+1609 App
+1038 RemoteMavenServer36
+1407 nacos-server.jar
+```
+
 
 
 ### seata
@@ -532,6 +568,10 @@ systemctl status docker
 systemctl start docker
 ```
 
+
+## redis
+MAC下Redis开启局域网IP可访问
+https://blog.csdn.net/With_Her/article/details/106291416
 
 
 

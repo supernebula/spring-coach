@@ -1,6 +1,6 @@
 package com.evol;
 
-import io.seata.spring.annotation.datasource.EnableAutoDataSourceProxy;
+//import io.seata.spring.annotation.datasource.EnableAutoDataSourceProxy;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.spring.web.SpringfoxWebMvcConfiguration;
 
-@ServletComponentScan
+//@ServletComponentScan
 @SpringBootApplication
 //@EnableEurekaClient  //nacos 和 eureka 注册中心二选一
 @EnableDiscoveryClient
@@ -21,7 +21,7 @@ import springfox.documentation.spring.web.SpringfoxWebMvcConfiguration;
 //@ConditionalOnClass(CoachOrderServerApplication.class)
 @ConditionalOnClass(SpringfoxWebMvcConfiguration.class)
 @MapperScan("com.evol.mapper")
-@EnableAutoDataSourceProxy //集成seata
+//@EnableAutoDataSourceProxy //集成seata
 public class CoachOrderServerApplication  implements WebMvcConfigurer {
 
     public static void main(String[] args) {

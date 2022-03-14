@@ -2,7 +2,7 @@ package com.evol.utils;
 
 import com.evol.config.SystemConfig;
 import com.evol.domain.result.ResultState;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import javax.imageio.ImageIO;

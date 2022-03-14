@@ -24,10 +24,10 @@ import com.evol.util.JsonUtil;
 import com.evol.web.ApiResponse;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import io.seata.spring.annotation.GlobalTransactional;
+//import io.seata.spring.annotation.GlobalTransactional;
 import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -288,7 +288,7 @@ public class NetOrderServiceImpl implements NetOrderService {
      * @param money
      * @param orderNo
      */
-    @GlobalTransactional
+    //@GlobalTransactional
     public void updateUserBalanceSync(Integer userId, Integer money, String orderNo){
         UpdateUserBalanceParam param = new UpdateUserBalanceParam();
         param.setUserId(userId);

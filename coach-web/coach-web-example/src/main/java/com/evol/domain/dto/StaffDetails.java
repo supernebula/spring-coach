@@ -1,9 +1,12 @@
 package com.evol.domain.dto;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class StaffDetails implements UserDetails {
 
@@ -14,7 +17,10 @@ public class StaffDetails implements UserDetails {
     public StaffDetails(String username, String password){
         this.username = username;
         this.password = password;
+        authorities.add(new SimpleGrantedAuthority("user:create"));
     }
+
+    private List<GrantedAuthority> authorities = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

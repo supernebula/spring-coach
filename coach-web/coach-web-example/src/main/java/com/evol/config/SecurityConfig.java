@@ -12,6 +12,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Spring Security的权限管理方式
+ * （1） Url权限控制
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -76,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .ignoringAntMatchers("/user/add")
                 .and()
                 // 关闭csrf
-                .csrf().disable()
+                .csrf().disable();
 
 
     }

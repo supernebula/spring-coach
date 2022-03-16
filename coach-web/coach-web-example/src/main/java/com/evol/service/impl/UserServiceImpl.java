@@ -3,6 +3,7 @@ package com.evol.service.impl;
 import com.evol.domain.dto.StaffDetails;
 import com.evol.domain.model.User;
 import com.evol.domain.model.UserExample;
+import com.evol.domain.model.UserRole;
 import com.evol.mapper.UserMapper;
 import com.evol.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +25,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RoleServiceImpl roleService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -43,7 +47,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User addUser(String username, String password) {
+    public User addUser(String username, String password){
         if(StringUtils.isBlank(username) || StringUtils.isBlank(password)){
             return null;
         }
@@ -54,10 +58,28 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         User user = new User();
         user.setUsername(StringUtils.trim(username));
+        user.setNickname(StringUtils.trim(username));
         user.setPassword(pwd1);
-        user.setRoleIds("");
+        user.setEmail("");
+        user.setPhone("");
+        user.setState(0);
+        user.setSex(0);
         user.setCreateTime(new Date());
         userMapper.insert(user);
         return user;
+    }
+
+    public boolean addUser(User user, Integer[] roleIds) {
+        int count = this.userMapper.insert(user);
+        log.warn("更新用户角色为空");
+        if (null != roleIds) {
+            Arrays.stream(roleIds).forEach(roleId -> {
+                UserRole ur = new UserRole();
+                ur.setUserId(user.getId());
+                ur.setRoleId(roleId);
+                this.userRoleService.save(ur);
+            });
+        }
+        return count > 0;
     }
 }

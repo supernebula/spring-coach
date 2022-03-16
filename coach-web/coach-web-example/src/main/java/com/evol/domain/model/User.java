@@ -4,23 +4,37 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class User implements Serializable {
-    private Integer id;
+    private Long id;
 
     private String username;
 
+    private String nickname;
+
     private String password;
 
-    private String roleIds;
+    private String email;
+
+    private String phone;
+
+    private Integer state;
+
+    private Integer sex;
+
+    private String remarks;
 
     private Date createTime;
 
+    private Date updateTime;
+
+    private Date lastLoginTime;
+
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -32,6 +46,14 @@ public class User implements Serializable {
         this.username = username == null ? null : username.trim();
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname == null ? null : nickname.trim();
+    }
+
     public String getPassword() {
         return password;
     }
@@ -40,12 +62,44 @@ public class User implements Serializable {
         this.password = password == null ? null : password.trim();
     }
 
-    public String getRoleIds() {
-        return roleIds;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRoleIds(String roleIds) {
-        this.roleIds = roleIds == null ? null : roleIds.trim();
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks == null ? null : remarks.trim();
     }
 
     public Date getCreateTime() {
@@ -56,6 +110,22 @@ public class User implements Serializable {
         this.createTime = createTime;
     }
 
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -64,9 +134,16 @@ public class User implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", username=").append(username);
+        sb.append(", nickname=").append(nickname);
         sb.append(", password=").append(password);
-        sb.append(", roleIds=").append(roleIds);
+        sb.append(", email=").append(email);
+        sb.append(", phone=").append(phone);
+        sb.append(", state=").append(state);
+        sb.append(", sex=").append(sex);
+        sb.append(", remarks=").append(remarks);
         sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", lastLoginTime=").append(lastLoginTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

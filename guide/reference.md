@@ -332,6 +332,14 @@ https://segmentfault.com/a/1190000021823564
 
 ## Spring Security
 
+https://blog.csdn.net/qq_32224047/article/details/108615301
+
+Spring Security官方文档 ：权限控制：
+https://docs.spring.io/spring-security/reference/servlet/authorization/index.html
+
+Spring Security 系列第 30 篇：Spring Security 中的四种权限控制方式
+https://blog.csdn.net/u012702547/article/details/106800446
+
 Spring Security最简单全面教程（带Demo）
 https://blog.csdn.net/qq_37771475/article/details/86153799
 
@@ -362,6 +370,9 @@ https://www.cnblogs.com/lenve/p/11242055.html
 
 权限框架： Sa-Token v1.29.0
 https://sa-token.dev33.cn/doc/index.html#/
+
+Sa-token 案例
+https://gitee.com/wtsoftware/jthink
 
 ## MQ
 

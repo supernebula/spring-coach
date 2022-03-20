@@ -3,12 +3,13 @@ package com.evol.service.impl;
 import com.evol.domain.model.RolePermission;
 import com.evol.domain.model.RolePermissionExample;
 import com.evol.mapper.RolePermissionMapper;
+import com.evol.service.RolePermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RolePermissionServiceImpl{
+public class RolePermissionServiceImpl implements RolePermissionService {
 	@Autowired
 	private RolePermissionMapper rolePermissionMapper;
 

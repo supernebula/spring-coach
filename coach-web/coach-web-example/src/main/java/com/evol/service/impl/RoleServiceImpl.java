@@ -4,6 +4,7 @@ import com.evol.domain.model.*;
 import com.evol.mapper.RoleMapper;
 import com.evol.mapper.RolePermissionMapper;
 import com.evol.mapper.UserRoleMapper;
+import com.evol.service.RoleService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
-public class RoleServiceImpl{
+public class RoleServiceImpl implements RoleService {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private RoleMapper roleMapper;
@@ -107,6 +108,15 @@ public class RoleServiceImpl{
 			log.error("获取角色信息失败", e);
 			return new ArrayList<>();
 		}
+	}
+
+	@Transactional
+	public void deleteRoles(List<Integer> roleIds) {
+		RolePermissionExample example = new RolePermissionExample();
+		example.createCriteria().andRoleIdIn(roleIds);
+		rolePermissionMapper.deleteByExample(example);
+		this.rolePermissionService.deleteRolePermissionsByRoleId(roleIds);
+		this.userRoleService.deleteUserRolesByRoleId(roleIds);
 	}
 
 }

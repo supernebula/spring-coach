@@ -5,6 +5,7 @@ import com.evol.domain.model.User;
 import com.evol.domain.model.UserExample;
 import com.evol.domain.model.UserRole;
 import com.evol.mapper.UserMapper;
+import com.evol.service.UserRoleService;
 import com.evol.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private UserMapper userMapper;
 
     @Autowired
-    private RoleServiceImpl roleService;
+    private UserRoleService userRoleService;
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;

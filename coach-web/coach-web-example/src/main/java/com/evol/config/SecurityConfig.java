@@ -3,6 +3,7 @@ package com.evol.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /**
  * Spring Security的权限管理方式
  * （1） Url权限控制
+ * @author admin
  */
 @Configuration
 @EnableWebSecurity
@@ -31,7 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .withUser("lisi").password(passwordEncoder().encode("123456")).authorities("ORDINARY");
 //    }
 
-    //用于配置全局认证相关的信息
+    /**
+     * 用于配置全局认证相关的信息
+     * @param auth
+     * @throws Exception
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
@@ -43,13 +49,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    //用于全局请求忽略规则配置，比如一些静态文件，注册登录页面的放行
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
+
+
+    /**
+     * 用于全局请求忽略规则配置，比如一些静态文件，注册登录页面的放行
+     * @param web
+     * @throws Exception
+     */
     @Override
     public void configure(WebSecurity web) throws Exception {
         super.configure(web);
     }
 
-    //用于具体的权限控制规则配置
+    /**
+     * 用于具体的权限控制规则配置
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()

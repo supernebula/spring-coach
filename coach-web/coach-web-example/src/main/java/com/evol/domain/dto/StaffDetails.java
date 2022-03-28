@@ -1,5 +1,6 @@
 package com.evol.domain.dto;
 
+import com.evol.domain.model.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,17 +15,26 @@ public class StaffDetails implements UserDetails {
 
     private String password;
 
-    public StaffDetails(String username, String password){
+    private List<Role> roleList;
+
+    private Collection<SimpleGrantedAuthority> grantedAuthorities;
+
+    public StaffDetails(String username, String password, List<Role> roleList){
         this.username = username;
         this.password = password;
-        authorities.add(new SimpleGrantedAuthority("user:create"));
+        this.roleList = roleList;
+        this.grantedAuthorities = new ArrayList<>();
+        this.roleList.forEach(role -> {
+            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        });
+        //authorities.add(new SimpleGrantedAuthority("user:create"));
     }
 
-    private List<GrantedAuthority> authorities = new ArrayList<>();
+//    private List<GrantedAuthority> authorities = new ArrayList<>();
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public Collection<? extends GrantedAuthority> getAuthorities(){
+        return grantedAuthorities;
     }
 
     @Override

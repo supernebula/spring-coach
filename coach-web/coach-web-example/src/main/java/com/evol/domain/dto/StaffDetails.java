@@ -19,6 +19,8 @@ public class StaffDetails implements UserDetails {
 
     private Collection<SimpleGrantedAuthority> grantedAuthorities;
 
+    public StaffDetails(){}
+
     public StaffDetails(String username, String password, List<Role> roleList){
         this.username = username;
         this.password = password;

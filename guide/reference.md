@@ -332,6 +332,13 @@ https://segmentfault.com/a/1190000021823564
 
 ## Spring Security
 
+SpringBoot+SpringSecurity+jwt整合及初体验 
+
+https://www.cnblogs.com/pjjlt/p/10960690.html
+
+SpringBoot+SpringSecurity+JWT实现认证和授权
+https://blog.csdn.net/u014553029/article/details/112759382
+
 https://blog.csdn.net/qq_32224047/article/details/108615301
 
 Spring Security官方文档 ：权限控制：

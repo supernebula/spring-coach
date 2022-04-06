@@ -332,6 +332,10 @@ https://segmentfault.com/a/1190000021823564
 
 ## Spring Security
 
+SpringBoot集成Spring Security，用JWT令牌实现登录和鉴权 「这篇文章很棒」
+
+https://zhuanlan.zhihu.com/p/142090453
+
 SpringBoot+SpringSecurity+jwt整合及初体验 
 
 https://www.cnblogs.com/pjjlt/p/10960690.html

@@ -1,12 +1,12 @@
 package com.evol.service.impl;
 
 import com.evol.cache.Cache;
-import com.evol.constant.CacheName;
+//import com.evol.constant.CacheName;
 import com.evol.domain.dto.AccessToken;
 import com.evol.domain.dto.StaffDetails;
 import com.evol.domain.model.*;
 import com.evol.mapper.UserMapper;
-import com.evol.provider.JwtProvider;
+//import com.evol.provider.JwtProvider;
 import com.evol.service.RoleService;
 import com.evol.service.UserRoleService;
 import com.evol.service.UserService;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +24,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang.StringUtils;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,12 +54,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userExample.createCriteria().andUsernameEqualTo(s);
         List<User> list = userMapper.selectByExample(userExample);
         if(list == null || list.get(0) == null){
-            return null;
+            //return null;
+            throw new RuntimeException("用户名不存在");
         }
         User user = list.get(0);
+//        List<Role> roleList = roleService.getRoleListByUser(user.getId());
+//        UserDetails userDetails = new StaffDetails(user.getUsername(), user.getPassword(), roleList);
+
         List<Role> roleList = roleService.getRoleListByUser(user.getId());
-
-
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roleList){
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        }
         UserDetails userDetails = new StaffDetails(user.getUsername(), user.getPassword(), roleList);
         return userDetails;
     }

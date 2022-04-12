@@ -1,6 +1,7 @@
 package com.evol.filter;
 
 import com.alibaba.fastjson.JSON;
+import com.evol.domain.dto.StaffDetails;
 import com.evol.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
@@ -8,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -35,14 +37,14 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
-        return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getParameter(
-                "username"),request.getParameter("password")));
-
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
 
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,FilterChain chain,Authentication authResult) throws IOException {
-        User user = (User)authResult.getPrincipal();
+        Object obj = authResult.getPrincipal();
+        StaffDetails user = (StaffDetails)obj;
 
         // 从User中获取权限信息
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
@@ -56,8 +58,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         //在请求头里返回创建成功的token
         //设置请求头为带有 “”前缀的token字符串
         response.setHeader("token", JwtTokenUtil.TOKEN_PREFIX + "token");
-
-        //处理编码方式 防止中文乱码
+        // 处理编码方式 防止中文乱码
+        response.setContentType("text/json;charset=utf-8");
+        // 将反馈塞到HttpServletResponse中返回给前台
+        response.getWriter().write(JSON.toJSONString("登录成功"));
 
     }
 

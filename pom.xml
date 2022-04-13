@@ -233,6 +233,7 @@
         <module>coach-server</module>
         <module>coach-common</module>
         <module>test</module>
+        <module>coach-web/coach-web2-manage</module>
     </modules>
     <packaging>pom</packaging>
 

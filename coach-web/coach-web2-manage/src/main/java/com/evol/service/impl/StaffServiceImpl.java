@@ -1,16 +1,23 @@
 package com.evol.service.impl;
 
+import com.evol.constant.Constants;
+import com.evol.domain.LoginUser;
 import com.evol.domain.PageBase;
+import com.evol.domain.dto.LoginParam;
 import com.evol.domain.dto.StaffChangePwdDto;
 import com.evol.domain.dto.StaffUpsertDto;
 import com.evol.domain.model.Staff;
 import com.evol.domain.model.StaffExample;
 import com.evol.domain.request.StaffQueryRequest;
+import com.evol.enums.ApiResponseEnum;
+import com.evol.enums.UserType;
 import com.evol.mapper.StaffMapper;
 import com.evol.service.StaffService;
 import com.evol.util.MD5Util;
+import com.evol.web.ApiResponse;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +26,30 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class StaffServiceImpl implements StaffService {
 
     @Autowired
     private StaffMapper staffMapper;
+
+
+    @Override
+    public Staff login(String username, String password) {
+        StaffExample staffExample = new StaffExample();
+        staffExample.createCriteria().andLoginNameEqualTo(username);
+        List<Staff> items = staffMapper.selectByExample(staffExample);
+        if(CollectionUtils.isEmpty(items) || items.get(0) == null){
+            return null;
+        }
+
+        Staff staff = items.get(0);
+        if(!staff.getPassword().equals(password)){
+            throw  new RuntimeException("密码错误");
+        }
+        return staff;
+    }
 
     @Override
     public Integer addStaff(StaffUpsertDto dto) {

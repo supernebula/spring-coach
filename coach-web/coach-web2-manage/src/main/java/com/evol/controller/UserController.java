@@ -1,12 +1,29 @@
 package com.evol.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.evol.domain.dto.LoginParam;
+import com.evol.domain.model.Staff;
+import com.evol.service.StaffService;
+import com.evol.web.ApiResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user/")
 public class UserController {
+
+
+    @Autowired
+    private StaffService staffService;
+
+    @RequestMapping("/login")
+    public ApiResponse<Staff> login(String username, String password){
+        Staff staff = staffService.login(username, password);
+        StpUtil.login(staff.getLoginName());
+        return ApiResponse.success(staff);
+    }
 
     // 测试登录，浏览器访问： http://localhost:8081/user/doLogin?username=zhang&password=123456
     @RequestMapping("doLogin")
@@ -40,20 +57,24 @@ public class UserController {
         return StpUtil.getLoginIdByToken(tokenValue);
     }
 
-    @RequestMapping("logout")
-    public void getTokenName() {
-        StpUtil.getTokenName();
+    @RequestMapping("getTokenName")
+    public String getTokenName() {
+        return StpUtil.getTokenName();
     }
 
     @RequestMapping("getTokenValue")
-    public void getTokenValue() {
-        StpUtil.getTokenValue();
+    public String getTokenValue()
+    {
+        return StpUtil.getTokenValue();
     }
 
     @RequestMapping("getTokenInfo")
-    public void getTokenInfo() {
-        StpUtil.getTokenInfo();
+    public Object getTokenInfo() {
+        return StpUtil.getTokenInfo();
     }
+
+
+
 
 
 }

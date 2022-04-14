@@ -8,6 +8,8 @@ import com.evol.domain.request.StaffQueryRequest;
 
 public interface StaffService {
 
+    Staff login(String username, String password);
+
     Integer addStaff(StaffUpsertDto dto);
 
     Integer modifyStaff(Integer staffId, StaffUpsertDto dto);

@@ -4,6 +4,8 @@ import com.evol.domain.model.User;
 import com.evol.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,8 +54,21 @@ public class UserController {
         modelMap.put("user",principal);
         return "index";
     }
+
+    //@PreAuthorize("hasRole('admin')")
+    //@Secured({"user.test"})
+    @Secured("ROLE_admin")
+    @RequestMapping("/userTest")
+    public String userTest(){
+        return "indexTest";
+    }
+
+
+
     @RequestMapping("/failure")
     public String failure(){
         return "failure";
     }
+
+
 }

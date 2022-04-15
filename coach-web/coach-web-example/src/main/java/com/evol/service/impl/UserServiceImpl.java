@@ -59,10 +59,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 //        UserDetails userDetails = new StaffDetails(user.getUsername(), user.getPassword(), roleList);
 
         List<Role> roleList = roleService.getRoleListByUser(user.getId());
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roleList){
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-        }
+//        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+//        for (Role role : roleList){
+//            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+//        }
         UserDetails userDetails = new StaffDetails(user.getUsername(), user.getPassword(), roleList);
         return userDetails;
     }

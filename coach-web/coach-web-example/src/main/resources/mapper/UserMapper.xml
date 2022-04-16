@@ -14,6 +14,10 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="expired_time" jdbcType="TIMESTAMP" property="expiredTime" />
+    <result column="locked" jdbcType="INTEGER" property="locked" />
+    <result column="password_expired_time" jdbcType="TIMESTAMP" property="passwordExpiredTime" />
+    <result column="enabled" jdbcType="INTEGER" property="enabled" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -75,7 +79,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, username, nickname, password, email, phone, state, sex, remarks, create_time, 
-    update_time, last_login_time
+    update_time, last_login_time, expired_time, locked, password_expired_time, enabled
   </sql>
   <select id="selectByExample" parameterType="com.evol.domain.model.UserExample" resultMap="BaseResultMap">
     select
@@ -111,11 +115,15 @@
     insert into user (username, nickname, password, 
       email, phone, state, 
       sex, remarks, create_time, 
-      update_time, last_login_time)
+      update_time, last_login_time, expired_time, 
+      locked, password_expired_time, enabled
+      )
     values (#{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
       #{sex,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP})
+      #{updateTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{expiredTime,jdbcType=TIMESTAMP}, 
+      #{locked,jdbcType=INTEGER}, #{passwordExpiredTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.evol.domain.model.User" useGeneratedKeys="true">
     insert into user
@@ -153,6 +161,18 @@
       <if test="lastLoginTime != null">
         last_login_time,
       </if>
+      <if test="expiredTime != null">
+        expired_time,
+      </if>
+      <if test="locked != null">
+        locked,
+      </if>
+      <if test="passwordExpiredTime != null">
+        password_expired_time,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="username != null">
@@ -187,6 +207,18 @@
       </if>
       <if test="lastLoginTime != null">
         #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expiredTime != null">
+        #{expiredTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="locked != null">
+        #{locked,jdbcType=INTEGER},
+      </if>
+      <if test="passwordExpiredTime != null">
+        #{passwordExpiredTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -235,6 +267,18 @@
       <if test="record.lastLoginTime != null">
         last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.expiredTime != null">
+        expired_time = #{record.expiredTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.locked != null">
+        locked = #{record.locked,jdbcType=INTEGER},
+      </if>
+      <if test="record.passwordExpiredTime != null">
+        password_expired_time = #{record.passwordExpiredTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.enabled != null">
+        enabled = #{record.enabled,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -253,7 +297,11 @@
       remarks = #{record.remarks,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP}
+      last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      expired_time = #{record.expiredTime,jdbcType=TIMESTAMP},
+      locked = #{record.locked,jdbcType=INTEGER},
+      password_expired_time = #{record.passwordExpiredTime,jdbcType=TIMESTAMP},
+      enabled = #{record.enabled,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -294,6 +342,18 @@
       <if test="lastLoginTime != null">
         last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="expiredTime != null">
+        expired_time = #{expiredTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="locked != null">
+        locked = #{locked,jdbcType=INTEGER},
+      </if>
+      <if test="passwordExpiredTime != null">
+        password_expired_time = #{passwordExpiredTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -309,7 +369,11 @@
       remarks = #{remarks,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP}
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      expired_time = #{expiredTime,jdbcType=TIMESTAMP},
+      locked = #{locked,jdbcType=INTEGER},
+      password_expired_time = #{passwordExpiredTime,jdbcType=TIMESTAMP},
+      enabled = #{enabled,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

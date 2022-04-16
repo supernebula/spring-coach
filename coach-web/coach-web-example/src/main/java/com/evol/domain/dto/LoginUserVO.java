@@ -3,13 +3,11 @@ package com.evol.domain.dto;
 import lombok.Data;
 
 @Data
-public class LoginUserDTO {
-
-    private Integer id;
+public class LoginUserVO {
 
     private String loginName;
 
-    private String realName;
+    private String nickName;
 
     private String token;
 

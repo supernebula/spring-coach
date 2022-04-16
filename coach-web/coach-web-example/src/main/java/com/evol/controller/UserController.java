@@ -57,8 +57,9 @@ public class UserController {
 
     //@PreAuthorize("hasRole('admin')")
     //@Secured({"user.test"})
-    @Secured("ROLE_admin")
+    @Secured("ROLE_admin_OLD")
     @RequestMapping("/userTest")
+    @ResponseBody
     public String userTest(){
         return "indexTest";
     }

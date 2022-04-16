@@ -27,7 +27,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
  */
 @Configuration
 @EnableWebSecurity //开关注解，开启Security
-@EnableGlobalMethodSecurity(prePostEnabled = true) //保证post之前的注解可以使用
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true) //保证post之前的注解可以使用
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 

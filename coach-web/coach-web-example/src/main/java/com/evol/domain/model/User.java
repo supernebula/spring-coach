@@ -28,6 +28,14 @@ public class User implements Serializable {
 
     private Date lastLoginTime;
 
+    private Date expiredTime;
+
+    private Integer locked;
+
+    private Date passwordExpiredTime;
+
+    private Integer enabled;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -126,6 +134,38 @@ public class User implements Serializable {
         this.lastLoginTime = lastLoginTime;
     }
 
+    public Date getExpiredTime() {
+        return expiredTime;
+    }
+
+    public void setExpiredTime(Date expiredTime) {
+        this.expiredTime = expiredTime;
+    }
+
+    public Integer getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Integer locked) {
+        this.locked = locked;
+    }
+
+    public Date getPasswordExpiredTime() {
+        return passwordExpiredTime;
+    }
+
+    public void setPasswordExpiredTime(Date passwordExpiredTime) {
+        this.passwordExpiredTime = passwordExpiredTime;
+    }
+
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -144,6 +184,10 @@ public class User implements Serializable {
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", lastLoginTime=").append(lastLoginTime);
+        sb.append(", expiredTime=").append(expiredTime);
+        sb.append(", locked=").append(locked);
+        sb.append(", passwordExpiredTime=").append(passwordExpiredTime);
+        sb.append(", enabled=").append(enabled);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
-public class PermissionServiceImpl  { //extends BaseService<Permission>
+public class PermissionServiceImpl implements com.evol.service.PermissionService { //extends BaseService<Permission>
 	@Autowired
 	private PermissionMapper permissionMapper;
 
@@ -42,6 +42,7 @@ public class PermissionServiceImpl  { //extends BaseService<Permission>
 		return pIds;
 	}
 
+	@Override
 	public List<Permission> getRolePermissions(Integer roleId) {
 		List<Integer> pIds = this.permissionIds(roleId);
 		PermissionExample permissionExample = new PermissionExample();
@@ -49,6 +50,7 @@ public class PermissionServiceImpl  { //extends BaseService<Permission>
 		return permissionMapper.selectByExample(permissionExample);
 	}
 
+	@Override
 	public List<Permission> getUnionPermission(List<Integer> roleIds) {
 		List pIds = this.permissionIds(roleIds);
 		PermissionExample permissionExample = new PermissionExample();
@@ -58,6 +60,7 @@ public class PermissionServiceImpl  { //extends BaseService<Permission>
 		return permissionMapper.selectByExample(permissionExample);
 	}
 
+	@Override
 	public List<Permission> getUnionPermissionByType(List<Integer> roleIds, Integer type) {
 
 		List pIds = this.permissionIds(roleIds);
@@ -68,6 +71,7 @@ public class PermissionServiceImpl  { //extends BaseService<Permission>
 		return permissionMapper.selectByExample(permissionExample);
 	}
 
+	@Override
 	public List<Permission> getAllUnionPermissionByType(Integer type) {
 		PermissionExample permissionExample = new PermissionExample();
 		permissionExample.createCriteria().andIsShowEqualTo(1).andTypeLessThanOrEqualTo(type);
@@ -76,22 +80,27 @@ public class PermissionServiceImpl  { //extends BaseService<Permission>
 		return permissionMapper.selectByExample(permissionExample);
 	}
 
+	@Override
 	public List<Permission> getAllMenus() {
 		return permissionMapper.selectByExample(new PermissionExample());
 	}
 
+	@Override
 	public int savePermission(Permission authPermission) {
 		return permissionMapper.insert(authPermission);
 	}
 
+	@Override
 	public int updatePermission(Permission authPermission) {
 		return permissionMapper.updateByPrimaryKeySelective(authPermission);
 	}
 
+	@Override
 	public Permission getPermissionById(Integer permId) {
 		return permissionMapper.selectByPrimaryKey(permId);
 	}
 
+	@Override
 	public void deletePerms(List<Integer> permIds) {
 		this.batchDeleteById(permIds);
 		this.rolePermissionService.deleteRolePermsByIds(permIds);
@@ -110,6 +119,7 @@ public class PermissionServiceImpl  { //extends BaseService<Permission>
 
 	}
 
+	@Override
 	public Permission findByNameAndType(String name, Integer type) {
 		PermissionExample example = new PermissionExample();
 		example.createCriteria().andNameEqualTo(name).andTypeEqualTo(type);
@@ -117,6 +127,7 @@ public class PermissionServiceImpl  { //extends BaseService<Permission>
 		return list.get(0);
 	}
 
+	@Override
 	public Permission findByPerm(String permCode) {
 		PermissionExample example = new PermissionExample();
 		example.createCriteria().andPermsEqualTo(permCode);
@@ -124,6 +135,7 @@ public class PermissionServiceImpl  { //extends BaseService<Permission>
 		return list.get(0);
 	}
 
+	@Override
 	public int batchDeleteById(List<Integer> list) {
 		PermissionExample example = new PermissionExample();
 		example.createCriteria().andIdIn(list);

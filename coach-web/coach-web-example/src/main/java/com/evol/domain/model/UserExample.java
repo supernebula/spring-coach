@@ -884,6 +884,246 @@ public class UserExample {
             addCriterion("last_login_time not between", value1, value2, "lastLoginTime");
             return (Criteria) this;
         }
+
+        public Criteria andExpiredTimeIsNull() {
+            addCriterion("expired_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpiredTimeIsNotNull() {
+            addCriterion("expired_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpiredTimeEqualTo(Date value) {
+            addCriterion("expired_time =", value, "expiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpiredTimeNotEqualTo(Date value) {
+            addCriterion("expired_time <>", value, "expiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpiredTimeGreaterThan(Date value) {
+            addCriterion("expired_time >", value, "expiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpiredTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("expired_time >=", value, "expiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpiredTimeLessThan(Date value) {
+            addCriterion("expired_time <", value, "expiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpiredTimeLessThanOrEqualTo(Date value) {
+            addCriterion("expired_time <=", value, "expiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpiredTimeIn(List<Date> values) {
+            addCriterion("expired_time in", values, "expiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpiredTimeNotIn(List<Date> values) {
+            addCriterion("expired_time not in", values, "expiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpiredTimeBetween(Date value1, Date value2) {
+            addCriterion("expired_time between", value1, value2, "expiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpiredTimeNotBetween(Date value1, Date value2) {
+            addCriterion("expired_time not between", value1, value2, "expiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedIsNull() {
+            addCriterion("locked is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedIsNotNull() {
+            addCriterion("locked is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedEqualTo(Integer value) {
+            addCriterion("locked =", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedNotEqualTo(Integer value) {
+            addCriterion("locked <>", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedGreaterThan(Integer value) {
+            addCriterion("locked >", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedGreaterThanOrEqualTo(Integer value) {
+            addCriterion("locked >=", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedLessThan(Integer value) {
+            addCriterion("locked <", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedLessThanOrEqualTo(Integer value) {
+            addCriterion("locked <=", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedIn(List<Integer> values) {
+            addCriterion("locked in", values, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedNotIn(List<Integer> values) {
+            addCriterion("locked not in", values, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedBetween(Integer value1, Integer value2) {
+            addCriterion("locked between", value1, value2, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedNotBetween(Integer value1, Integer value2) {
+            addCriterion("locked not between", value1, value2, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordExpiredTimeIsNull() {
+            addCriterion("password_expired_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordExpiredTimeIsNotNull() {
+            addCriterion("password_expired_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordExpiredTimeEqualTo(Date value) {
+            addCriterion("password_expired_time =", value, "passwordExpiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordExpiredTimeNotEqualTo(Date value) {
+            addCriterion("password_expired_time <>", value, "passwordExpiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordExpiredTimeGreaterThan(Date value) {
+            addCriterion("password_expired_time >", value, "passwordExpiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordExpiredTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("password_expired_time >=", value, "passwordExpiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordExpiredTimeLessThan(Date value) {
+            addCriterion("password_expired_time <", value, "passwordExpiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordExpiredTimeLessThanOrEqualTo(Date value) {
+            addCriterion("password_expired_time <=", value, "passwordExpiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordExpiredTimeIn(List<Date> values) {
+            addCriterion("password_expired_time in", values, "passwordExpiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordExpiredTimeNotIn(List<Date> values) {
+            addCriterion("password_expired_time not in", values, "passwordExpiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordExpiredTimeBetween(Date value1, Date value2) {
+            addCriterion("password_expired_time between", value1, value2, "passwordExpiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordExpiredTimeNotBetween(Date value1, Date value2) {
+            addCriterion("password_expired_time not between", value1, value2, "passwordExpiredTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnabledIsNull() {
+            addCriterion("enabled is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnabledIsNotNull() {
+            addCriterion("enabled is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnabledEqualTo(Integer value) {
+            addCriterion("enabled =", value, "enabled");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnabledNotEqualTo(Integer value) {
+            addCriterion("enabled <>", value, "enabled");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnabledGreaterThan(Integer value) {
+            addCriterion("enabled >", value, "enabled");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnabledGreaterThanOrEqualTo(Integer value) {
+            addCriterion("enabled >=", value, "enabled");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnabledLessThan(Integer value) {
+            addCriterion("enabled <", value, "enabled");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnabledLessThanOrEqualTo(Integer value) {
+            addCriterion("enabled <=", value, "enabled");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnabledIn(List<Integer> values) {
+            addCriterion("enabled in", values, "enabled");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnabledNotIn(List<Integer> values) {
+            addCriterion("enabled not in", values, "enabled");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnabledBetween(Integer value1, Integer value2) {
+            addCriterion("enabled between", value1, value2, "enabled");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnabledNotBetween(Integer value1, Integer value2) {
+            addCriterion("enabled not between", value1, value2, "enabled");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -1,4 +1,4 @@
-package com.evol.controller.permission;
+package com.evol.controller.system;
 
 import com.evol.common.entity.QueryRequest;
 import com.evol.controller.BaseController;

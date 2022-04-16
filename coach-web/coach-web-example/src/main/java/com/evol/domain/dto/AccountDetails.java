@@ -5,7 +5,6 @@ import com.evol.domain.model.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -33,9 +32,7 @@ public class AccountDetails implements UserDetails {
 
     private Collection<SimpleGrantedAuthority> grantedAuthorities;
 
-    public AccountDetails(String username, String password, String nickname, Date expiredTime, Integer locked,
-                          Date passwordExpiredTime, Integer enabled, List<Role> roleList,
-                          List<Permission> permissionList){
+    public AccountDetails(String username, String password, String nickname, Date expiredTime, Integer locked, Date passwordExpiredTime, Integer enabled, List<Role> roleList, List<Permission> permissionList){
         this.username = username;
         this.password = password;
         this.nickname = nickname;

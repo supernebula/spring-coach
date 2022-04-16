@@ -3,7 +3,6 @@ package com.evol.service.impl;
 import com.evol.domain.dto.AccountDetails;
 import com.evol.domain.model.*;
 import com.evol.mapper.UserMapper;
-//import com.evol.provider.JwtProvider;
 import com.evol.service.PermissionService;
 import com.evol.service.RoleService;
 import com.evol.service.UserRoleService;
@@ -16,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang.StringUtils;
-
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +35,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private PermissionService permissionService;
-
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -64,31 +61,59 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User addUser(String username, String password){
+    public boolean addUser(String username, String password){
         if(StringUtils.isBlank(username) || StringUtils.isBlank(password)){
-            return null;
+            return false;
         }
 
         //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String pwd1 = passwordEncoder.encode(StringUtils.trim(password));
-        log.info("pwd1:" + pwd1);
-
+        String encryptPwd = passwordEncoder.encode(StringUtils.trim(password));
+        log.info("encryptPwd:" + encryptPwd);
         User user = new User();
         user.setUsername(StringUtils.trim(username));
         user.setNickname(StringUtils.trim(username));
-        user.setPassword(pwd1);
+        user.setPassword(encryptPwd);
         user.setEmail("");
         user.setPhone("");
         user.setState(0);
         user.setSex(0);
         user.setCreateTime(new Date());
-        userMapper.insert(user);
-        return user;
+        user.setLocked(0);
+        user.setEnabled(0);
+        int count = userMapper.insert(user);
+        return count > 0;
+    }
+    public boolean addUser(User user, Integer[] roleIds) {
+        String encryptPwd = passwordEncoder.encode(StringUtils.trim(user));
+        user.setUsername(StringUtils.trim(user.getUsername()));
+        user.setNickname(StringUtils.trim(user.getNickname()));
+        user.setUpdateTime(new Date());
+        int count = this.userMapper.insert(user);
+        if (null != roleIds) {
+            Arrays.stream(roleIds).forEach(roleId -> {
+                UserRole ur = new UserRole();
+                ur.setUserId(user.getId());
+                ur.setRoleId(roleId);
+                this.userRoleService.save(ur);
+            });
+        }
+        return count > 0;
     }
 
-    public boolean addUser(User user, Integer[] roleIds) {
+    public boolean updateUser(User user, Integer[] roleIds){
+        User user = this.userMapper.selectByPrimaryKey(userParam.getId());
+        user.setNickname(StringUtils.trim(userParam.getNickname()));
+        user.setEmail(userParam.getEmail());
+        user.setPhone(userParam.getEmail());
+        user.setState(userParam.getState());
+        user.setRemarks(userParam.getRemarks());
+        user.setUpdateTime(new Date());
+        user.setLocked(userParam.getLocked());
+        user.setEnabled(userParam.getEnabled());
+        user.setUsername(StringUtils.trim(user.getUsername()));
+        user.setNickname(StringUtils.trim(user.getNickname()));
+        user.setUpdateTime(new Date());
         int count = this.userMapper.insert(user);
-        log.warn("更新用户角色为空");
         if (null != roleIds) {
             Arrays.stream(roleIds).forEach(roleId -> {
                 UserRole ur = new UserRole();

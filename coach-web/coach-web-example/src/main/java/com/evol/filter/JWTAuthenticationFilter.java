@@ -78,7 +78,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         else if(failed instanceof BadCredentialsException){
             msg = "密码错误";
         }
-
         else if(failed instanceof CredentialsExpiredException){
             msg = "密码已过期";
         }// 账号不可用

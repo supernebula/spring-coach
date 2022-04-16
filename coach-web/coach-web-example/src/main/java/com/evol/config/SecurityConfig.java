@@ -5,7 +5,6 @@ import com.evol.filter.JWTAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,18 +29,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true) //保证post之前的注解可以使用
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-
     @Autowired
     private UserDetailsService userDetailsService;
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication().passwordEncoder(passwordEncoder())
-//                .withUser("zhangsan").password(passwordEncoder().encode("123456")).authorities("ADMIN")
-//                .and()
-//                .withUser("lisi").password(passwordEncoder().encode("123456")).authorities("ORDINARY");
-//    }
 
     /**
      * 用于配置全局认证相关的信息
@@ -58,13 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    @Override
-//    public AuthenticationManager authenticationManager() throws Exception {
-//        return super.authenticationManager();
-//    }
-
 
     /**
      * 用于全局请求忽略规则配置，比如一些静态文件，注册登录页面的放行

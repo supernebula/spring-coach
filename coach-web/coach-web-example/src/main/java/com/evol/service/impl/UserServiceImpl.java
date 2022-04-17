@@ -1,6 +1,7 @@
 package com.evol.service.impl;
 
 import com.evol.domain.dto.AccountDetails;
+import com.evol.domain.dto.UserChangePwdParam;
 import com.evol.domain.model.*;
 import com.evol.mapper.UserMapper;
 import com.evol.service.PermissionService;
@@ -84,10 +85,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return count > 0;
     }
     public boolean addUser(User user, Integer[] roleIds) {
-        String encryptPwd = passwordEncoder.encode(StringUtils.trim(user));
+        String encryptPwd = passwordEncoder.encode(StringUtils.trim(user.getPassword()));
         user.setUsername(StringUtils.trim(user.getUsername()));
         user.setNickname(StringUtils.trim(user.getNickname()));
-        user.setUpdateTime(new Date());
+        user.setCreateTime(new Date());
         int count = this.userMapper.insert(user);
         if (null != roleIds) {
             Arrays.stream(roleIds).forEach(roleId -> {
@@ -100,19 +101,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return count > 0;
     }
 
-    public boolean updateUser(User user, Integer[] roleIds){
+    public boolean updateUser(User userParam, Integer[] roleIds){
         User user = this.userMapper.selectByPrimaryKey(userParam.getId());
         user.setNickname(StringUtils.trim(userParam.getNickname()));
         user.setEmail(userParam.getEmail());
-        user.setPhone(userParam.getEmail());
+        user.setPhone(userParam.getPhone());
         user.setState(userParam.getState());
         user.setRemarks(userParam.getRemarks());
         user.setUpdateTime(new Date());
+        user.setExpiredTime(userParam.getExpiredTime());
         user.setLocked(userParam.getLocked());
+        user.setPasswordExpiredTime(userParam.getPasswordExpiredTime());
         user.setEnabled(userParam.getEnabled());
-        user.setUsername(StringUtils.trim(user.getUsername()));
-        user.setNickname(StringUtils.trim(user.getNickname()));
-        user.setUpdateTime(new Date());
         int count = this.userMapper.insert(user);
         if (null != roleIds) {
             Arrays.stream(roleIds).forEach(roleId -> {
@@ -123,6 +123,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             });
         }
         return count > 0;
+    }
+
+    public boolean changePassword(UserChangePwdParam changePwdParam){
+        User user = userMapper.selectByPrimaryKey(changePwdParam.getUserId());
+        if(user == null){
+            return false;
+        }
+        if(passwordEncoder.matches(changePwdParam.getPassword(), user.getPassword())){
+            throw new RuntimeException("原密码错误");
+        }
+
+        if(!changePwdParam.getNewPassword().equals(changePwdParam.getConfirmPassword())){
+            throw new RuntimeException("两次新密码不一致");
+        }
+
+        String encryptPwd = passwordEncoder.encode(StringUtils.trim(changePwdParam.getNewPassword()));
+        user.setPassword(encryptPwd);
+        return userMapper.updateByPrimaryKeySelective(user) > 1;
     }
 
 //

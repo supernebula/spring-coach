@@ -34,6 +34,7 @@ public class RoleServiceImpl implements RoleService {
 	@Autowired
 	private UserRoleServiceImpl userRoleService;
 
+	@Override
 	public void addRoleWithPerm(Role role, Integer[] permissionIds) {
 		roleMapper.insert(role);
 		Arrays.stream(permissionIds).forEach(permissionId -> {
@@ -44,6 +45,8 @@ public class RoleServiceImpl implements RoleService {
 		});
 	}
 
+
+	@Override
 	public void UpdateRoleWithPerm(Role role, Integer[] permissionIds) {
 		roleMapper.updateByPrimaryKeySelective(role);
 		RolePermissionExample example = new RolePermissionExample();
@@ -57,27 +60,12 @@ public class RoleServiceImpl implements RoleService {
 		});
 	}
 
-//	@Transactional
-//	public void deleteRoles(List<Integer> roleIds) {
-//
-//		RolePermissionExample deleteExample = new RolePermissionExample();
-//		deleteExample.createCriteria().andIdIn(roleIds);
-//		rolePermissionMapper.deleteByExample(deleteExample);
-//		this.rolePermissionService.deleteRolePermissionsByRoleId(roleIds);
-//		this.userRoleService.deleteUserRolesByRoleId(roleIds);
-//	}
-
-//	@Transactional
-//	public int batchDelete(List<String> list, String property) {
-//		RolePermissionExample example = new RolePermissionExample();
-//		example.createCriteria().and(property, list);
-//		return this.roleMapper.deleteByExample(example);
-//	}
-
+	@Override
 	public boolean updateRole(Role role) {
 		return roleMapper.updateByPrimaryKeySelective(role) > 0;
 	}
 
+	@Override
 	public List<Role> getRoleListByUser(Long userId) {
 		UserRoleExample urExample = new UserRoleExample();
 		urExample.createCriteria().andUserIdEqualTo(userId);
@@ -92,10 +80,12 @@ public class RoleServiceImpl implements RoleService {
 		return roles;
 	}
 
+	@Override
 	public Role getRoleById(Integer roleId) {
 		return roleMapper.selectByPrimaryKey(roleId);
 	}
 
+	@Override
 	public List<Role> getRoleList(Role role) {
 		try {
 			RoleExample example = new RoleExample();
@@ -110,6 +100,7 @@ public class RoleServiceImpl implements RoleService {
 		}
 	}
 
+	@Override
 	@Transactional
 	public void deleteRoles(List<Integer> roleIds) {
 		RolePermissionExample example = new RolePermissionExample();

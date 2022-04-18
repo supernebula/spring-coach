@@ -84,6 +84,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         int count = userMapper.insert(user);
         return count > 0;
     }
+
+    @Override
     public boolean addUser(User user, Integer[] roleIds) {
         String encryptPwd = passwordEncoder.encode(StringUtils.trim(user.getPassword()));
         user.setUsername(StringUtils.trim(user.getUsername()));
@@ -101,6 +103,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return count > 0;
     }
 
+
+    @Override
     public boolean updateUser(User userParam, Integer[] roleIds){
         User user = this.userMapper.selectByPrimaryKey(userParam.getId());
         user.setNickname(StringUtils.trim(userParam.getNickname()));
@@ -125,6 +129,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return count > 0;
     }
 
+    @Override
     public boolean changePassword(UserChangePwdParam changePwdParam){
         User user = userMapper.selectByPrimaryKey(changePwdParam.getUserId());
         if(user == null){

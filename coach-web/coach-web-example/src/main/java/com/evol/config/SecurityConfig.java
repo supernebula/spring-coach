@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 用于配置全局认证相关的信息
      * @param auth
      * @throws Exception
-     */
+     */WebSecurityConfigurerAdapter
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
@@ -101,7 +101,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .ignoringAntMatchers("/user/add")
                 .and()
                 // 关闭csrf
-                .csrf().disable();
+                .csrf().disable();// 禁用 Spring Security 自带的跨域处理
     }
 
     /**

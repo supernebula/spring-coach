@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * @author admin
+ */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter  {
 
     @Autowired
@@ -42,6 +45,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
 
+    @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,FilterChain chain,Authentication authResult) throws IOException {
         Object obj = authResult.getPrincipal();
         AccountDetails user = (AccountDetails)obj;

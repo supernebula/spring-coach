@@ -17,7 +17,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * 登录成功后 走此类进行鉴权操作
+ *登录成功后 走此类进行鉴权操作
+ * @author admin
  */
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {

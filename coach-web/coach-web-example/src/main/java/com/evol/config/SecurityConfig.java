@@ -2,6 +2,7 @@ package com.evol.config;
 
 import com.evol.filter.JWTAuthenticationFilter;
 import com.evol.filter.JWTAuthorizationFilter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity //开关注解，开启Security
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true) //保证post之前的注解可以使用
+@Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -66,33 +68,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @param http
      * @throws Exception
      */
-    //@Override
-    protected void configure0(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/resources/**", "/signup", "/about", "/login","/user/test","/user/add").permitAll()
-                .and()
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+                http.authorizeRequests()
+                        .antMatchers("/resources/**", "/favicon.ico", "/login")
+                        .permitAll().and()
                 .formLogin()
                 //登录页面
                 .loginPage("/login")
                 //登录成功后的页面
-//                .successForwardUrl("/index")
-//                //登录失败后的页面
-//                .failureForwardUrl("/failure")
-//
-//                .successHandler((req, resp, auth) -> {
-//
-//                })
-//                .failureHandler((req, resp, e) -> {
-//
-//                })
+                .successForwardUrl("/index")
+                //登录失败后的页面
+                .failureForwardUrl("/failure")
+                        //successHandler\failureHandler会因为设置了其他过滤器，而失效
+                .successHandler((req, resp, auth) -> {
+                    log.debug(req.getRequestURI());
+                    log.debug(resp.getStatus() + "");
+                    log.debug(auth.getName(), auth.getPrincipal());
+
+//                    System.out.println(req.getRequestURI());
+//                    System.out.println(resp.getStatus() + "");
+//                    System.out.println(auth.getPrincipal());
+
+                })
+                .failureHandler((req, resp, ex) -> {
+                    log.debug(req.getRequestURI());
+                    log.debug(resp.getStatus() + "");
+                    log.debug(ex.getMessage(), ex);
+                })
                 .and()
-                // 添加JWT登录拦截器
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                // 添加JWT鉴权拦截器
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-                .sessionManagement()
-                // 设置Session的创建策略为：Spring Security永不创建HttpSession 不使用HttpSession来获取SecurityContext
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+//                // 添加JWT登录拦截器
+//                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+//                // 添加JWT鉴权拦截器
+//                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+//                .sessionManagement()
+//                // 设置Session的创建策略为：Spring Security永不创建HttpSession 不使用HttpSession来获取SecurityContext
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
                 // 设置URL的授权
                 .authorizeRequests()
                 // 这里需要将登录页面放行
@@ -126,10 +138,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @param http
      * @throws Exception
      */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception{
-        http.authorizeRequests().antMatchers("/resources/**", "/signup", "/about").permitAll() //授权匿名访问
-                .and()
+    //@Override
+    protected void configure1(HttpSecurity http) throws Exception{
+        http.authorizeRequests()
+                .antMatchers("/resources/**", "/favicon.ico", "/login", "/logout")
+                .permitAll().and()
                 .formLogin() // 配置表单登录
                 //登录页面
                 .loginPage("/login")

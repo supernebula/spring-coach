@@ -1,4 +1,13 @@
-Spring security 集成 jwt流程
+# Spring security
+
+## 官方文档  
+https://docs.spring.io/spring-security/site/docs/5.1.13.RELEASE/reference/html5/#sample-apps
+
+认证方式
+1、UsernamePasswordAuthenticationFilter 
+Spring Security 默认认证过滤器，处于拦截器链当中
+
+## Spring security 集成 jwt流程
 
 https://10wjfang.github.io/blog/2019/02/14/springsecurity-jwt/
 
@@ -18,6 +27,14 @@ role 则是一个 permission 的集合，它的命名约定就是以 ROLE_ 开�
 ## 原理
 
 登录、登录验证、鉴权验证、url权限验证、注解权限验证
+
+
+## 登录回调
+
+前后端分离登录
+前后端不分登录
+
+https://mp.weixin.qq.com/s/kHJRKwH-WUx-JEeaQMa7jw
 
 
 

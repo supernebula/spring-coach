@@ -21,6 +21,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 /**
  * Spring Security的权限管理方式
+ * WebSecurityConfigurerAdapter 是旧的方式，新的方式采用 filterChain ，see  https://www.cnblogs.com/felordcn/p/15922976.html
  * （1） Url权限控制
  * @author admin
  */
@@ -36,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 用于配置全局认证相关的信息
      * @param auth
      * @throws Exception
-     */WebSecurityConfigurerAdapter
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
@@ -58,26 +59,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         super.configure(web);
     }
 
+
+
     /**
      * 用于具体的权限控制规则配置
      * @param http
      * @throws Exception
      */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
+    //@Override
+    protected void configure0(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/resources/**", "/signup", "/about", "/login","/user/test","/user/add").permitAll()
+                .and()
+                .formLogin()
                 //登录页面
                 .loginPage("/login")
                 //登录成功后的页面
-                .successForwardUrl("/index")
-                //登录失败后的页面
-                .failureForwardUrl("/failure")
-                .successHandler((req, resp, auth) -> {
-
-                })
-                .failureHandler((req, resp, e) -> {
-
-                })
+//                .successForwardUrl("/index")
+//                //登录失败后的页面
+//                .failureForwardUrl("/failure")
+//
+//                .successHandler((req, resp, auth) -> {
+//
+//                })
+//                .failureHandler((req, resp, e) -> {
+//
+//                })
                 .and()
                 // 添加JWT登录拦截器
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
@@ -90,18 +96,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 设置URL的授权
                 .authorizeRequests()
                 // 这里需要将登录页面放行
-                .antMatchers( "/login","/user/test","/user/add").permitAll()
                 //除了上面，其他所有请求必须被认证
                 .anyRequest().authenticated()
 
                 .and()
                 .logout()
-                .permitAll()
+
 //                .ignoringAntMatchers("/logout")
 //                .ignoringAntMatchers("/user/add")
                 .and()
                 // 关闭csrf
-                .csrf().disable();// 禁用 Spring Security 自带的跨域处理
+                .csrf().disable();// 禁用 Spring Security 自带的跨域处理，因为不使用session
     }
 
     /**
@@ -114,5 +119,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //注册跨域配置
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
+    }
+
+    /**
+     * 1 表单登录
+     * @param http
+     * @throws Exception
+     */
+    @Override
+    protected void configure(HttpSecurity http) throws Exception{
+        http.authorizeRequests().antMatchers("/resources/**", "/signup", "/about").permitAll() //授权匿名访问
+                .and()
+                .formLogin() // 配置表单登录
+                //登录页面
+                .loginPage("/login")
+                //登录成功后的页面
+                .successForwardUrl("/index")
+                //.defaultSuccessUrl("/index")  // 未指定地址时，默认defaultSuccessUrl
+                //登录失败后的页面
+                .failureForwardUrl("/failure") //登录失败服务端跳转
+                .failureUrl("/failure") //登录失败重定向
+
+                .usernameParameter("name")
+                .passwordParameter("password")
+                .successHandler((req, resp, auth) -> {
+                    //自定义登录成功后的结果处理
+                    // https://zhuanlan.zhihu.com/p/92698964
+                })
+                .failureHandler((req, resp, e) -> {
+                    //自定义登录失败后的结果处理
+                })
+                .and() //注销的逻辑
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("afterlogout.html")
+                .deleteCookies("JSESSIONID");
     }
 }

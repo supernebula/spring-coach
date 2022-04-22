@@ -70,7 +70,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-                http.authorizeRequests()
+                // 设置URL的授权
+                http.authorizeRequests()                // 这里需要将登录页面放行
+                        //除了上面，其他所有请求必须被认证
                         .antMatchers("/resources/**", "/favicon.ico", "/login")
                         .permitAll().and()
                 .formLogin()
@@ -97,23 +99,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     log.debug(ex.getMessage(), ex);
                 })
                 .and()
-//                // 添加JWT登录拦截器
-//                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-//                // 添加JWT鉴权拦截器
-//                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-//                .sessionManagement()
-//                // 设置Session的创建策略为：Spring Security永不创建HttpSession 不使用HttpSession来获取SecurityContext
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-                // 设置URL的授权
-                .authorizeRequests()
-                // 这里需要将登录页面放行
-                //除了上面，其他所有请求必须被认证
-                .anyRequest().authenticated()
-
-                .and()
                 .logout()
-
+                .and()
+                // 添加JWT登录拦截器
+                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                // 添加JWT鉴权拦截器
+                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+                .sessionManagement()
+                // 设置Session的创建策略为：Spring Security永不创建HttpSession 不使用HttpSession来获取SecurityContext
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    //配置不需要CSRF保护的URL
 //                .ignoringAntMatchers("/logout")
 //                .ignoringAntMatchers("/user/add")
                 .and()

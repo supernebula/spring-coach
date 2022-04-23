@@ -46,13 +46,7 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping("/index")
-    public String index(ModelMap modelMap){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails principal = (UserDetails) authentication.getPrincipal();
-        modelMap.put("user",principal);
-        return "index";
-    }
+
 
     //@PreAuthorize("hasRole('admin')")
     //@Secured({"user.test"})

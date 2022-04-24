@@ -74,111 +74,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     /**
-     * 用于具体的权限控制规则配置
+     * 2. Spring Security 集成JWT认证验证
      * @param http
      * @throws Exception
      */
-    //@Override
-    protected void configure1(HttpSecurity http) throws Exception {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
                 // 设置URL的授权
-                http.authorizeRequests()                // 这里需要将登录页面放行
-                        //除了上面，其他所有请求必须被认证
-                        .antMatchers("/resources/**", "/favicon.ico", "/login")
-                        .permitAll().and()
+                http.authorizeRequests()
+                //除了上面，其他所有请求必须被认证,这里需要将登录页面放行
+                .antMatchers("/resources/**", "/favicon.ico", "/login").permitAll()
+                .and()
                 .formLogin() // 需要启用session
                 //登录页面
                 .loginPage("/login")
-                .defaultSuccessUrl("/index", true) //浏览器跳转
-                //登录成功后的页面
-//                .successForwardUrl("/index") //服务端重定向
-                //登录失败后的页面
-                .failureForwardUrl("/failure")
-                        //successHandler\failureHandler会因为设置了其他过滤器，而失效
-//                .successHandler((req, resp, auth) -> {
-//                    //加塞逻辑 或 替代 successForwardUrl 返回JSON
-//                    log.debug(req.getRequestURI());
-//                    log.debug(resp.getStatus() + "");
-//                    log.debug(auth.getName(), auth.getPrincipal());
-//
-//                    Object obj = auth.getPrincipal();
-//                    AccountDetails user = (AccountDetails)obj;
-//
-//                    // 从User中获取权限信息
-//                    Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-//                    //创建Token
-//                    String token = JwtTokenUtil.createToken(user.getUsername(), authorities.toString());
-//                    //设置编码 防止乱码问题
-//                    resp.setCharacterEncoding("UTF-8");
-//                    resp.setContentType("application/json; charset=utf-8");
-//                    //在请求头里返回创建成功的token
-//                    //设置请求头为带有 “”前缀的token字符串
-//                    resp.setHeader("token", JwtTokenUtil.TOKEN_PREFIX + token);
-//                    // 处理编码方式 防止中文乱码
-//                    resp.setContentType("text/json;charset=utf-8");
-//                    // 将反馈塞到HttpServletResponse中返回给前台
-//                    LoginUserVO loginUserVO = new LoginUserVO();
-//                    loginUserVO.setLoginName(user.getUsername());
-//                    loginUserVO.setNickName(user.getNickname());
-//                    loginUserVO.setToken(token);
-//                    ApiResponse apiResponse = ApiResponse.success(loginUserVO);
-//                    resp.getWriter().write(JSON.toJSONString(apiResponse));
-//
-//                })
-//                .failureHandler((req, resp, ex) -> {
-//                    //加塞逻辑 或 替代 failureForwardUrl 返回JSON
-//                    log.debug(req.getRequestURI());
-//                    log.debug(resp.getStatus() + "");
-//                    log.debug(ex.getMessage(), ex);
-//
-//                    String msg = "";
-//                    //账号过期
-//                    if(ex instanceof AccountExpiredException){
-//                        msg = "账号已过期";
-//                    }
-//                    else if(ex instanceof BadCredentialsException){
-//                        msg = "密码错误";
-//                    }
-//                    else if(ex instanceof CredentialsExpiredException){
-//                        msg = "密码已过期";
-//                    }// 账号不可用
-//                    else if (ex instanceof DisabledException) {
-//                        msg="账号不可用";
-//                    }
-//                    //账号锁定
-//                    else if (ex instanceof LockedException) {
-//                        msg="账号已锁定";
-//                    }
-//                    // 用户不存在
-//                    else if (ex instanceof InternalAuthenticationServiceException) {
-//                        msg="用户不存在";
-//                    }
-//                    // 其他错误
-//                    else{
-//                        msg="未知异常";
-//                    }
-//                    // 处理编码方式 防止中文乱码
-//                    resp.setContentType("text/json;charset=utf-8");
-//                    // 将反馈塞到HttpServletResponse中返回给前台
-//                    ApiResponse apiResponse = ApiResponse.fail(ApiResponseEnum.USER_DEFINED_ERROR.getCode(), msg);
-//                    resp.getWriter().write(JSON.toJSONString(apiResponse));
-//                })
                 .and()
                 .logout()
                 .and()
-//                // 添加JWT登录拦截器
-//                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-//                // 添加JWT鉴权拦截器
-//                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-                   //在formlogin如果启用此行，session将被禁用，造成SecurityContextHolder.getContext().getAuthentication().getPrincipal()只能获取匿名用户，而非登录用户
-//                .sessionManagement()
-//                // 设置Session的创建策略为：Spring Security永不创建HttpSession 不使用HttpSession来获取SecurityContext
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    //配置不需要CSRF保护的URL
-//                .ignoringAntMatchers("/logout")
-//                .ignoringAntMatchers("/user/add")
-                //.and()
-                // 关闭csrf
-                .csrf().disable();// 禁用 Spring Security 自带的跨域处理，因为不使用session
+                // 添加JWT登录拦截器
+                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                // 添加JWT鉴权拦截器
+                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+                 //JWT认证，禁用session，此时SecurityContextHolder.getContext().getAuthentication()
+                        // .getPrincipal，只能获取匿名用户，而非登录用户，通过jwt获取用户
+                .sessionManagement()
+                // 设置Session的创建策略为：Spring Security永不创建HttpSession 不使用HttpSession来获取SecurityContext
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                 .and()
+                 //关闭csrf, 禁用 Spring Security 自带的跨域处理，因为不使用session
+                .csrf().ignoringAntMatchers("/logout").ignoringAntMatchers("/user/add").disable();
     }
 
     /**
@@ -194,12 +118,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 1 表单登录
+     * 1 表单登录验证
      * @param http
      * @throws Exception
      */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception{
+    //@Override
+    protected void configure1(HttpSecurity http) throws Exception{
         // 设置URL的授权
         http.authorizeRequests()
                 //antMatchers 放行的url，除此之外都需要认证

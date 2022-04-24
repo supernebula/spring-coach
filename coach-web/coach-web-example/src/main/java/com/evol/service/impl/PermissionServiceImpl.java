@@ -34,6 +34,9 @@ public class PermissionServiceImpl implements com.evol.service.PermissionService
 
 	private List<Integer> permissionIds(List<Integer> roleIds){
 		RolePermissionExample rpExample = new RolePermissionExample();
+		if(roleIds.size() == 0){
+			return new ArrayList<Integer>();
+		}
 		rpExample.createCriteria().andRoleIdIn(roleIds);
 		List<RolePermission> rpList = rolePermissionMapper.selectByExample(rpExample);
 		if(rpList == null || rpList.size() == 0){
@@ -55,6 +58,9 @@ public class PermissionServiceImpl implements com.evol.service.PermissionService
 	public List<Permission> getUnionPermission(List<Integer> roleIds) {
 		List pIds = this.permissionIds(roleIds);
 		PermissionExample permissionExample = new PermissionExample();
+		if(pIds.size() == 0){
+			return new ArrayList<Permission>();
+		}
 		permissionExample.createCriteria().andIdIn(pIds);
 		permissionExample.setDistinct(true);
 		permissionExample.setOrderByClause("order_num desc");

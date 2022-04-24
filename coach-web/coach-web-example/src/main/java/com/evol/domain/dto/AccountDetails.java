@@ -43,13 +43,18 @@ public class AccountDetails implements UserDetails {
         this.roleList = roleList;
         this.permissionList = permissionList;
         this.grantedAuthorities = new ArrayList<>();
-        this.roleList.forEach(role -> {
-            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-        });
+        if(this.roleList != null || this.roleList.size() != 0){
+            this.roleList.forEach(role -> {
+                grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+            });
+        }
 
-        this.permissionList.forEach(permis -> {
-            grantedAuthorities.add(new SimpleGrantedAuthority(permis.getName()));
-        });
+        if(this.permissionList != null || this.permissionList.size() != 0){
+            this.permissionList.forEach(permis -> {
+                grantedAuthorities.add(new SimpleGrantedAuthority(permis.getName()));
+            });
+        }
+
     }
 
     public AccountDetails(String username, String password, String nickname, List<Role> roleList,

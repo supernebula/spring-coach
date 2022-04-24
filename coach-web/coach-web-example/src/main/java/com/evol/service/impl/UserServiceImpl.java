@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private RoleService roleService;
 
+
     @Autowired
     private PermissionService permissionService;
 

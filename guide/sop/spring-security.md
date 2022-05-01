@@ -29,6 +29,31 @@ role 则是一个 permission 的集合，它的命名约定就是以 ROLE_ 开�
 登录、登录验证、鉴权验证、url权限验证、注解权限验证
 
 
+## Spring Security OAuth2
+
+《深入浅出SpringCloud》Spring Security Oauth2
+https://blog.csdn.net/ysj_2021/article/details/124394933
+
+
+SpringBoot + Spring Security OAuth2基本使用
+
+https://blog.csdn.net/u013435893/article/details/79735097
+
+Springboot 2.11版本集成security+oauth2
+https://blog.csdn.net/xiyuan_mc/article/details/85015868
+https://github.com/NicolaLuoqi/zhaospace.git
+
+spring boot 2.1.6.RELEASE配oauth2-2.0版本
+https://blog.csdn.net/qq_34530405/article/details/103037213
+
+项目链接地址
+https://github.com/whyalwaysmea/Spring-Security
+
+Spring Boot Security 整合 OAuth2 设计安全API接口服务
+
+https://developer.aliyun.com/article/703185
+
+
 ## 登录回调
 
 前后端分离登录

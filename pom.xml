@@ -234,6 +234,7 @@
         <module>coach-common</module>
         <module>test</module>
         <module>coach-shenyu-gateway</module>
+        <module>coach-web/coach-web-oauth-example</module>
     </modules>
     <packaging>pom</packaging>
 

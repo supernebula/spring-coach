@@ -32,15 +32,15 @@ public class UserServiceImpl implements UserDetailsService {
         userList.add(user1);
 
         User user2 = new User();
-        user2.setUsername("yuan11");
+        user2.setUsername("maochao");
         user2.setPassword(password);
-        user2.setNickname("yuan11");
+        user2.setNickname("maochao");
         userList.add(user2);
 
         User user3 = new User();
-        user3.setUsername("yuan11");
+        user3.setUsername("zhaoyun");
         user3.setPassword(password);
-        user3.setNickname("yuan11");
+        user3.setNickname("zhaoyun");
         userList.add(user3);
     }
 

@@ -33,10 +33,16 @@ role 则是一个 permission 的集合，它的命名约定就是以 ROLE_ 开�
 
 《深入浅出SpringCloud》Spring Security Oauth2
 https://blog.csdn.net/ysj_2021/article/details/124394933
+https://blog.csdn.net/m0_37892044/article/details/116599077
+
+https://www.cnblogs.com/zsg88/p/11382054.html
+
+
+Spring Security Oauth2 数据库
+https://blog.csdn.net/Victor_An/article/details/81510874
 
 
 SpringBoot + Spring Security OAuth2基本使用
-
 https://blog.csdn.net/u013435893/article/details/79735097
 
 Springboot 2.11版本集成security+oauth2
@@ -57,9 +63,13 @@ https://developer.aliyun.com/article/703185
 ## 登录回调
 
 前后端分离登录
-前后端不分登录
-
 https://mp.weixin.qq.com/s/kHJRKwH-WUx-JEeaQMa7jw
+
+
+## 整合OAuth2
+
+SpringBoot整合spring-security-oauth2完整实现例子
+https://github.com/EalenXie/spring-oauth2-authenticator
 
 
 

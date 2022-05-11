@@ -31,6 +31,13 @@ role 则是一个 permission 的集合，它的命名约定就是以 ROLE_ 开�
 
 ## Spring Security OAuth2
 
+Spring Security OAuth2 Demo（阿里云）
+https://developer.aliyun.com/article/315216
+
+官方Oauth2表格
+https://github.com/spring-projects/spring-security-oauth/blob/main/spring-security-oauth2/src/test/resources/schema.sql
+
+
 《深入浅出SpringCloud》Spring Security Oauth2
 https://blog.csdn.net/ysj_2021/article/details/124394933
 https://blog.csdn.net/m0_37892044/article/details/116599077

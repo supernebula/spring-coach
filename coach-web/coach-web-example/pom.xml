@@ -50,6 +50,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
             <groupId>com.evol</groupId>
             <artifactId>coach-common-data</artifactId>
             <version>0.1-SNAPSHOT</version>

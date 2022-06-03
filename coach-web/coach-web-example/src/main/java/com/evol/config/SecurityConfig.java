@@ -83,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 设置URL的授权
                 http.authorizeRequests()
                 //除了上面，其他所有请求必须被认证,这里需要将登录页面放行
-                .antMatchers("/resources/**", "/favicon.ico", "/login").permitAll()
+                .antMatchers("/resources/**", "/favicon.ico", "/login", "/test/**").permitAll()
                 .and()
                 .formLogin() // 需要启用session
                 //登录页面

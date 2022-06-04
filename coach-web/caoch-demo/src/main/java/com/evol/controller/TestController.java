@@ -1,5 +1,6 @@
 package com.evol.controller;
 
+import com.evol.aop.annotation.Log;
 import com.evol.config.UserCustomConfig;
 import com.evol.domain.RoleVo;
 import com.evol.domain.UserVo;
@@ -68,5 +69,11 @@ public class TestController {
     @GetMapping(value = "/test/propXml", produces = MediaType.APPLICATION_XML_VALUE)
     public UserVo propXml(){
         return userVo;
+    }
+
+    @Log(name = "访问/free接口")
+    @GetMapping("/free")
+    public String free(){
+        return "排查在拦截器Interceptor之外，不会被拦截";
     }
 }

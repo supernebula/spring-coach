@@ -13,7 +13,7 @@ import java.util.Arrays;
  * 方式二 CorsFilter过滤器,Springboot 没有自动设置，需要手动注讲CorsFilter注入容器。
  * 过滤器先于拦截器执行
  */
-@Configuration
+//@Configuration
 public class CorsFilterConfig {
     @Bean
     public FilterRegistrationBean<CorsFilter> coreFilter(){

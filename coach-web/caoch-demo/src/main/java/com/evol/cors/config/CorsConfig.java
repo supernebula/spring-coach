@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * spring-webmvc-5.2.0R
  * springboot2.2.0R之前的版本，这种方式弊端，如果自定义拦截器，跨域配置会失效。执行顺序先处理拦截器，在执行请求映射逻辑
  */
-@Configuration
+//@Configuration
 public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {

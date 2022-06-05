@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * 如果需要，更换为apache Commons FileUpload包
  */
-@Configuration
+//@Configuration
 public class FileUploadConfig{
     @Bean
     public MultipartResolver multipartResolver() throws IOException{

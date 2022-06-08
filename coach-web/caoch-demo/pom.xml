@@ -22,6 +22,15 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+<!--        不需要单独引入logback依赖 spring-boot-starter-web 已经内置了-->
+<!--                <dependency>-->
+<!--                    <groupId>org.springframework.boot</groupId>-->
+<!--                    <artifactId>spring-boot-starter-logging</artifactId>-->
+<!--                </dependency>-->
+<!--        引入logback依赖 结束-->
+
+
+
         <!--引入log4j 2依赖 开始-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->
@@ -39,10 +48,13 @@
 <!--        </dependency>-->
         <!--引入log4j 2依赖 结束-->
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
+
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
+<!--        </dependency>-->
+
 
         <!--SpringBoot移除Tomcat更换Undertow Web容器，Undertow资料少-->
 <!--        <dependency>-->

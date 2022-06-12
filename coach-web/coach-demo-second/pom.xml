@@ -14,7 +14,7 @@
     <name>coach-demo-second</name>
     <description>Demo project for Spring Boot</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>1.8</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -27,11 +27,21 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--SrpingBoot2.0 官方推荐数据库连接池HiariCP-->
+        <!--SrpingBoot2.0 官方推荐数据库连接池HiariCP 默认内置-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+
+
+        <!--SrpingBoot2.0 官方推荐数据库连接池druid 开始-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.24</version>
+        </dependency>
+        <!--SrpingBoot2.0 官方推荐数据库连接池druid 结束-->
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

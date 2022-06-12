@@ -16,7 +16,8 @@ public class CoachDemoSecondApplication implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception{
         try (Connection conn = dataSource.getConnection()){
-            System.out.println(conn);
+            System.out.println("打印数据源名称");
+            System.out.println(conn.toString());
         }
     }
     public static void main(String[] args) {

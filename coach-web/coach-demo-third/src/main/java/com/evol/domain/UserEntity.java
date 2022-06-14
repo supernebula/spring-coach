@@ -6,6 +6,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 /**
  * 4.4 配置使用Spring Data JDBC
+ * @author admin
  */
 @Table("user")
 @Data

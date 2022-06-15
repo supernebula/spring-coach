@@ -4,6 +4,7 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -17,32 +18,34 @@ import java.util.Map;
 public class DataSourceConfig {
 
     @Bean
-    @ConfigurationProperties("spring.datasource.druid.master")
-    public DataSource masterDataSource(){
+    @Primary
+    @ConfigurationProperties("spring.datasource.druid.user")
+    public DataSource userDataSource(){
         return DruidDataSourceBuilder.create().build();
     }
 
     @Bean
-    @ConfigurationProperties("spring.datasource.druid.new")
-    public DataSource newDataSource(){
+    @ConfigurationProperties("spring.datasource.druid.order")
+    public DataSource orderDataSource(){
         return DruidDataSourceBuilder.create().build();
     }
 
     @Bean
-    @ConfigurationProperties("spring.datasource.druid.backup")
-    public DataSource backupDataSource(){
+    @ConfigurationProperties("spring.datasource.druid.business")
+    public DataSource businessDataSource(){
         return DruidDataSourceBuilder.create().build();
     }
 
+    @Bean(name = "routingDataSource")
     public RoutingDataSource routingDataSource(){
         Map<Object, Object> dataSourceMap = new HashMap<>();
-        dataSourceMap.put("master", masterDataSource());
-        dataSourceMap.put("new", newDataSource());
-        dataSourceMap.put("backup", backupDataSource());
+        dataSourceMap.put("user", userDataSource());
+        dataSourceMap.put("order", orderDataSource());
+        dataSourceMap.put("business", businessDataSource());
 
         RoutingDataSource routingDataSource = new RoutingDataSource();
         routingDataSource.setTargetDataSources(dataSourceMap);
-        routingDataSource.setDefaultTargetDataSource(masterDataSource());
+        routingDataSource.setDefaultTargetDataSource(userDataSource());
         return routingDataSource;
     }
 }

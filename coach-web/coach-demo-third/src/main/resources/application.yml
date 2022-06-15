@@ -6,21 +6,29 @@ spring:
     password: 123456
     druid:
       # 主数据源
-      master:
+      user:
         driver-class-name: com.mysql.jdbc.Driver
         # 默认数据库连接（配置库）
-        url: jdbc:mysql://xxx:xxx/master_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+        url: jdbc:mysql://127.0.0.1:3306/coach_user?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
         username: root
         password: 123456
-      new:
+      order:
         driver-class-name: com.mysql.jdbc.Driver
         # 默认数据库连接（配置库）
-        url: jdbc:mysql://xxx:xxx/new_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+        url: jdbc:mysql://127.0.0.1:3306/coach_order?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
         username: root
         password: 123456
-      backup:
+      business:
         driver-class-name: com.mysql.jdbc.Driver
         # 默认数据库连接（配置库）
-        url: jdbc:mysql://xxx:xxx/backup_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+        url: jdbc:mysql://127.0.0.1:3306/coach_business?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
         username: root
         password: 123456
+logging:
+  level:
+    root: debug
+    com:
+      evol:
+        mapper= debug
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml

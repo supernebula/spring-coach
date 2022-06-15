@@ -4,3 +4,23 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/praxis_example?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=true&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
     username: root
     password: 123456
+    druid:
+      # 主数据源
+      master:
+        driver-class-name: com.mysql.jdbc.Driver
+        # 默认数据库连接（配置库）
+        url: jdbc:mysql://xxx:xxx/master_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+      new:
+        driver-class-name: com.mysql.jdbc.Driver
+        # 默认数据库连接（配置库）
+        url: jdbc:mysql://xxx:xxx/new_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+      backup:
+        driver-class-name: com.mysql.jdbc.Driver
+        # 默认数据库连接（配置库）
+        url: jdbc:mysql://xxx:xxx/backup_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456

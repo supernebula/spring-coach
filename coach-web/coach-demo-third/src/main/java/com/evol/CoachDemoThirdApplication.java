@@ -1,5 +1,6 @@
 package com.evol;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -10,6 +11,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 
 @SpringBootApplication
+@MapperScan("com.evol.multidatas.mapper")
 public class CoachDemoThirdApplication implements ApplicationRunner {
 
     @Autowired

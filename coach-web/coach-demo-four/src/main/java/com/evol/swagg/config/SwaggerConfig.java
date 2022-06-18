@@ -34,5 +34,4 @@ public class SwaggerConfig {
                 //所有路径都满足这个条件
                 .paths(PathSelectors.any()).build();
     }
-
 }

@@ -32,5 +32,4 @@ public class IndexController {
         userDTO.setLoginTime(new Date());
         return userDTO;
     }
-
 }

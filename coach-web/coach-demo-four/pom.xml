@@ -58,6 +58,29 @@
             <version>2.9.2</version>
         </dependency>
 
+        <!--依赖Spring Boot Data Redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.lettuce</groupId>
+                    <artifactId>lettuce-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--对象池化组件，配合JAVA客户端的JedisPool使用-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <!--Jedis的jar包-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.3.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>

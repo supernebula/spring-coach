@@ -5,6 +5,7 @@ import com.evol.mongo.service.UserService;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,6 +43,18 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public DeleteResult update(@PathVariable Integer id){
         return userService.deleteResult(id);
+    }
+
+    @Cacheable(cacheNames = "all_user", key = ("'UserController.findAll2'"))
+    @GetMapping("/findAll2")
+    public List<UserDTO> findAll2(){
+        return userService.findAll();
+    }
+
+    @GetMapping("/getById/{id}")
+    @Cacheable(cacheNames = "all_user", key = ("'UserController.getById'+ #id"))
+    public UserDTO getById(@PathVariable Integer id){
+        return userService.getOneById(id);
     }
 
 }

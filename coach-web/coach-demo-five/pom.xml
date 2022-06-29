@@ -39,9 +39,17 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+
+        <!--引入 Cache 缓存依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+        <!--引入 Ehcache 依赖-->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
         </dependency>
 
     </dependencies>

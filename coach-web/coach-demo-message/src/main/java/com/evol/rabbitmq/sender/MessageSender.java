@@ -1,11 +1,12 @@
-package com.evol.sender;
+package com.evol.rabbitmq.sender;
 
-import com.evol.config.RabbitDirectConfig;
+import com.evol.rabbitmq.config.RabbitDirectConfig;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.UUID;
 
 /**
@@ -31,6 +32,7 @@ public class MessageSender {
         // 构建消息，设置消息内容
         Message message = new Message(info.getBytes(),messageProperties);
         rabbitTemplate.convertAndSend(RabbitDirectConfig.DIRECT_NAME,RabbitDirectConfig.ROUTING_KEY,message);
+        //rabbitTemplate.convertAndSend(RabbitDirectConfig.DIRECT_NAME,RabbitDirectConfig.ROUTING_KEY,"STRING MSG");
     }
 
 }

@@ -236,6 +236,7 @@
         <module>coach-shenyu-gateway</module>
         <module>coach-web/coach-web-oauth-example</module>
         <module>coach-web/coach-demo-message</module>
+        <module>coach-web/coach-demo-rocketmq</module>
     </modules>
     <packaging>pom</packaging>
 

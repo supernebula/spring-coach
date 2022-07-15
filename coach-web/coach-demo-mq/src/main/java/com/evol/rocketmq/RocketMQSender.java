@@ -27,6 +27,11 @@ public class RocketMQSender {
         log.info("发送结果：{}", JSON.toJSONString(result));
     }
 
+    public void sendTagMessage(String topic, String tag, String message){
+        SendResult result = rocketMQTemplate.syncSend(topic + ":" + tag, message);
+        log.info("发送结果：{}", JSON.toJSONString(result));
+    }
+
     public <T extends Serializable> SendStatus sendDto(String topic, T dto){
         SendResult result = rocketMQTemplate.syncSend(topic, JSON.toJSONString(dto));
         log.info("发送结果：{}", JSON.toJSONString(result));

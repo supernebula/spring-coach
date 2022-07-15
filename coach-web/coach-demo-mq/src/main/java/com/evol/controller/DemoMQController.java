@@ -25,6 +25,15 @@ public class DemoMQController {
         return "ok";
     }
 
+    @GetMapping("/testSendTagMsg")
+    public String testSendTagMessage(@RequestParam(required = false) String msg){
+        if(StringUtils.isBlank(msg)){
+            msg = "Hello World";
+        }
+        rocketMQSender.sendTagMessage(TopicConstant.DEMO_TOPIC1, "tag1", msg);
+        return "ok";
+    }
+
     @GetMapping("/testSendObj")
     public String testSendDto(){
         DemoOrderDto demoOrderDto = new DemoOrderDto("OR202204051220", 100, new Date());

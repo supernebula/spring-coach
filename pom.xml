@@ -237,6 +237,7 @@
         <module>coach-web/coach-web-oauth-example</module>
         <module>coach-web/coach-demo-message</module>
         <module>coach-web/coach-demo-rocketmq</module>
+        <module>coach-web/coach-batch</module>
     </modules>
     <packaging>pom</packaging>
 

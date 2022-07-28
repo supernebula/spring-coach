@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Configuration;
  * // 启用批处理功能
  * @author admin
  */
-//@Configuration
-//@EnableBatchProcessing
+@Configuration
+@EnableBatchProcessing
 public class HelloJobConfiguration {
 
     //注入创建任务的对象
